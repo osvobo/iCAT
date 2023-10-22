@@ -707,11 +707,78 @@ if(theEvent.getController().getName()=="heating") {
     }    
   }
 }
+
   
+
+private static int HEADER_SIZE = 4;
+
+private static final int MSG_TYPE_TEMPERATURE = 1;
+private static final int MSG_TYPE_IMAGE = 2;
+private static final int MSG_TYPE_MESSAGE = 3;
+
 
 void serialEvent(Serial myPort) {
   
   try {
+    
+    // Check if data is available
+    if (myPort.available() < HEADER_SIZE) {
+      throw new Exception("Not enough bytes to read header:" + myPort.available() + ", expected" + HEADER_SIZE);
+    }
+    // Read Header
+    byte[] header = new byte[HEADER_SIZE];
+    header = myPort.readBytes(HEADER_SIZE);
+    
+    int messageType =  header[1] | (header[0] << 8);
+    int dataSize    =  header[3] | (header[2] << 8);
+    
+    
+    // Check if data is available
+    if (myPort.available() < dataSize) {
+      throw new Exception("Not enough bytes to read data:" + myPort.available() + ", expected " + dataSize);
+    }
+    // Read data
+    byte[] data = new byte[dataSize];
+    data = myPort.readBytes(dataSize);
+        
+    // Log 
+    print("Message received, type:" + messageType + " dataSize: " + dataSize + ", bytes: ");
+    for (int i = 0; i < dataSize; i++) {
+      print(Byte.toString(data[i]) + ",");
+    }
+    
+    
+    switch (messageType) {
+      case MSG_TYPE_TEMPERATURE:
+      {
+        // Temperature is in 2 bytes, respresenting centicelsius - 2851 = 28.51°C
+        int tempCentiCelsius =  data[1] | (data[0] << 8);
+        float temp = tempCentiCelsius / 100;
+        
+        println("Temperature: " + temp);
+                
+        Slider4.setValue(temp);
+        Chart1.push("currentTemp", temp);
+        thermostat();
+      }
+      break;
+      
+      case MSG_TYPE_MESSAGE:
+      {
+        String message = new String(data);
+        println(message);
+      }
+      break;
+    }
+    
+  }
+
+  catch(Exception e) {
+    println("Error while reading serial line: " + e.getMessage());
+  }
+    
+/*
+    
 //    String incoming[];
 //    String myString = myPort.readStringUntil(13); // get myString till line break (ASCII > 13)   
 //    myString = trim(myString);
@@ -733,14 +800,16 @@ incoming[1] = "dasdasd";
     //String joinedIncoming = join(incoming, ","); 
     //println(joinedIncoming);  
 
-
-    byte[] byteBuffer = new byte[2000]; /// what relationship to FifoLength???? how to set up only for neccesary length???
-    byte separator = 13; ///how to get rid of new lines after "received...."
+/// what relationship to FifoLength???? how to set up only for neccesary length???
+    byte[] byteBuffer = new byte[2000]; 
+///how to get rid of new lines after "received...."    
+    byte separator = 13; 
 
 
 ///this is in progress
 //    byte[] incoming = new byte[1000];
 //    incoming = byteBuffer;
+
 /// following line does not work yet
 //    String in = new String(incoming[0]);
 
@@ -750,14 +819,13 @@ incoming[1] = "dasdasd";
     String myString = new String(byteBuffer);
     
 
-      
-if (byteBuffer[0] >0) {      ///this helps to get rid of empty "received..."
+///this helps to get rid of empty "received..."
+if (byteBuffer[0] >0) {      
 //    println(byteBuffer);
-    println("myString received: "+myString);
+    println("myString received: "+myString); //<>//
     
     
 //    if (myString != null) { // just if there is data
-//      println("myString received: "+myString); 
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("myString received: "+myString);
@@ -799,6 +867,7 @@ if (byteBuffer[0] >0) {      ///this helps to get rid of empty "received..."
         catch(RuntimeException e) {
           println(e.getMessage());
         }
+        
       } else if (incoming[0].equals("Ready:")) {
         myPort.write(0x10);
         println("Starting Capture");
@@ -808,5 +877,8 @@ if (byteBuffer[0] >0) {      ///this helps to get rid of empty "received..."
     }
   }
   catch (Exception e) {}
+  
+  */
+  
 }
     

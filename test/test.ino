@@ -48,13 +48,67 @@ bool continuous = false;
 long int streamStartTime;
 ArduCAM myCAM1(OV5642, CS1);
 
+
+
+
+void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[])
+{
+  // Write messageType
+  byte messageTypeBytes[2] = {0x00, messageType};
+  Serial.write(messageTypeBytes, sizeof(messageTypeBytes));
+
+  // Write data size
+  byte dataSizeBytes[2];
+  dataSizeBytes[0] = (dataSize & 0xFF00) >> 8;
+  dataSizeBytes[1] = (dataSize & 0x00FF);
+
+  Serial.write(dataSizeBytes, sizeof(dataSizeBytes));
+
+  // Write string itself
+  Serial.write(data, dataSize);
+}
+
+#define MSG_TYPE_TEMPERATURE 1
+#define MSG_TYPE_IMAGE 2
+#define MSG_TYPE_MESSAGE 3
+
+
+void SendMessage(const char c[])
+{
+  writeToSerial(
+    MSG_TYPE_MESSAGE,
+    strlen(c),
+    c
+  );
+}
+
+void SendTemperature(float temp)
+{
+  uint16_t tempCentiCelsius = (uint16_t) (temp * 100);
+
+  writeToSerial(
+    MSG_TYPE_TEMPERATURE,
+    2,
+    (const char *) &tempCentiCelsius
+  );
+}
+
+void SendImage(byte data[], int size)
+{
+
+}
+
+
+
+
 void setup() {
   uint8_t vid, pid;
   uint8_t temp;
   Wire.begin();
   //Serial.begin(115200);
   Serial.begin(650000);
-  Serial.println("UNO is connected");
+
+  SendMessage("UNO is connected");
   pinMode(CS1, OUTPUT);
   SPI.begin();
   stepper1.setMaxSpeed(10000);
@@ -70,10 +124,10 @@ void setup() {
     myCAM1.write_reg(ARDUCHIP_TEST1, 0x55);
     temp = myCAM1.read_reg(ARDUCHIP_TEST1);
     if (temp != 0x55) {
-      Serial.println(F("SPI1 interface Error!"));
+      SendMessage("SPI1 interface Error!");
     } else {
       CAM1_EXIST = true;
-      Serial.println(F("SPI1 interface OK."));
+      SendMessage("SPI1 interface OK.");
     }
 
     if (!(CAM1_EXIST)) {
@@ -88,11 +142,11 @@ void setup() {
     myCAM1.rdSensorReg16_8(OV5642_CHIPID_HIGH, &vid);
     myCAM1.rdSensorReg16_8(OV5642_CHIPID_LOW, &pid);
     if ((vid != 0x56) || (pid != 0x42)) {
-      Serial.println(F("Can't find OV5642 module"));
+      SendMessage("Can't find OV5642 module");
       delay(1000);
       continue;
     } else {
-      Serial.println(F("OV5642 detected"));
+      SendMessage("OV5642 detected");
       break;
     }
   }
@@ -107,8 +161,10 @@ void setup() {
   delay(1000);
   myCAM1.clear_fifo_flag();
 
-  Serial.println("iCat is ready!");
+  SendMessage("iCat is ready!");
   t = millis();
+
+  SendTemperature(18.54);
 }
 
 // line 123, 391
@@ -205,9 +261,7 @@ void ntc(int scale) {
   temperature = 1.0 / temperature;                  // Invert
   temperature -= 273.15;                     // convert absolute temp to C
 
-  Serial.print("Temperature ");
-  Serial.print(temperature);
-  Serial.println(" *C");
+  SendTemperature(temperature);
 }
 
 
@@ -284,7 +338,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();
 
-   Serial.print("Image:,");
+  SendMessage("Sending image:");
 
   while (length--) {
     temp_last = temp;
