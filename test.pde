@@ -501,18 +501,12 @@ year = year();
 
 void write (int val, int append1, int append2) {
   println("theValue is: "+val); 
-  output.println();
-    output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("theValue is: "+val);
         String s0 = Integer.toString(val);
         String s1 = Integer.toString(append1);
         String s2 = Integer.toString(append2);
         String s = s0 + s1 + s2;
         int c = Integer.parseInt(s);
   println("sent: "+c);       
-  output.println();
-    output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("sent: "+c);
   myPort.write(Integer.toString(c)); 
   myPort.write('e');
 }

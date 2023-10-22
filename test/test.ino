@@ -44,7 +44,7 @@ AccelStepper stepper2 = AccelStepper(motorInterfaceType, step2, dir2);
 //arducam
 const int CS1 = 10;  // SPI slave for ArduCam
 bool CAM1_EXIST = false;
-bool continuous = false;
+bool stopMotion = false;
 long int streamStartTime;
 ArduCAM myCAM1(OV5642, CS1);
 
@@ -116,7 +116,7 @@ void loop() {
   serialEvent();
 
 
-  if (millis() == t + 5000) {
+  if (millis() == t + 2000) {
     Serial.print("Time: ");
     Serial.println(millis());  // prints time since program started
     ntc(1023);                 //1023 for 5V, 675 for 3.3V
@@ -170,14 +170,13 @@ void loop() {
     }
   }
 
-  if (CAM1_EXIST && continuous) {
+  if (CAM1_EXIST && stopMotion) {
     streamStartTime = millis();
     myCAMSendToSerial(myCAM1);
     //double fps = ((millis() - streamStartTime) / 1000);
     //Serial.println("fps: " + String(1 / fps));
     long int elapsed = millis() - streamStartTime;
     Serial.println("Total camera processing and sending time: " + String(elapsed));
-    Serial.println("continuousValue: " + String(continuous));
   }
 }
 
@@ -284,7 +283,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();
 
-  Serial.print("Image:,");
+  // Serial.print("Image:,");
 
   while (length--) {
     temp_last = temp;
@@ -297,12 +296,13 @@ void myCAMSendToSerial(ArduCAM myCAM) {
       myCAM.CS_HIGH();
 
       for (int i = 0; i < sizeof(buf); i++) {
-        Serial.print(buf[i]);
-        Serial.print(",");
+        Serial.write(buf[i]);
+        // Serial.print(buf[i]);
+        // Serial.print(",");
       }
 
-      Serial.println();
-      Serial.println(F("Image transfer OK."));
+      // Serial.println();
+      // Serial.println(F("Image transfer OK."));
       is_header = false;
       i = 0;
     }
@@ -314,8 +314,9 @@ void myCAMSendToSerial(ArduCAM myCAM) {
         //Stream 5 bytes of raw image data to serial
         myCAM.CS_HIGH();
         for (int i = 0; i < sizeof(buf); i++) {
-          Serial.print(buf[i]);
-          Serial.print(",");
+          Serial.write(buf[i]);
+          // Serial.print(buf[i]);
+          // Serial.print(",");
         }
         i = 0;
         buf[i++] = temp;
@@ -413,26 +414,18 @@ void serialEvent() {
 
 
       if (inputID == 2) {  //cam continuous
-        Serial.println("cam cont sw pressed"); 
-        Serial.println("continuousValue before: " + String(continuous));
-        if (continuous) {
-          Serial.println("continuousValue before sw when true: " + String(continuous));
-          continuous = false;
-        }
-        else {
-          Serial.println("continuousValue before sw when false: " + String(continuous));
-          continuous = true;
-        }
-        Serial.println("continuousValue after sw: " + String(continuous));
+        if (stopMotion)
+          stopMotion = false;
+        else
+          stopMotion = true;
+        Serial.println("Continuous: " + String(stopMotion));
       }
       if (inputID == 1) {  //cam snapshot
         if (CAM1_EXIST) {
           streamStartTime = millis();
           myCAMSendToSerial(myCAM1);
-          //double fps = ((millis() - streamStartTime) / 1000);
-          //Serial.println("Total Time: " + String(fps));
-          long int elapsed = millis() - streamStartTime;
-          Serial.println("Total camera processing and sending time: " + String(elapsed));
+          double fps = ((millis() - streamStartTime) / 1000);
+          Serial.println("Total Time: " + String(fps));
         }
       }
 
