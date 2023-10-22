@@ -44,7 +44,7 @@ AccelStepper stepper2 = AccelStepper(motorInterfaceType, step2, dir2);
 //arducam
 const int CS1 = 10;  // SPI slave for ArduCam
 bool CAM1_EXIST = false;
-bool stopMotion = false;
+bool continuous = false;
 long int streamStartTime;
 ArduCAM myCAM1(OV5642, CS1);
 
@@ -170,13 +170,14 @@ void loop() {
     }
   }
 
-  if (CAM1_EXIST && stopMotion) {
+  if (CAM1_EXIST && continuous) {
     streamStartTime = millis();
     myCAMSendToSerial(myCAM1);
     //double fps = ((millis() - streamStartTime) / 1000);
     //Serial.println("fps: " + String(1 / fps));
     long int elapsed = millis() - streamStartTime;
     Serial.println("Total camera processing and sending time: " + String(elapsed));
+    Serial.println("continuousValue: " + String(continuous));
   }
 }
 
@@ -414,18 +415,26 @@ void serialEvent() {
 
 
       if (inputID == 2) {  //cam continuous
-        if (stopMotion)
-          stopMotion = false;
-        else
-          stopMotion = true;
-        Serial.println("Continuous: " + String(stopMotion));
+        Serial.println("cam cont sw pressed"); 
+        Serial.println("continuousValue before: " + String(continuous));
+        if (continuous) {
+          Serial.println("continuousValue before sw when true: " + String(continuous));
+          continuous = false;
+        }
+        else {
+          Serial.println("continuousValue before sw when false: " + String(continuous));
+          continuous = true;
+        }
+        Serial.println("continuousValue after sw: " + String(continuous));
       }
       if (inputID == 1) {  //cam snapshot
         if (CAM1_EXIST) {
           streamStartTime = millis();
           myCAMSendToSerial(myCAM1);
-          double fps = ((millis() - streamStartTime) / 1000);
-          Serial.println("Total Time: " + String(fps));
+          //double fps = ((millis() - streamStartTime) / 1000);
+          //Serial.println("Total Time: " + String(fps));
+          long int elapsed = millis() - streamStartTime;
+          Serial.println("Total camera processing and sending time: " + String(elapsed));
         }
       }
 

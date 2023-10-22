@@ -706,11 +706,23 @@ if(theEvent.getController().getName()=="heating") {
 void serialEvent(Serial myPort) {
   try {
 
-    String incoming[];
-    String myString = myPort.readStringUntil(13); // get myString till line break (ASCII > 13)
+//    String incoming[];
+//    String myString = myPort.readStringUntil(13); // get myString till line break (ASCII > 13)   
+//    myString = trim(myString);
+//    incoming = split(myString, ',');    
+
+    int myStringg = int(myPort.read()); 
+    char ch = ((char)myStringg);
+    println(ch);
+    String myString = str(myStringg);
+
+
     
-    myString = trim(myString);
-    incoming = split(myString, ',');
+    String[] incoming = new String[2];
+    incoming[0] = "aaaa";
+    incoming[1] = "dasdasd";
+
+        
     
     if (myString != null) { // just if there is data
       println("myString received: "+myString); 
