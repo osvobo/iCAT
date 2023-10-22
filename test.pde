@@ -22,8 +22,8 @@ long picNum = 0;
 int millisInit;
 int port = 0;
 
-int baud = 650000;
-//int baud = 115200;
+//int baud = 650000;
+int baud = 115200;
 //int baud = 500000;
 
 
@@ -711,7 +711,6 @@ if(theEvent.getController().getName()=="heating") {
   
 
 private static int HEADER_SIZE = 4;
-
 private static final int MSG_TYPE_TEMPERATURE = 1;
 private static final int MSG_TYPE_IMAGE = 2;
 private static final int MSG_TYPE_MESSAGE = 3;
@@ -731,6 +730,12 @@ void serialEvent(Serial myPort) {
     
     int messageType =  header[1] | (header[0] << 8);
     int dataSize    =  header[3] | (header[2] << 8);
+    
+    
+    //println("header:" + header);
+    //println("header1:" + header[1]);
+    //println("header0:" + header[0]);
+    //println("messageType:" + messageType);
     
     
     // Check if data is available
@@ -776,7 +781,7 @@ void serialEvent(Serial myPort) {
   catch(Exception e) {
     println("Error while reading serial line: " + e.getMessage());
   }
-    
+  
 /*
     
 //    String incoming[];
@@ -880,5 +885,4 @@ if (byteBuffer[0] >0) {
   
   */
   
-}
-    
+}   

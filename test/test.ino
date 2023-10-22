@@ -51,8 +51,7 @@ ArduCAM myCAM1(OV5642, CS1);
 
 
 
-void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[])
-{
+void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
   // Write messageType
   byte messageTypeBytes[2] = {0x00, messageType};
   Serial.write(messageTypeBytes, sizeof(messageTypeBytes));
@@ -73,8 +72,8 @@ void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[])
 #define MSG_TYPE_MESSAGE 3
 
 
-void SendMessage(const char c[])
-{
+
+void SendMessage(const char c[]) {
   writeToSerial(
     MSG_TYPE_MESSAGE,
     strlen(c),
@@ -82,10 +81,8 @@ void SendMessage(const char c[])
   );
 }
 
-void SendTemperature(float temp)
-{
+void SendTemperature(float temp) {
   uint16_t tempCentiCelsius = (uint16_t) (temp * 100);
-
   writeToSerial(
     MSG_TYPE_TEMPERATURE,
     2,
@@ -93,11 +90,8 @@ void SendTemperature(float temp)
   );
 }
 
-void SendImage(byte data[], int size)
-{
-
+void SendImage(byte data[], int size) {
 }
-
 
 
 
@@ -105,8 +99,8 @@ void setup() {
   uint8_t vid, pid;
   uint8_t temp;
   Wire.begin();
-  //Serial.begin(115200);
-  Serial.begin(650000);
+  Serial.begin(115200);
+  //Serial.begin(650000);
 
   SendMessage("UNO is connected");
   pinMode(CS1, OUTPUT);
