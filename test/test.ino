@@ -284,7 +284,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();
 
-  // Serial.print("Image:,");
+   Serial.print("Image:,");
 
   while (length--) {
     temp_last = temp;
@@ -297,13 +297,14 @@ void myCAMSendToSerial(ArduCAM myCAM) {
       myCAM.CS_HIGH();
 
       for (int i = 0; i < sizeof(buf); i++) {
+//        Serial.print("h");
         Serial.write(buf[i]);
         // Serial.print(buf[i]);
         // Serial.print(",");
       }
 
-      // Serial.println();
-      // Serial.println(F("Image transfer OK."));
+      Serial.println(); //
+      Serial.println(F("Image transfer OK.")); //
       is_header = false;
       i = 0;
     }
@@ -315,9 +316,10 @@ void myCAMSendToSerial(ArduCAM myCAM) {
         //Stream 5 bytes of raw image data to serial
         myCAM.CS_HIGH();
         for (int i = 0; i < sizeof(buf); i++) {
+//          Serial.print("b");
           Serial.write(buf[i]);
           // Serial.print(buf[i]);
-          // Serial.print(",");
+//          Serial.print(","); //
         }
         i = 0;
         buf[i++] = temp;

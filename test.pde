@@ -501,12 +501,18 @@ year = year();
 
 void write (int val, int append1, int append2) {
   println("theValue is: "+val); 
+  output.println();
+    output.printf("%02d:%02d:%02d   ", hour, min, sec);
+    output.print("theValue is: "+val);
         String s0 = Integer.toString(val);
         String s1 = Integer.toString(append1);
         String s2 = Integer.toString(append2);
         String s = s0 + s1 + s2;
         int c = Integer.parseInt(s);
   println("sent: "+c);       
+  output.println();
+    output.printf("%02d:%02d:%02d   ", hour, min, sec);
+    output.print("sent: "+c);
   myPort.write(Integer.toString(c)); 
   myPort.write('e');
 }
@@ -704,28 +710,54 @@ if(theEvent.getController().getName()=="heating") {
   
 
 void serialEvent(Serial myPort) {
+  
   try {
-
 //    String incoming[];
 //    String myString = myPort.readStringUntil(13); // get myString till line break (ASCII > 13)   
 //    myString = trim(myString);
 //    incoming = split(myString, ',');    
 
-    int myStringg = int(myPort.read()); 
-    char ch = ((char)myStringg);
-    println(ch);
-    String myString = str(myStringg);
+
+String[] incoming = new String[2];
+    //String[] incoming = {};
+incoming[0] = "aaaa";
+incoming[1] = "dasdasd";
+    //String w1 = "jedna";
+    //String w2 = "dva";
+    //String w3 = "tri";
+    //String w0 = "nula";
+    //String w4 = "ctyri";
+    //incoming = append(incoming, w1); 
+    //incoming = append(incoming, w2); 
+    //incoming = append(incoming, w3); 
+    //String joinedIncoming = join(incoming, ","); 
+    //println(joinedIncoming);  
 
 
+    byte[] byteBuffer = new byte[2000]; /// what relationship to FifoLength???? how to set up only for neccesary length???
+    byte separator = 13; ///how to get rid of new lines after "received...."
+
+
+///this is in progress
+//    byte[] incoming = new byte[1000];
+//    incoming = byteBuffer;
+/// following line does not work yet
+//    String in = new String(incoming[0]);
+
+
+    //myPort.readBytes(byteBuffer); 
+    myPort.readBytesUntil(separator, byteBuffer); 
+    String myString = new String(byteBuffer);
     
-    String[] incoming = new String[2];
-    incoming[0] = "aaaa";
-    incoming[1] = "dasdasd";
 
-        
+      
+if (byteBuffer[0] >0) {      ///this helps to get rid of empty "received..."
+//    println(byteBuffer);
+    println("myString received: "+myString);
     
-    if (myString != null) { // just if there is data
-      println("myString received: "+myString); 
+    
+//    if (myString != null) { // just if there is data
+//      println("myString received: "+myString); 
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("myString received: "+myString);
@@ -737,8 +769,10 @@ void serialEvent(Serial myPort) {
       }
     }
     
+/// how to setup that if image, whole current buffer will go here.....
     if (incoming.length > 1) {
-      if (incoming[0].equals("FifoLength:")) {
+//      if (incoming[0].equals("FifoLength:")) {
+      if (incoming[0].equals("FifoLength:")) {  
         //initialize raw data byte array to the size of the picture
         rawBytes = new byte[int(incoming[1])];
         println("Picture Size: "+incoming[1]+" bytes");
@@ -775,3 +809,4 @@ void serialEvent(Serial myPort) {
   }
   catch (Exception e) {}
 }
+    
