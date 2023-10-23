@@ -22,6 +22,8 @@ long picNum = 0;
 int millisInit;
 int port = 0;
 
+ 
+
 //int baud = 650000;
 int baud = 115200;
 //int baud = 500000;
@@ -37,7 +39,7 @@ Toggle Toggle1, Toggle2, Toggle3;
 
 
 //output
-int sec = second();  // Values from 0 - 59
+int sec = second();  // Values from 0 - 59hheea
 int min = minute();  // Values from 0 - 59
 int hour = hour();    // Values from 0 - 23
 int day = day();  
@@ -83,7 +85,7 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
   DropList1.getCaptionLabel().set("PORT"); //set PORT before anything is selected
   portName = Serial.list()[port]; //0 as default   
   myPort = new Serial(this, portName, baud);      
-  myPort.bufferUntil('\n');
+  //myPort.bufferUntil('\n');
 
 
 //led
@@ -716,72 +718,104 @@ private static final int MSG_TYPE_IMAGE = 2;
 private static final int MSG_TYPE_MESSAGE = 3;
 
 
+private static boolean headerRead = false;
+private static byte[] header = new byte[HEADER_SIZE];
+private static int messageType = 0;
+private static int dataSize = 0;
+
+
+void handleMessage(byte[] data) {
+   switch (messageType) {
+    case MSG_TYPE_TEMPERATURE:
+    {
+      
+      // Temperature is in 2 bytes, respresenting centicelsius - 2851 = 28.51°C
+      int tempCentiCelsius =  Byte.toUnsignedInt(data[0]) | (Byte.toUnsignedInt(data[1]) << 8);
+
+      float temp = (float)tempCentiCelsius / 100f;
+      
+      println("Temperature: " + temp);
+              
+      Slider4.setValue(temp);
+      Chart1.push("currentTemp", temp);
+      thermostat();
+    }
+    break;
+    
+    case MSG_TYPE_MESSAGE:
+    {
+      String message = new String(data);
+      println(message);
+    }
+    break;
+  }
+}
+
+
+
 void serialEvent(Serial myPort) {
-  
+
   try {
     
-    // Check if data is available
-    if (myPort.available() < HEADER_SIZE) {
-      throw new Exception("Not enough bytes to read header:" + myPort.available() + ", expected" + HEADER_SIZE);
-    }
-    // Read Header
-    byte[] header = new byte[HEADER_SIZE];
-    header = myPort.readBytes(HEADER_SIZE);
-    
-    int messageType =  header[1] | (header[0] << 8);
-    int dataSize    =  header[3] | (header[2] << 8);
-    
-    
-    //println("header:" + header);
-    //println("header1:" + header[1]);
-    //println("header0:" + header[0]);
-    //println("messageType:" + messageType);
-    
-    
-    // Check if data is available
-    if (myPort.available() < dataSize) {
-      throw new Exception("Not enough bytes to read data:" + myPort.available() + ", expected " + dataSize);
-    }
-    // Read data
-    byte[] data = new byte[dataSize];
-    data = myPort.readBytes(dataSize);
-        
-    // Log 
-    print("Message received, type:" + messageType + " dataSize: " + dataSize + ", bytes: ");
-    for (int i = 0; i < dataSize; i++) {
-      print(Byte.toString(data[i]) + ",");
-    }
-    
-    
-    switch (messageType) {
-      case MSG_TYPE_TEMPERATURE:
-      {
-        // Temperature is in 2 bytes, respresenting centicelsius - 2851 = 28.51°C
-        int tempCentiCelsius =  data[1] | (data[0] << 8);
-        float temp = tempCentiCelsius / 100;
-        
-        println("Temperature: " + temp);
-                
-        Slider4.setValue(temp);
-        Chart1.push("currentTemp", temp);
-        thermostat();
+    // First, set up to receive a header
+    if (!headerRead)
+    {
+      if (myPort.available() < HEADER_SIZE) {
+        myPort.buffer(HEADER_SIZE);
+        return;
       }
-      break;
       
-      case MSG_TYPE_MESSAGE:
-      {
-        String message = new String(data);
-        println(message);
+      // Read Header
+      header = myPort.readBytes(HEADER_SIZE);
+      headerRead = true;
+
+      for (int i = 0; i < HEADER_SIZE; i++) {
+        print(Integer.toString(Byte.toUnsignedInt(header[i])) + ",");
       }
-      break;
+      println();
+
+      
+      messageType =  Byte.toUnsignedInt(header[1]) | (Byte.toUnsignedInt(header[0]) << 8);
+      dataSize    =  Byte.toUnsignedInt(header[3]) | (Byte.toUnsignedInt(header[2]) << 8);
+  
+      println("Header received, type:" + messageType + " dataSize: " + dataSize);
+  
+      // Set up the serial line to receive expected amount of bytes
+      myPort.buffer(dataSize);
+      return;
+    }    
+
+    // Reading body
+    else
+    {
+      // Check if data is available
+      if (myPort.available() < dataSize) {
+        throw new Exception("Not enough bytes to read data:" + myPort.available() + ", expected " + dataSize);
+      }
+      
+      // Read data
+      byte[] data = new byte[dataSize];
+      data = myPort.readBytes(dataSize);
+          
+      // Log 
+      print("Message body received, bytes: ");
+      for (int i = 0; i < dataSize; i++) {
+        print(Byte.toString(data[i]) + ",");
+      }
+      println();
+      
+      handleMessage(data);
     }
-    
   }
 
   catch(Exception e) {
     println("Error while reading serial line: " + e.getMessage());
   }
-  
+
+  // Cleanup - expecting header again
+  myPort.buffer(HEADER_SIZE);
+  headerRead = false;
+
 /*
     
 //    String incoming[];

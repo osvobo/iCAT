@@ -49,9 +49,7 @@ long int streamStartTime;
 ArduCAM myCAM1(OV5642, CS1);
 
 
-
-
-void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
+void writeToSerialHeader(uint8_t messageType, uint16_t dataSize) {
   // Write messageType
   byte messageTypeBytes[2] = {0x00, messageType};
   Serial.write(messageTypeBytes, sizeof(messageTypeBytes));
@@ -62,6 +60,10 @@ void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
   dataSizeBytes[1] = (dataSize & 0x00FF);
 
   Serial.write(dataSizeBytes, sizeof(dataSizeBytes));
+}
+
+void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
+  writeToSerialHeader(messageType, dataSize);
 
   // Write string itself
   Serial.write(data, dataSize);
@@ -90,8 +92,6 @@ void SendTemperature(float temp) {
   );
 }
 
-void SendImage(byte data[], int size) {
-}
 
 
 
@@ -103,6 +103,7 @@ void setup() {
   //Serial.begin(650000);
 
   SendMessage("UNO is connected");
+
   pinMode(CS1, OUTPUT);
   SPI.begin();
   stepper1.setMaxSpeed(10000);
@@ -165,52 +166,51 @@ void setup() {
 void loop() {
   serialEvent();
 
-
   if (millis() == t + 2000) {
-    Serial.print("Time: ");
-    Serial.println(millis());  // prints time since program started
-    ntc(1023);                 //1023 for 5V, 675 for 3.3V
+    //Serial.print("Time: ");
+    //Serial.println(millis());  // prints time since program started
+    ////ntc(1023);                 //1023 for 5V, 675 for 3.3V
     t = millis();
     if (temperature > 35) {
       pelt(0);
-      Serial.println("peltier safety shutdown!!!!");
+      //Serial.println("peltier safety shutdown!!!!");
       }
   }
 
   if (millis() > t + 5000) {
-    Serial.println("timing error");
+    //Serial.println("timing error");
     t = millis();
   }
 
 
   if (analogRead(IN) > 900 && interval == 1) {
     if (int2 == 0) {
-      Serial.print("A2 read: ");
-      Serial.println(analogRead(IN));
-      Serial.print("Position before int1: ");
-      Serial.println(intV);
+      //Serial.print("A2 read: ");
+      //Serial.println(analogRead(IN));
+      //Serial.print("Position before int1: ");
+      //Serial.println(intV);
       intV = intV + int1;
-      Serial.print("Position after int1: ");
-      Serial.println(intV);
+      //Serial.print("Position after int1: ");
+      //Serial.println(intV);
       motor1(intV);
       delay(1000);
     } else {
       int int12[2];
       int12[0] = int1;
       int12[1] = int2;
-      Serial.print("A2 read: ");
-      Serial.println(analogRead(IN));
+      //Serial.print("A2 read: ");
+      //Serial.println(analogRead(IN));
 
-      Serial.print("i: ");
-      Serial.println(inti);
-      Serial.print("int: ");
-      Serial.println(int12[inti]);
+      //Serial.print("i: ");
+      //Serial.println(inti);
+      //Serial.print("int: ");
+      //Serial.println(int12[inti]);
 
-      Serial.print("Position before int: ");
-      Serial.println(intV);
+      //Serial.print("Position before int: ");
+      //Serial.println(intV);
       intV = intV + int12[inti];
-      Serial.print("Position after int: ");
-      Serial.println(intV);
+      //Serial.print("Position after int: ");
+      //Serial.println(intV);
       motor1(intV);
       delay(1000);
       inti++;
@@ -226,8 +226,8 @@ void loop() {
     //double fps = ((millis() - streamStartTime) / 1000);
     //Serial.println("fps: " + String(1 / fps));
     long int elapsed = millis() - streamStartTime;
-    Serial.println("Total camera processing and sending time: " + String(elapsed));
-    Serial.println("continuousValue: " + String(continuous));
+    //Serial.println("Total camera processing and sending time: " + String(elapsed));
+    //Serial.println("continuousValue: " + String(continuous));
   }
 }
 
@@ -244,10 +244,10 @@ void ntc(int scale) {
     average += samples[i];
   }
   average /= ntc_no;
-  //Serial.print("Average analog reading "); Serial.println(average);
+  ////Serial.print("Average analog reading "); //Serial.println(average);
   average = scale / average - 1;     // (1023/ADC - 1) USE THIS FOR 5V supply
   average = ntc_resistor / average;  // 10K / (1023/ADC - 1)
-  //Serial.print("Thermistor resistance "); Serial.println(average);
+  ////Serial.print("Thermistor resistance "); //Serial.println(average);
   temperature = average / ntc_ref;           // (R/Ro)
   temperature = log(temperature);                   // ln(R/Ro)
   temperature /= ntc_beta;                   // 1/B * ln(R/Ro)
@@ -260,16 +260,16 @@ void ntc(int scale) {
 
 
 void led(int led_val) {
-  Serial.println("true led");
-  Serial.print("Arduino: led ");
-  Serial.println(led_val);
+  //Serial.println("true led");
+  //Serial.print("Arduino: led ");
+  //Serial.println(led_val);
   analogWrite(led_pin, led_val);
 }
 
 void pelt(int pelt_val) {
-  Serial.println("true pelt");
-  Serial.print("Arduino: pelt ");
-  Serial.println(pelt_val);
+  //Serial.println("true pelt");
+  //Serial.print("Arduino: pelt ");
+  //Serial.println(pelt_val);
   analogWrite(pelt_pin, pelt_val);
 }
 
@@ -279,8 +279,8 @@ void motor1(long motor1_val) {
   digitalWrite(EN, LOW);
   stepper1.moveTo(motor1_val);
   stepper1.runToPosition();
-  Serial.print("motor1 moved (sent value*16/1.8) to: ");
-  Serial.println(motor1_val);
+  //Serial.print("motor1 moved (sent value*16/1.8) to: ");
+  //Serial.println(motor1_val);
   digitalWrite(EN, HIGH);
 }
 
@@ -290,13 +290,14 @@ void motor2(long motor2_val) {
   digitalWrite(EN, LOW);
   stepper2.moveTo(motor2_val);
   stepper2.runToPosition();
-  Serial.print("motor2 moved to: ");
-  Serial.println(motor2_val);
+  //Serial.print("motor2 moved to: ");
+  //Serial.println(motor2_val);
   digitalWrite(EN, HIGH);
 }
 
 
 void myCAMSendToSerial(ArduCAM myCAM) {
+  char logMessage[64];
   char str[8];
   byte buf[5];
 
@@ -314,29 +315,30 @@ void myCAMSendToSerial(ArduCAM myCAM) {
     ;
 
   length = myCAM.read_fifo_length();
-  Serial.print(F("FifoLength:,"));
-  Serial.print(length, DEC);
-  Serial.println(",");
+
+  snprintf(logMessage, sizeof(logMessage), "Sending image, fifoLength: %d", length);
+  SendMessage(logMessage);
 
   if (length >= MAX_FIFO_SIZE)  //8M
   {
-    Serial.println(F("Over size"));
+    //Serial.println(F("Over size"));
     return;
   }
   if (length == 0)  //0 kb
   {
-    Serial.println(F("Size is 0"));
+    //Serial.println(F("Size is 0"));
     return;
   }
 
   myCAM.CS_LOW();
   myCAM.set_fifo_burst();
 
-  SendMessage("Sending image:");
+  writeToSerialHeader(MSG_TYPE_IMAGE, length*5);
 
   while (length--) {
     temp_last = temp;
     temp = SPI.transfer(0x00);
+
     //Read JPEG data from FIFO
     if ((temp == 0xD9) && (temp_last == 0xFF))  //If find the end ,break while,
     {
@@ -345,17 +347,13 @@ void myCAMSendToSerial(ArduCAM myCAM) {
       myCAM.CS_HIGH();
 
       for (int i = 0; i < sizeof(buf); i++) {
-//        Serial.print("h");
         Serial.write(buf[i]);
-        // Serial.print(buf[i]);
-        // Serial.print(",");
       }
 
-      Serial.println(); //
-      Serial.println(F("Image transfer OK.")); //
       is_header = false;
       i = 0;
     }
+
     if (is_header == true) {
       //Write image data to buffer if not full
       if (i < 5) {
@@ -364,10 +362,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
         //Stream 5 bytes of raw image data to serial
         myCAM.CS_HIGH();
         for (int i = 0; i < sizeof(buf); i++) {
-//          Serial.print("b");
           Serial.write(buf[i]);
-          // Serial.print(buf[i]);
-//          Serial.print(","); //
         }
         i = 0;
         buf[i++] = temp;
@@ -389,16 +384,16 @@ void serialEvent() {
     inputRaw = Serial.read();
     if ((inputRaw >= '0') && (inputRaw <= '9')) {
       input = 10 * input + inputRaw - '0';
-      //Serial.println(input);
+      ////Serial.println(input);
     } else if (inputRaw == 'e') {
-      Serial.println(input);
+      //Serial.println(input);
       uint8_t start_capture = 0;
       long val = input / 100;
       int inputID;
       inputID = input % 100;
       input = 0;
-      //Serial.println(val);
-      //Serial.println(inputID);
+      ////Serial.println(val);
+      ////Serial.println(inputID);
 
 
       if (inputID == 9) {
@@ -410,29 +405,29 @@ void serialEvent() {
       //}
 
       if (inputID == 7) {
-        //Serial.println(motor1_temp);
-        //Serial.println(val);
+        ////Serial.println(motor1_temp);
+        ////Serial.println(val);
         int motor1_diff = -val - motor1_temp;
-        //Serial.println(motor1_diff);
+        ////Serial.println(motor1_diff);
         if (motor1_diff > -720) {  // this doesnt allow >720 deg rotation
           motor1(-val);
           intV = -val;
           motor1_temp = -val;
         } else {
-          Serial.println("motor1 error, rotation > 720deg isnt allowed!");
+          //Serial.println("motor1 error, rotation > 720deg isnt allowed!");
         }
       }
       if (inputID == 6) {
-        //Serial.println(motor1_temp);
-        //Serial.println(val);
+        ////Serial.println(motor1_temp);
+        ////Serial.println(val);
         int motor1_diff = val - motor1_temp;
-        //Serial.println(motor1_diff);
+        ////Serial.println(motor1_diff);
         if (motor1_diff < 720) {  // this doesnt allow >720 deg rotation
           motor1(+val);
           intV = val;
           motor1_temp = val;
         } else {
-          Serial.println("motor1 error, rotation > 720deg isnt allowed!");
+          //Serial.println("motor1 error, rotation > 720deg isnt allowed!");
         }
       }
 
@@ -465,65 +460,65 @@ void serialEvent() {
 
 
       if (inputID == 2) {  //cam continuous
-        Serial.println("cam cont sw pressed"); 
-        Serial.println("continuousValue before: " + String(continuous));
+        //Serial.println("cam cont sw pressed"); 
+        //Serial.println("continuousValue before: " + String(continuous));
         if (continuous) {
-          Serial.println("continuousValue before sw when true: " + String(continuous));
+          //Serial.println("continuousValue before sw when true: " + String(continuous));
           continuous = false;
         }
         else {
-          Serial.println("continuousValue before sw when false: " + String(continuous));
+          //Serial.println("continuousValue before sw when false: " + String(continuous));
           continuous = true;
         }
-        Serial.println("continuousValue after sw: " + String(continuous));
+        //Serial.println("continuousValue after sw: " + String(continuous));
       }
       if (inputID == 1) {  //cam snapshot
         if (CAM1_EXIST) {
           streamStartTime = millis();
           myCAMSendToSerial(myCAM1);
           //double fps = ((millis() - streamStartTime) / 1000);
-          //Serial.println("Total Time: " + String(fps));
+          ////Serial.println("Total Time: " + String(fps));
           long int elapsed = millis() - streamStartTime;
-          Serial.println("Total camera processing and sending time: " + String(elapsed));
+          //Serial.println("Total camera processing and sending time: " + String(elapsed));
         }
       }
 
       if (inputID == 11) {
         myCAM1.OV5642_set_JPEG_size(OV5642_320x240);
-        Serial.println(F("OV5642_320x240"));
+        //Serial.println(F("OV5642_320x240"));
         delay(1000);
         myCAM1.clear_fifo_flag();
       }
       if (inputID == 12) {
         myCAM1.OV5642_set_JPEG_size(OV5642_640x480);
-        Serial.println(F("OV5642_640x480"));
+        //Serial.println(F("OV5642_640x480"));
         delay(1000);
         myCAM1.clear_fifo_flag();
       }
       if (inputID == 13) {
         myCAM1.OV5642_set_JPEG_size(OV5642_1024x768);
-        Serial.println(F("OV5642_1024x768"));
+        //Serial.println(F("OV5642_1024x768"));
         delay(1000);
         myCAM1.clear_fifo_flag();
       }
       if (inputID == 14) {
         myCAM1.OV5642_set_JPEG_size(OV5642_1280x960);
-        Serial.println(F("OV5642_1280x960"));
+        //Serial.println(F("OV5642_1280x960"));
         delay(1000);
         myCAM1.clear_fifo_flag();
       }
       if (inputID == 15) {
         myCAM1.OV5642_set_JPEG_size(OV5642_1600x1200);
-        Serial.println(F("OV5642_1600x1200"));
+        //Serial.println(F("OV5642_1600x1200"));
         delay(1000);
         myCAM1.clear_fifo_flag();
       }
 
       //  myCAM1.OV5642_set_JPEG_size(OV5642_2048x1536);
-      //  Serial.println(F("OV5642_2048x1536")); delay(1000);
+      //  //Serial.println(F("OV5642_2048x1536")); delay(1000);
       //
       //  myCAM1.OV5642_set_JPEG_size(OV5642_2592x1944);
-      //  Serial.println(F("OV5642_2592x1944")); delay(1000);
+      //  //Serial.println(F("OV5642_2592x1944")); delay(1000);
     }
   t = millis();
   }
