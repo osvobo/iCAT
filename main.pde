@@ -25,7 +25,7 @@ int port = 0;
  
 
 //int baud = 650000;
-int baud = 115200;
+  int baud = 57600;
 //int baud = 500000;
 
 
@@ -739,15 +739,33 @@ void handleMessage(byte[] data) {
       Slider4.setValue(temp);
       Chart1.push("currentTemp", temp);
       thermostat();
+      break;
     }
-    break;
     
     case MSG_TYPE_MESSAGE:
     {
       String message = new String(data);
       println(message);
+      break;
     }
-    break;
+    
+    case MSG_TYPE_IMAGE:
+    {
+        try {
+          //Save raw data to file
+          String fname = "capture#"+picNum+"_"+day()+month()+year()+".jpg";
+          saveBytes("data/capture/"+fname, data);
+          // Open saved picture for local display
+          img = loadImage("/data/capture/"+fname);
+          picNum++;
+        }
+        catch(RuntimeException e) {
+          println(e.getMessage());
+        }
+        break;
+    }
+  
+    
   }
 }
 
@@ -800,7 +818,7 @@ void serialEvent(Serial myPort) {
       // Log 
       print("Message body received, bytes: ");
       for (int i = 0; i < dataSize; i++) {
-        print(Byte.toString(data[i]) + ",");
+        print(Integer.toString(Byte.toUnsignedInt(data[i])) + ",");
       }
       println();
       
