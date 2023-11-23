@@ -51,7 +51,8 @@
 // float temperature;
 
 
-// led and peltier
+// led, temperature, peltier, motors
+int pacemaker = 2000;
 int led_pin = 6;
 int pelt_pin = 3;
 int samples[ntc_no];
@@ -146,7 +147,7 @@ void loop() {
   serialEvent();
 
 
-  if (millis() == t + 5000) {
+  if (millis() == t + pacemaker) {
     Serial.print("Time: ");
     Serial.println(millis());  // prints time since program started
     ntc(1023);                 //1023 for 5V, 675 for 3.3V
@@ -157,7 +158,7 @@ void loop() {
       }
   }
 
-  if (millis() > t + 5000) {
+  if (millis() > t + pacemaker) {
     Serial.println("timing error");
     t = millis();
   }
