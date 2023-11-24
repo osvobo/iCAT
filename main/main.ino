@@ -91,7 +91,7 @@ void setup() {
   stepper2.setMaxSpeed(10000);
   stepper2.setAcceleration(500);
   pinMode(EN, OUTPUT);
-  digitalWrite(EN, LOW);
+  digitalWrite(EN, HIGH);
   pinMode(IN, INPUT);
   digitalWrite(IN, LOW);
 
@@ -146,7 +146,7 @@ void loop() {
   serialEvent();
 
 
-  if (millis() == t + 5000) {
+  if (millis() == t + 1000) {
     Serial.print("Time: ");
     Serial.println(millis());  // prints time since program started
     ntc(1023);                 //1023 for 5V, 675 for 3.3V
@@ -157,7 +157,7 @@ void loop() {
       }
   }
 
-  if (millis() > t + 5000) {
+  if (millis() > t + 1000) {
     Serial.println("timing error");
     t = millis();
   }
