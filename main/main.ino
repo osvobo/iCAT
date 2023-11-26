@@ -48,7 +48,7 @@
 // int motor1_temp = 0;
 // unsigned long t;
 // float temperature;
-int pacemaker = 2000;
+int pacemaker = 5000;
 int led_pin = 6;
 int pelt_pin = 3;
 int samples[ntc_no];
@@ -125,7 +125,7 @@ void setup() {
   uint8_t vid, pid;
   uint8_t temp;
   Wire.begin();
-  Serial.begin(57600);
+  Serial.begin(115200);
   // Serial.begin(150000);
 
   SendMessage("UNO is connected");
@@ -136,6 +136,7 @@ void setup() {
   stepper1.setAcceleration(500);
   stepper2.setMaxSpeed(10000);
   stepper2.setAcceleration(500);
+  pinMode(EN, OUTPUT);
   digitalWrite(EN, HIGH);
   pinMode(IN, INPUT);
   digitalWrite(IN, LOW);
@@ -286,9 +287,9 @@ void ntc(int scale) {
 
 
 void led(int led_val) {
-  //Serial.println("true led");
-  //Serial.print("Arduino: led ");
-  //Serial.println(led_val);
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: led %d", led_val);
+  SendMessage(logMessage);
   analogWrite(led_pin, led_val);
 }
 
@@ -337,8 +338,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
   myCAM.clear_fifo_flag();  //Clear the capture done flag
   myCAM.start_capture();    //Start capture
 
-  while (!myCAM.get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK))
-    ;
+  while (!myCAM.get_bit(ARDUCHIP_TRIG, CAP_DONE_MASK));
 
   length = myCAM.read_fifo_length();
 
@@ -389,6 +389,7 @@ void myCAMSendToSerial(ArduCAM myCAM) {
 
 void serialEvent() {
   long inputRaw;
+  char logMessage[64];
   if (Serial.available()) {
     inputRaw = Serial.read();
     if ((inputRaw >= '0') && (inputRaw <= '9')) {
@@ -488,7 +489,8 @@ void serialEvent() {
           //double fps = ((millis() - streamStartTime) / 1000);
           ////Serial.println("Total Time: " + String(fps));
           long int elapsed = millis() - streamStartTime;
-          SendMessage("Total camera processing and sending time: " + elapsed);
+          snprintf(logMessage, sizeof(logMessage), "Total camera processing and sending time: %d", elapsed);
+          SendMessage(logMessage);
         }
       }
 
