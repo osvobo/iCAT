@@ -3,17 +3,31 @@
 #include <ArduCAM.h>
 #include <SPI.h>
 #include "memorysaver.h"
+// #define ntc_pin A0
+// #define ntc_ref 10000
+// #define temp_ref 25
+// #define ntc_no 10
+// #define ntc_beta 3950
+// #define ntc_resistor 10000
+// #define dir1 8
+// #define step1 3
+// #define dir2 4
+// #define step2 5
+// #define EN 7
+// #define IN A1
+// #define motorInterfaceType 1
+
 #define ntc_pin A0
 #define ntc_ref 10000
 #define temp_ref 25
 #define ntc_no 10
 #define ntc_beta 3950
 #define ntc_resistor 10000
-#define dir1 8
-#define step1 3
-#define dir2 4
-#define step2 5
-#define EN 7
+#define dir1 5
+#define step1 2
+#define dir2 7
+#define step2 4
+#define EN 8
 #define IN A1
 #define motorInterfaceType 1
 
@@ -23,8 +37,20 @@
 #define FRAMES_NUM 0x00
 
 // led and peltier
-int led_pin = 9;
-int pelt_pin = 6;
+// int led_pin = 9;
+// int pelt_pin = 6;
+// int samples[ntc_no];
+// int interval = 0;
+// int intV = 0;
+// int int1 = 0;
+// int int2 = 0;
+// int inti = 0;
+// int motor1_temp = 0;
+// unsigned long t;
+// float temperature;
+int pacemaker = 2000;
+int led_pin = 6;
+int pelt_pin = 3;
 int samples[ntc_no];
 int interval = 0;
 int intV = 0;
@@ -166,10 +192,10 @@ void setup() {
 void loop() {
   serialEvent();
 
-  if (millis() == t + 2000) {
+  if (millis() == t + pacemaker) {
     //Serial.print("Time: ");
     //Serial.println(millis());  // prints time since program started
-    ////ntc(1023);                 //1023 for 5V, 675 for 3.3V
+    ntc(1023);                 //1023 for 5V, 675 for 3.3V
     t = millis();
     if (temperature > 35) {
       pelt(0);
@@ -177,7 +203,7 @@ void loop() {
       }
   }
 
-  if (millis() > t + 5000) {
+  if (millis() > t + pacemaker) {
     //Serial.println("timing error");
     t = millis();
   }
@@ -226,7 +252,7 @@ void loop() {
     //double fps = ((millis() - streamStartTime) / 1000);
     //Serial.println("fps: " + String(1 / fps));
     long int elapsed = millis() - streamStartTime;
-    //Serial.println("Total camera processing and sending time: " + String(elapsed));
+    SendMessage("Total camera processing and sending time: " + elapsed);
     //Serial.println("continuousValue: " + String(continuous));
   }
 }
@@ -462,7 +488,7 @@ void serialEvent() {
           //double fps = ((millis() - streamStartTime) / 1000);
           ////Serial.println("Total Time: " + String(fps));
           long int elapsed = millis() - streamStartTime;
-          //Serial.println("Total camera processing and sending time: " + String(elapsed));
+          SendMessage("Total camera processing and sending time: " + elapsed);
         }
       }
 
