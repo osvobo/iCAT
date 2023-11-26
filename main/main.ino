@@ -92,7 +92,7 @@ void setup() {
   stepper2.setMaxSpeed(10000);
   stepper2.setAcceleration(500);
   pinMode(EN, OUTPUT);
-  digitalWrite(EN, LOW);
+  digitalWrite(EN, HIGH);
   pinMode(IN, INPUT);
   digitalWrite(IN, LOW);
 
