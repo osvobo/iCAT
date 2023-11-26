@@ -25,7 +25,7 @@ int port = 0;
  
 
 //int baud = 650000;
-  int baud = 57600;
+int baud = 115200;
 //int baud = 500000;
 
 
@@ -627,7 +627,6 @@ void thermostat() {
   }
 }
 
-
 void controlEvent(ControlEvent theEvent) {
 // motor2 reset
  if(theEvent.getController().getName()=="bang1") {
@@ -651,13 +650,11 @@ if(theEvent.getController().getName()=="heating") {
   }
 }
 
-
 //Arducam vertical adjust
   if(theEvent.getController().getName()=="camVertical") {
     valVert = cp5.getController("camVertical").getValue();
     println("camera vertical adjust: ", valVert);
 }
-
 
  
 //ArduCam
@@ -690,7 +687,6 @@ if(theEvent.getController().getName()=="heating") {
     write(0, 0, 2);
   }
 
-
   if(theEvent.isController()) { 
 //println
     //print("control event from : "+theEvent.getController().getName());
@@ -705,18 +701,15 @@ if(theEvent.getController().getName()=="heating") {
       println("Serial index set to: " + theEvent.getController().getValue());
       millisInit = millis();
       println("millisInit: " + millisInit);
-      //delay(2000); 
+      delay(500); 
     }    
   }
 }
-
-  
 
 private static int HEADER_SIZE = 4;
 private static final int MSG_TYPE_TEMPERATURE = 1;
 private static final int MSG_TYPE_IMAGE = 2;
 private static final int MSG_TYPE_MESSAGE = 3;
-
 
 private static boolean headerRead = false;
 private static byte[] header = new byte[HEADER_SIZE];
@@ -728,14 +721,10 @@ void handleMessage(byte[] data) {
    switch (messageType) {
     case MSG_TYPE_TEMPERATURE:
     {
-      
       // Temperature is in 2 bytes, respresenting centicelsius - 2851 = 28.51°C
       int tempCentiCelsius =  Byte.toUnsignedInt(data[0]) | (Byte.toUnsignedInt(data[1]) << 8);
-
       float temp = (float)tempCentiCelsius / 100f;
-      
       println("Temperature: " + temp);
-              
       Slider4.setValue(temp);
       Chart1.push("currentTemp", temp);
       thermostat();
@@ -763,12 +752,9 @@ void handleMessage(byte[] data) {
           println(e.getMessage());
         }
         break;
-    }
-  
-    
+    }    
   }
 }
-
 
 
 void serialEvent(Serial myPort) {
@@ -782,27 +768,21 @@ void serialEvent(Serial myPort) {
         myPort.buffer(HEADER_SIZE);
         return;
       }
-      
       // Read Header
       header = myPort.readBytes(HEADER_SIZE);
       headerRead = true;
-
       for (int i = 0; i < HEADER_SIZE; i++) {
         print(Integer.toString(Byte.toUnsignedInt(header[i])) + ",");
       }
       println();
-
-      
       messageType =  Byte.toUnsignedInt(header[1]) | (Byte.toUnsignedInt(header[0]) << 8);
       dataSize    =  Byte.toUnsignedInt(header[3]) | (Byte.toUnsignedInt(header[2]) << 8);
-  
       println("Header received, type:" + messageType + " dataSize: " + dataSize);
-  
       // Set up the serial line to receive expected amount of bytes
       myPort.buffer(dataSize);
       return;
-    }    
-
+    }
+    
     // Reading body
     else
     {
@@ -810,131 +790,23 @@ void serialEvent(Serial myPort) {
       if (myPort.available() < dataSize) {
         throw new Exception("Not enough bytes to read data:" + myPort.available() + ", expected " + dataSize);
       }
-      
       // Read data
       byte[] data = new byte[dataSize];
       data = myPort.readBytes(dataSize);
-          
       // Log 
       print("Message body received, bytes: ");
       for (int i = 0; i < dataSize; i++) {
         print(Integer.toString(Byte.toUnsignedInt(data[i])) + ",");
       }
       println();
-      
       handleMessage(data);
     }
   }
-
+  
   catch(Exception e) {
     println("Error while reading serial line: " + e.getMessage());
   }
-
   // Cleanup - expecting header again
   myPort.buffer(HEADER_SIZE);
   headerRead = false;
-
-/*
-    
-//    String incoming[];
-//    String myString = myPort.readStringUntil(13); // get myString till line break (ASCII > 13)   
-//    myString = trim(myString);
-//    incoming = split(myString, ',');    
-
-
-String[] incoming = new String[2];
-    //String[] incoming = {};
-incoming[0] = "aaaa";
-incoming[1] = "dasdasd";
-    //String w1 = "jedna";
-    //String w2 = "dva";
-    //String w3 = "tri";
-    //String w0 = "nula";
-    //String w4 = "ctyri";
-    //incoming = append(incoming, w1); 
-    //incoming = append(incoming, w2); 
-    //incoming = append(incoming, w3); 
-    //String joinedIncoming = join(incoming, ","); 
-    //println(joinedIncoming);  
-
-/// what relationship to FifoLength???? how to set up only for neccesary length???
-    byte[] byteBuffer = new byte[2000]; 
-///how to get rid of new lines after "received...."    
-    byte separator = 13; 
-
-
-///this is in progress
-//    byte[] incoming = new byte[1000];
-//    incoming = byteBuffer;
-
-/// following line does not work yet
-//    String in = new String(incoming[0]);
-
-
-    //myPort.readBytes(byteBuffer); 
-    myPort.readBytesUntil(separator, byteBuffer); 
-    String myString = new String(byteBuffer);
-    
-
-///this helps to get rid of empty "received..."
-if (byteBuffer[0] >0) {      
-//    println(byteBuffer);
-    println("myString received: "+myString); //<>//
-    
-    
-//    if (myString != null) { // just if there is data
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("myString received: "+myString);
-      if(myString.indexOf("Temp") >= 0){
-        float temp = float(myString.replaceAll("[^\\d.-]", ""));
-        Slider4.setValue(temp);
-        Chart1.push("currentTemp", temp);
-        thermostat();
-      }
-    }
-    
-/// how to setup that if image, whole current buffer will go here.....
-    if (incoming.length > 1) {
-//      if (incoming[0].equals("FifoLength:")) {
-      if (incoming[0].equals("FifoLength:")) {  
-        //initialize raw data byte array to the size of the picture
-        rawBytes = new byte[int(incoming[1])];
-        println("Picture Size: "+incoming[1]+" bytes");
-      } else if (incoming[0].equals("Image:")) {
-        int x = 0;
-        for (int i = 1; i < incoming.length; i++) {
-          try {
-            //add raw jpeg incoming bytes to byte array
-            rawBytes[x]= (byte)int(incoming[i]);
-            x++;
-          }
-          catch(RuntimeException e) {
-            println(e.getMessage());
-          }
-        }
-        try {
-          //Save raw data to file
-          String fname = "capture#"+picNum+"_"+day()+month()+year()+".jpg";
-          saveBytes("data/capture/"+fname, rawBytes);
-          // Open saved picture for local display
-          img = loadImage("/data/capture/"+fname);
-          picNum++;
-        }
-        catch(RuntimeException e) {
-          println(e.getMessage());
-        }
-        
-      } else if (incoming[0].equals("Ready:")) {
-        myPort.write(0x10);
-        println("Starting Capture");
-      }
-    } else {
-      //println(myString);
-    }
-  }
-  catch (Exception e) {}
-  
-  */
-  
 }   
