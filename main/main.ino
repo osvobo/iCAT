@@ -48,7 +48,9 @@
 // int motor1_temp = 0;
 // unsigned long t;
 // float temperature;
-int pacemaker = 5000;
+
+// led, temperature, peltier, motors
+int pacemaker = 2000;
 int led_pin = 6;
 int pelt_pin = 3;
 int samples[ntc_no];
