@@ -55,6 +55,7 @@ int led_pin = 6;
 int pelt_pin = 3;
 int samples[ntc_no];
 int interval = 0;
+int intervalPin = 0;
 int intV = 0;
 int int1 = 0;
 int int2 = 0;
@@ -63,64 +64,17 @@ int motor1_temp = 0;
 unsigned long t;
 float temperature;
 
-
-// steepers
+// Steepers
 long input = 0;
 AccelStepper stepper1 = AccelStepper(motorInterfaceType, step1, dir1);
 AccelStepper stepper2 = AccelStepper(motorInterfaceType, step2, dir2);
 
-//arducam
+// Arducam
 const int CS1 = 10;  // SPI slave for ArduCam
 bool CAM1_EXIST = false;
 bool continuous = false;
 long int streamStartTime;
 ArduCAM myCAM1(OV5642, CS1);
-
-
-void writeToSerialHeader(uint8_t messageType, uint16_t dataSize) {
-  // Write messageType
-  byte messageTypeBytes[2] = {0x00, messageType};
-  Serial.write(messageTypeBytes, sizeof(messageTypeBytes));
-
-  // Write data size
-  byte dataSizeBytes[2];
-  dataSizeBytes[0] = (dataSize & 0xFF00) >> 8;
-  dataSizeBytes[1] = (dataSize & 0x00FF);
-
-  Serial.write(dataSizeBytes, sizeof(dataSizeBytes));
-}
-
-void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
-  writeToSerialHeader(messageType, dataSize);
-
-  // Write string itself
-  Serial.write(data, dataSize);
-}
-
-#define MSG_TYPE_TEMPERATURE 1
-#define MSG_TYPE_IMAGE 2
-#define MSG_TYPE_MESSAGE 3
-
-
-
-void SendMessage(const char c[]) {
-  writeToSerial(
-    MSG_TYPE_MESSAGE,
-    strlen(c),
-    c
-  );
-}
-
-void SendTemperature(float temp) {
-  uint16_t tempCentiCelsius = (uint16_t) (temp * 100);
-  writeToSerial(
-    MSG_TYPE_TEMPERATURE,
-    2,
-    (const char *) &tempCentiCelsius
-  );
-}
-
-
 
 
 void setup() {
@@ -184,62 +138,59 @@ void setup() {
   myCAM1.OV5642_set_JPEG_size(OV5642_320x240);
   delay(1000);
   myCAM1.clear_fifo_flag();
-
   SendMessage("iCat is ready!");
   t = millis();
-
-  //SendTemperature(18.54);
 }
 
-// line 123, 391
 void loop() {
+  char logMessage[64];
   serialEvent();
 
   if (millis() == t + pacemaker) {
-    //Serial.print("Time: ");
-    //Serial.println(millis());  // prints time since program started
+    snprintf(logMessage, sizeof(logMessage), "Time: %lu", millis()/1000);
+    SendMessage(logMessage);
     ntc(1023);                 //1023 for 5V, 675 for 3.3V
     t = millis();
     if (temperature > 35) {
       pelt(0);
-      //Serial.println("peltier safety shutdown!!!!");
+    SendMessage("peltier safety shutdown!!!!");
       }
   }
 
   if (millis() > t + pacemaker) {
-    //Serial.println("timing error");
+    SendMessage("pacemaker error");
     t = millis();
   }
 
 
-  if (analogRead(IN) > 900 && interval == 1) {
+  intervalPin = analogRead(IN);
+  if (intervalPin > 900 && interval == 1) {
     if (int2 == 0) {
-      //Serial.print("A2 read: ");
-      //Serial.println(analogRead(IN));
-      //Serial.print("Position before int1: ");
-      //Serial.println(intV);
+      snprintf(logMessage, sizeof(logMessage), "A2: %d", intervalPin);
+      SendMessage(logMessage);
+      snprintf(logMessage, sizeof(logMessage), "Position before int1: %d", intV);
+      SendMessage(logMessage);
       intV = intV + int1;
-      //Serial.print("Position after int1: ");
-      //Serial.println(intV);
+      snprintf(logMessage, sizeof(logMessage), "Position after int1: %d", intV);
+      SendMessage(logMessage);
       motor1(intV);
       delay(1000);
     } else {
       int int12[2];
       int12[0] = int1;
       int12[1] = int2;
-      //Serial.print("A2 read: ");
-      //Serial.println(analogRead(IN));
+      snprintf(logMessage, sizeof(logMessage), "A2: %d", intervalPin);
+      SendMessage(logMessage);
+      snprintf(logMessage, sizeof(logMessage), "i: %d", inti);
+      SendMessage(logMessage);
+      snprintf(logMessage, sizeof(logMessage), "int: %d", int12[inti]);
+      SendMessage(logMessage);
 
-      //Serial.print("i: ");
-      //Serial.println(inti);
-      //Serial.print("int: ");
-      //Serial.println(int12[inti]);
-
-      //Serial.print("Position before int: ");
-      //Serial.println(intV);
+      snprintf(logMessage, sizeof(logMessage), "Position before int1: %d", intV);
+      SendMessage(logMessage);
       intV = intV + int12[inti];
-      //Serial.print("Position after int: ");
-      //Serial.println(intV);
+      snprintf(logMessage, sizeof(logMessage), "Position after int1: %d", intV);
+      motor1(intV);
       motor1(intV);
       delay(1000);
       inti++;
@@ -252,14 +203,54 @@ void loop() {
   if (CAM1_EXIST && continuous) {
     streamStartTime = millis();
     myCAMSendToSerial(myCAM1);
-    //double fps = ((millis() - streamStartTime) / 1000);
-    //Serial.println("fps: " + String(1 / fps));
     long int elapsed = millis() - streamStartTime;
-    SendMessage("Total camera processing and sending time: " + elapsed);
-    //Serial.println("continuousValue: " + String(continuous));
+    snprintf(logMessage, sizeof(logMessage), "Camera continuous processing and sending time: %lu", elapsed); //%d
+    SendMessage(logMessage);
   }
 }
 
+void writeToSerialHeader(uint8_t messageType, uint16_t dataSize) {
+  // Write messageType
+  byte messageTypeBytes[2] = {0x00, messageType};
+  Serial.write(messageTypeBytes, sizeof(messageTypeBytes));
+
+  // Write data size
+  byte dataSizeBytes[2];
+  dataSizeBytes[0] = (dataSize & 0xFF00) >> 8;
+  dataSizeBytes[1] = (dataSize & 0x00FF);
+
+  Serial.write(dataSizeBytes, sizeof(dataSizeBytes));
+}
+
+void writeToSerial(uint8_t messageType, uint16_t dataSize, const char data[]) {
+  writeToSerialHeader(messageType, dataSize);
+
+  // Write string itself
+  Serial.write(data, dataSize);
+}
+
+#define MSG_TYPE_TEMPERATURE 1
+#define MSG_TYPE_IMAGE 2
+#define MSG_TYPE_MESSAGE 3
+
+
+
+void SendMessage(const char c[]) {
+  writeToSerial(
+    MSG_TYPE_MESSAGE,
+    strlen(c),
+    c
+  );
+}
+
+void SendTemperature(float temp) {
+  uint16_t tempCentiCelsius = (uint16_t) (temp * 100);
+  writeToSerial(
+    MSG_TYPE_TEMPERATURE,
+    2,
+    (const char *) &tempCentiCelsius
+  );
+}
 
 void ntc(int scale) {
   uint8_t i;
@@ -366,8 +357,6 @@ void myCAMSendToSerial(ArduCAM myCAM) {
 
   while (length > 0)
   {
-    // if (!jpeg_finished) 
-    // {
     temp_last = temp;
     temp = SPI.transfer(0x00);
 
@@ -488,10 +477,8 @@ void serialEvent() {
         if (CAM1_EXIST) {
           streamStartTime = millis();
           myCAMSendToSerial(myCAM1);
-          //double fps = ((millis() - streamStartTime) / 1000);
-          ////Serial.println("Total Time: " + String(fps));
           long int elapsed = millis() - streamStartTime;
-          snprintf(logMessage, sizeof(logMessage), "Total camera processing and sending time: %d", elapsed);
+          snprintf(logMessage, sizeof(logMessage), "Camera processing and sending time: %lu", elapsed);
           SendMessage(logMessage);
         }
       }
