@@ -25,7 +25,8 @@ int port = 0;
  
 
 //int baud = 650000;
-  int baud = 115200;
+int baud = 115200;
+//int baud = 230400;
 //int baud = 500000;
 
 

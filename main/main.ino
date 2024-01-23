@@ -50,7 +50,7 @@
 // float temperature;
 
 // led, temperature, peltier, motors
-int pacemaker = 2000;
+int pacemaker = 4000;
 int led_pin = 6;
 int pelt_pin = 3;
 int samples[ntc_no];
@@ -82,6 +82,7 @@ void setup() {
   uint8_t temp;
   Wire.begin();
   Serial.begin(115200);
+  //Serial.begin(230400);
   // Serial.begin(150000);
 
   SendMessage("UNO is connected");
