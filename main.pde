@@ -574,31 +574,31 @@ void thermostat() {
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("heating OFF");
       peltColor = color(background4);
-      write(1, 0, 3);
+      write(5, 0, 3);
     }
     if(valueDiff >=0 && valueDiff <0.2 ) {
-      println("heat ON! 2");
+      println("heat ON! 5");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("heat ON! 2");
       peltColor = color(60);
-      write(2, 0, 3);
+      write(5, 0, 3);
     }
     if(valueDiff >=0.2 && valueDiff <0.5 ) {
-      println("heat ON! 5");
+      println("heat ON! 10");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("heat ON! 5");
       peltColor = color(60);
-      write(5, 0, 3);
+      write(10, 0, 3);
     }
     if(valueDiff >=0.5 && valueDiff <2 ) {
-      println("heat ON! 10");
+      println("heat ON! 15");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
         output.print("heat ON! 10");
       peltColor = color(120);
-      write(10, 0, 3);
+      write(15, 0, 3);
     }
     if(valueDiff >=2 && valueDiff <4 ) {
       println("heat ON! 20");
