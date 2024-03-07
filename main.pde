@@ -543,8 +543,8 @@ void int2(int val) {
 
 
 void motor2(int val) {
-  if( val <100 - diff) {write(val - 100 + diff, 0, 4);}
-  if( val >100 - diff) {write(val - 100 + diff, 0, 5);}
+  if( val >100 - diff) {write(val - 100 + diff, 0, 4);}
+  if( val <100 - diff) {write(val - 100 + diff, 0, 5);}
   if( val == 100 - diff) {write(val - 100 + diff, 0, 4);}
 } 
 
