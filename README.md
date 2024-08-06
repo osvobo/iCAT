@@ -4,19 +4,15 @@
 "C" - Controlled: iCat offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
 "a" - Axial: iCat's unique capability to rotate specimens along their axial axis sets it apart from conventional light microscopy techniques, allowing researchers to observe dynamic processes and capture detailed time-lapse sequences. <br>
 "t" - Tilt: iCat offers the unique capability of "Controlled Axial Tilt," providing researchers with a 360-degree perspective. This groundbreaking feature empowers researchers to examine specimens in three dimensions, facilitating the exploration of dynamic cellular processes, developmental biology, and beyond. <br>
-
 ![iCat rendered-front](https://github.com/osvobo/iCat/blob/main/support/media/promo/iCat_v2a_2024-Feb-22_02-36-14PM-000_CustomizedView18085180867.png)
-
 <br>
 
 # Abstract:
-In the field of light microscopy, imaging specimens from multiple angles and maintaining controlled temperature conditions are crucial for comprehensive and accurate analysis. To address these challenges, we present iCat, an open-source multifunctional accessory designed to revolutionize light microscopy capabilities. iCat enables the rotation of specimens along their axial axis, incorporates an in-built thermometer and Peltier element for precise temperature control, features an integrated LED light source, and is equipped with a camera. This versatile device, controlled by an Arduino-based electronic circuit and a Processing based graphical user interface (GUI), allows researchers to capture detailed images and videos of both fixed and live specimens, such as C. Elegans, Zebrafish, Drosophila, mouse embryos etc. The iCat accessory, which can be easily 3D printed and assembled using readily available electrical components, serves as a powerful tool for investigating dynamic cellular processes and complex developmental phenomena. <br>
-
-<br>
+In the field of light microscopy, imaging specimens from multiple angles and maintaining controlled temperature conditions are crucial for comprehensive and accurate analysis. To address these challenges, we present iCat, an open-source multifunctional accessory designed to revolutionize light microscopy capabilities. iCat enables the rotation of specimens along their axial axis, incorporates an in-built thermometer and Peltier element for precise temperature control, features an integrated LED light source, and is equipped with a camera. This versatile device, controlled by an Arduino-based electronic circuit and a Processing based graphical user interface (GUI), allows researchers to capture detailed images and videos of both fixed and live specimens, such as C. Elegans, Zebrafish, Drosophila, mouse embryos etc. The iCat accessory, which can be easily 3D printed and assembled using readily available electrical components, serves as a powerful tool for investigating dynamic cellular processes and complex developmental phenomena. <br><br>
 
 # Introduction
 Light microscopy has been an invaluable tool in biological research, enabling the visualization and analysis of various biological specimens with exceptional detail. However, traditional light microscopy techniques have limitations when it comes to imaging specimens from different angles and maintaining precise temperature conditions. These limitations hinder our ability to explore dynamic cellular processes, investigate complex morphological changes, and observe real-time developmental events accurately. ZMINIT RESENI DOTED (LIGHSHEET, VAST, ….) <br>
-To address these limitations and advance the capabilities of light microscopy, we introduce iCat, a novel multifunctional accessory that combines several essential features into a single, open-source device. iCat allows researchers to rotate specimens along their axial axis, regulate the temperature within a desired range, provide ample illumination through an integrated LED light source, and capture images using its built-in camera to better navigate through the specimen. This integrated approach overcomes the challenges associated with traditional light microscopy, offering researchers a versatile tool to explore the intricacies of biological systems. <br>
+To address these limitations and advance the capabilities of light microscopy, we introduce iCat, a novel multifunctional accessory that combines several essential features into a single, open-source device. iCat allows researchers to rotate specimens along their axial axis, regulate the temperature within a desired range, provide ample illumination through an integrated LED light source, and capture images using its built-in camera to better navigate through the specimen. This integrated approach overcomes the challenges associated with traditional light microscopy, offering researchers a versatile tool to explore the intricacies of biological systems.  <br>
 ![iCat-detail](support/media/pics/iCat-30.jpg)
 <br>
 
@@ -24,11 +20,9 @@ To address these limitations and advance the capabilities of light microscopy, w
 ## Rotational Capabilities
 The ability to capture images and videos of a specimen from multiple angles is essential for comprehensive analysis. iCat incorporates a motorized rotation mechanism that enables controlled and precise specimen rotation along its axial axis. Researchers can program the desired rotation parameters through the device's graphical user interface (GUI) and monitor the rotation progress in real-time. The iCat accessory provides unprecedented flexibility in imaging and studying dynamic processes that require specimen repositioning during time-lapse experiments, such as cell migration or morphogenesis. <br>
 ## Temperature Control
-Maintaining a stable and controlled temperature environment is crucial for studying living specimens and preserving the integrity of fixed samples. iCat addresses this requirement through an in-built thermometer and a Peltier element. The thermometer constantly monitors the specimen's temperature, while the Peltier element actively regulates the temperature within a specified range. This temperature control feature ensures optimal imaging conditions and facilitates accurate analysis of temperature-sensitive biological processes, including embryonic development and cellular reactions. <br>
+Maintaining a stable and controlled temperature environment is crucial for studying living specimens. iCat addresses this requirement through an in-built thermometer and a Peltier element. The thermometer constantly monitors the specimen's temperature, while the Peltier element actively regulates the temperature within a specified range. This temperature control feature ensures optimal imaging conditions and facilitates accurate analysis of temperature-sensitive biological processes, including embryonic development. <br>
 ## Illumination and Camera System
-An appropriate and adjustable uniform light source is critical for obtaining images using internal camera. The intensity of the LED can be adjusted via the GUI and minimizes the need for external light sources during specimen rotation using in-built camera. The camera's parameters, such as exposure time and image resolution, can be controlled through the GUI, providing researchers with flexibility and customization options. <br>
-
-<br>
+An appropriate and adjustable uniform light source is critical for obtaining images using the internal camera. The intensity of the LED can be adjusted via the GUI and minimizes the need for further external light sources during specimen rotation using the built-in camera. The GUI can control the image resolution, providing researchers with flexibility in controlling camera speed. <br><br>
 
 # Fabrication and Accessibility
 One of the key advantages of iCat is its open-source nature, which promotes accessibility, customization, and collaborative development. The device can be fabricated using 3D printing technology, ensuring low-cost production and ease of assembly. Additionally, all the electrical components required for iCat can be readily obtained for less than $300, making it feasible for researchers with varying resources and expertise levels to replicate and utilize the device in their laboratories. The control circuit, based on the Arduino platform, is well-documented and can be modified to accommodate specific experimental requirements. <br>
@@ -37,14 +31,10 @@ One of the key advantages of iCat is its open-source nature, which promotes acce
 
 # Applications and Impact
 The multifunctional capabilities of iCat open up new avenues for biological research, particularly in the fields of developmental biology, neurobiology, and cellular imaging. By enabling precise specimen rotation, temperature control, illumination, and imaging, iCat empowers researchers to investigate dynamic processes, observe intricate morphological changes, and capture real-time developmental events. The device has proven particularly effective in the study of model organisms such as C. elegans, Zebrafish, where cell migration, organogenesis, and tissue development necessitate the ability to reposition specimens during time-lapse experiments. <br>
-Furthermore, the open-source nature of iCat fosters collaboration and encourages the scientific community to contribute to its development and enhancement. By sharing the design, software, and documentation, we aim to accelerate scientific progress and provide a versatile tool that can be adapted and customized for specific research needs. <br>
-
-<br>
+Furthermore, the open-source nature of iCat fosters collaboration and encourages the scientific community to contribute to its development and enhancement. By sharing the design, software, and documentation, we aim to accelerate scientific progress and provide a versatile tool that can be adapted and customized for specific research needs. <br><br>
 
 # Conclusion
-iCat represents a significant advancement in light microscopy, addressing the limitations of traditional techniques by offering a multifunctional accessory that combines rotation, temperature control, illumination, and imaging capabilities. The open-source nature of iCat ensures its accessibility, affordability, and adaptability, making it an invaluable tool for researchers in the biological sciences. By providing a platform to investigate dynamic processes and complex developmental phenomena, iCat contributes to our understanding of fundamental biological mechanisms and facilitates discoveries in various fields of study. <br>
-
-<br>
+iCat represents a significant advancement in light microscopy, addressing the limitations of traditional techniques by offering a multifunctional accessory that combines rotation, temperature control, illumination, and imaging capabilities. The open-source nature of iCat ensures its accessibility, affordability, and adaptability, making it an invaluable tool for researchers in the biological sciences. By providing a platform to investigate dynamic processes and complex developmental phenomena, iCat contributes to our understanding of fundamental biological mechanisms and facilitates discoveries in various fields of study. <br><br>
 
 # Methods
 ## Supplies
@@ -137,15 +127,10 @@ To assemble iCat from individual parts, follow these instructions.
 ![alt text](support/media/pics/iCat-38.jpg)
 ![alt text](support/media/pics/iCat-21.jpg)
 
-
-
 10. fghsxgfs
 
 
-
-
 ### Step 3: Programming and usage
-
 1. afsfasfsa
 ![alt text](support/media/pics/iCat-41.jpg)
 ![alt text](support/media/pics/iCat-40.jpg)
@@ -154,8 +139,6 @@ To assemble iCat from individual parts, follow these instructions.
 2. fdgsxhfghj
 ![alt text](support/media/pics/iCat-23.jpg)
 ![alt text](support/media/pics/iCat-24.jpg)
-
-
 
 
 
@@ -170,10 +153,7 @@ Solder ground and input signal wires to the Trigger out power jack. Connect posi
 Insert M4 nuts at the bottom of the stage.
 Attach 20 teeth pulley to the NEMA motor and both motors with their adapters using M4 screws. Add cover for camera wiring to steeper rotation motor.
 Assemble the camera, camera adapter, spacers, and belt.
-
 Connect the male power jack to the Peltier element.
-
-
 
 # THIS REPOSITORY IS UNDER CONSTRUCTION 
 ![image](https://github.com/osvobo/iCat/assets/68607250/d3a2ea69-4e26-4ef7-bf7c-908aaa448af7)
