@@ -81,12 +81,12 @@ One of the key advantages of iCat is its open-source nature, which promotes acce
 1x Crimping Tools SN-58B + 4 jaws
 1x Screwdriver Set
 
-A complete list of all components is in the sheet [components](https://github.com/osvobo/iCat/blob/main/support/support.xlsx).
+A complete list of all components is in the sheet [components](support/support.xlsx).
 
 ## Build instructions
 Step 1: 3D printing
 
-Most of the 3D-printed parts need to be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first bottom layers in order to be able to use the transmitted light. Otherwise, it is recommended to use black filament to reduce light reflections. The individual stl and 3mf files for all necessary parts as well as the complete Fusion360 project is [here](https://github.com/osvobo/iCat/blob/main/support/3d).
+Most of the 3D-printed parts need to be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first bottom layers in order to be able to use the transmitted light. Otherwise, it is recommended to use black filament to reduce light reflections. The individual stl and 3mf files for all necessary parts as well as the complete Fusion360 project is [here](support/3d).
 
 
 Step 2: Parts That Need To Be Preassembled
