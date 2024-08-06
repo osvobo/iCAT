@@ -82,14 +82,22 @@ One of the key advantages of iCat is its open-source nature, which promotes acce
 1x Screwdriver Set
 
 A complete list of all components is in the sheet [components](support/support.xlsx).
+![alt text](support/media/pics/iCat-2.jpg)
 
-## Build instructions
-Step 1: 3D printing
 
+## Instructions
+### Step 1: 3D printing
 Most of the 3D-printed parts need to be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first bottom layers in order to be able to use the transmitted light. Otherwise, it is recommended to use black filament to reduce light reflections. The individual stl and 3mf files for all necessary parts as well as the complete Fusion360 project is [here](support/3d).
 
+### Step 2: Assembly
 
-Step 2: Parts That Need To Be Preassembled
+
+### Step 3: Programming and usage
+
+
+
+
+Parts That Need To Be Preassembled
 Insert the LED strip inside the stage tunnel and face the strip upwards. Be careful not to damage the top layer of the stage as it might be fragile.
 Solder wires to the LED strip.
 Assemble power wires and solder them to the Peltier element power jack.
@@ -105,7 +113,4 @@ Connect the male power jack to the Peltier element.
 
 
 # THIS REPOSITORY IS UNDER CONSTRUCTION 
-
 ![image](https://github.com/osvobo/iCat/assets/68607250/d3a2ea69-4e26-4ef7-bf7c-908aaa448af7)
-
-
