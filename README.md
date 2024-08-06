@@ -9,7 +9,7 @@
 
 
 
-![components](https://github.com/osvobo/iCat/blob/main/support/support.xlsx)
+[components](https://github.com/osvobo/iCat/blob/main/support/support.xlsx)
 
 
 
