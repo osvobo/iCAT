@@ -17,7 +17,7 @@ In the field of light microscopy, imaging specimens from multiple angles and mai
 # Introduction
 Light microscopy has been an invaluable tool in biological research, enabling the visualization and analysis of various biological specimens with exceptional detail. However, traditional light microscopy techniques have limitations when it comes to imaging specimens from different angles and maintaining precise temperature conditions. These limitations hinder our ability to explore dynamic cellular processes, investigate complex morphological changes, and observe real-time developmental events accurately. ZMINIT RESENI DOTED (LIGHSHEET, VAST, ….) <br>
 To address these limitations and advance the capabilities of light microscopy, we introduce iCat, a novel multifunctional accessory that combines several essential features into a single, open-source device. iCat allows researchers to rotate specimens along their axial axis, regulate the temperature within a desired range, provide ample illumination through an integrated LED light source, and capture images using its built-in camera to better navigate through the specimen. This integrated approach overcomes the challenges associated with traditional light microscopy, offering researchers a versatile tool to explore the intricacies of biological systems. <br>
-
+![iCat-detail](support/media/pics/iCat-30.jpg)
 <br>
 
 # Design and Functionality
@@ -32,7 +32,7 @@ An appropriate and adjustable uniform light source is critical for obtaining ima
 
 # Fabrication and Accessibility
 One of the key advantages of iCat is its open-source nature, which promotes accessibility, customization, and collaborative development. The device can be fabricated using 3D printing technology, ensuring low-cost production and ease of assembly. Additionally, all the electrical components required for iCat can be readily obtained for less than $300, making it feasible for researchers with varying resources and expertise levels to replicate and utilize the device in their laboratories. The control circuit, based on the Arduino platform, is well-documented and can be modified to accommodate specific experimental requirements. <br>
-
+![alt text](support/media/pics/iCat-1.jpg)
 <br>
 
 # Applications and Impact
@@ -107,9 +107,55 @@ All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it i
 
 ### Step 2: Assembly
 To assemble iCat from individual parts, follow these instructions.
-1.	
+1. tdfgs
+![alt text](support/media/pics/iCat-3.jpg)
+![alt text](support/media/pics/iCat-4.jpg)
+![alt text](support/media/pics/iCat-6.jpg)
+2. asdfg
+![alt text](support/media/pics/iCat-5.jpg)
+![alt text](support/media/pics/iCat-7.jpg)
+3. sfd
+![alt text](support/media/pics/iCat-8.jpg)
+![alt text](support/media/pics/iCat-9.jpg)
+4. fgh
+![alt text](support/media/pics/iCat-10.jpg)
+![alt text](support/media/pics/iCat-11.jpg)
+![alt text](support/media/pics/iCat-12.jpg)
+5. fghfgh
+![alt text](support/media/pics/iCat-13.jpg)
+![alt text](support/media/pics/iCat-14.jpg)
+6. fgdshhgf
+![alt text](support/media/pics/iCat-15.jpg)
+![alt text](support/media/pics/iCat-16.jpg)
+![alt text](support/media/pics/iCat-17.jpg)
+7. fdhshf
+![alt text](support/media/pics/iCat-18.jpg)
+![alt text](support/media/pics/iCat-19.jpg)
+8. fhgfdgh
+![alt text](support/media/pics/iCat-36.jpg)
+![alt text](support/media/pics/iCat-37.jpg)
+![alt text](support/media/pics/iCat-38.jpg)
+![alt text](support/media/pics/iCat-21.jpg)
+
+
+
+10. fghsxgfs
+
+
+
 
 ### Step 3: Programming and usage
+
+1. afsfasfsa
+![alt text](support/media/pics/iCat-41.jpg)
+![alt text](support/media/pics/iCat-40.jpg)
+![alt text](support/media/pics/iCat-39.jpg)
+
+2. fdgsxhfghj
+![alt text](support/media/pics/iCat-23.jpg)
+![alt text](support/media/pics/iCat-24.jpg)
+
+
 
 
 
