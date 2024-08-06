@@ -5,9 +5,7 @@
 "t" - Tilt: iCat enables precise tracking of specimens during imaging experiments. By combining controlled axial rotation and advanced imaging capabilities, researchers can accurately track and monitor specific features or regions of interest within the specimen over time.
 
 
-![iCat_v2a_2024-Feb-22_02-36-14PM-000_CustomizedView18085180867](https://github.com/osvobo/iCat/assets/68607250/667971e7-4c3e-4232-8205-385106dd3379)
-
-
+![iCat rendered-front](https://github.com/osvobo/iCat/blob/main/support/promo_v2/iCat_v2a_2024-Feb-22_02-36-14PM-000_CustomizedView18085180867.png)
 
 
 
