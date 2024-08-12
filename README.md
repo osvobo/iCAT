@@ -1,4 +1,4 @@
-# iCat: A Multifunctional Open-Source Accessory for Advanced Light Microscopy test
+# iCat: A Multifunctional Open-Source Accessory for Advanced Light Microscopy
 
 "i" - Innovative: iCat represents an innovative approach to light microscopy, incorporating advanced features like controlled axial rotation and tracking. It introduces a novel solution for imaging and studying biological specimens with enhanced capabilities, pushing the boundaries of traditional microscopy techniques. <br>
 "C" - Controlled: iCat offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
@@ -41,8 +41,8 @@ iCat represents a significant advancement in light microscopy, addressing the li
 One of the key advantages of iCat is its open-source nature, which promotes accessibility, customization, and collaborative development. The device can be fabricated using 3D printing technology, ensuring low-cost production and ease of assembly. All the electrical and mechanical components required for iCat can be readily obtained for less than $300, making it feasible for researchers with varying resources and expertise levels to replicate and utilize the device in their laboratories. <br>
 
 ### Electronics:
-Arduino Uno Rev3, 1x  <br>
-Arducam 5MP Plus OV5642, 1x  <br>
+Arduino Uno Rev3, 1x <br>
+Arducam 5MP Plus OV5642, 1x <br>
 IRF520 Driver Module, 1x <br>
 CNC Shield V3, 1x <br>
 DRV8825 Stepper Motor Driver, 2x <br>
@@ -60,8 +60,8 @@ GT2 Pulley 16 Teeth 5mm bore 6 mm width, 1x <br>
 GT2 Idler 20 Teeth 5mm bore 3 mm width without teeth, 1x <br>
 GT2 Open Timing Belt 2mm Pitch 6mm Width, 1x <br>
 MGN9H 100mm linear guide rail with carriage, 1x <br>
-Stainless Steel DIN912 Hexagon Hex Socket Head Cap Allen Bolt Screw, M3x4, M3x5, M3x6, M3x14, 4x25 <br>
-M3 hex nut, 50x <br>
+Stainless Steel DIN912 Hexagon Hex Socket Head Cap Allen Bolt Screw, M3x4 (22x), M3x5 (4x), M3x6 (8x), M3x14 (1x) <br>
+M3 hex nut, 20x <br>
 Microscope Cover Glass, 24x40mm, 10x <br>
 Lubricant in the syringe, 1x <br>
 Sleeving Cord Protector, 6-12 mm, 1x <br>
@@ -74,13 +74,13 @@ Siliconrubber  tube 1x2 mm, 3 m <br>
 Male Female Plug 12V DC Power Pigtail Cable Jack, 5x <br>
 Female And Male DC Connectors 2.1x5.5mm, 5x <br>
 Crimp Terminals Set Kit, 1x <br>
-Dupont Line M-M + F-M + F-F Jumper Wire 10cm, 20CM, 3x30 <br>
+Dupont Line M-M + F-M + F-F Jumper Wire 10cm, 20CM, 30x <br>
 WAGO Terminals Series Splicing Connector 221-413, 10x <br>
 Mini Solderless Prototype Breadboard, 7x <br>
 
 ### 3D print:
 3D printer, 1x <br>
-3D Printer Filament 1.75mm - transparent, black, 2x1 <br>
+3D Printer Filament 1.75mm - transparent, black, 2x <br>
 
 ### Tools:
 Pipette Pump 10ml, 1x <br>
@@ -96,25 +96,25 @@ A complete list of all components is in the [components](support/support.xlsx) s
 All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. Otherwise, black filament should be used to reduce light reflections. The individual STL and 3MF files as well as the complete Fusion360 project are [here](support/3d). <br>
 
 ### Step 2: Assembly
-To assemble iCat from individual parts, follow these instructions.
-1. Insert nuts into 
+To assemble iCat from individual parts, follow these instructions:
+1. Insert M3 nuts and neodymium magnets into both “base” parts.
 ![alt text](support/media/pics/iCat-3.jpg)
+2. Slide linear guide into “base-1” part and put both “base” parts together. Secure the connection between “base-1” and “base-2” with 2 M3x6 screws. Attach “mounting plate” to the “base” using 2 M3x6 screws and secure the linear guide using 4 M3x5 screws.
 ![alt text](support/media/pics/iCat-4.jpg)
 ![alt text](support/media/pics/iCat-6.jpg)
-2. asdfg
+3. Fix the “motor plates” to NEMA motors using 8 M3x4 screws according to the picture below. Attach GT2 Pulley to the NEMA motor with vertically oriented pin connection. 
 ![alt text](support/media/pics/iCat-5.jpg)
+4. Secure the “motor plates on the “base” using 2x2 M3x4 screws.
 ![alt text](support/media/pics/iCat-7.jpg)
-3. sfd
+5. Insert 3 nuts into the “cargo plate-2” fasten GT2 Idler to it using 1 M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the picture below.
 ![alt text](support/media/pics/iCat-8.jpg)
+6. Secure the “cargo” to the Linear Guide Carriage using 2 M3x4 screws and place the belt ……
 ![alt text](support/media/pics/iCat-9.jpg)
-4. fgh
 ![alt text](support/media/pics/iCat-10.jpg)
 ![alt text](support/media/pics/iCat-11.jpg)
 ![alt text](support/media/pics/iCat-12.jpg)
-5. fghfgh
 ![alt text](support/media/pics/iCat-13.jpg)
 ![alt text](support/media/pics/iCat-14.jpg)
-6. fgdshhgf
 ![alt text](support/media/pics/iCat-15.jpg)
 ![alt text](support/media/pics/iCat-16.jpg)
 ![alt text](support/media/pics/iCat-17.jpg)
