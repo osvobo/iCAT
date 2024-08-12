@@ -1,4 +1,4 @@
-# iCat: A Multifunctional Open-Source Accessory for Advanced Light Microscopy
+# iCat: A Multifunctional Open-Source Accessory for Advanced Light Microscopy test
 
 "i" - Innovative: iCat represents an innovative approach to light microscopy, incorporating advanced features like controlled axial rotation and tracking. It introduces a novel solution for imaging and studying biological specimens with enhanced capabilities, pushing the boundaries of traditional microscopy techniques. <br>
 "C" - Controlled: iCat offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
