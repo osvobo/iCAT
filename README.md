@@ -71,8 +71,8 @@ FEP tube clear - other sizes, 5 m <br>
 Siliconrubber  tube 1x2 mm, 3 m <br>
 
 ### Wiring:
-Male Female Plug 12V DC Power Pigtail Cable Jack, 5x <br>
-Female And Male DC Connectors 2.1x5.5mm, 5x <br>
+Female Plug 12V DC Power Pigtail Cable Jack, 5x <br>
+Male DC Connectors 2.1x5.5mm, 5x <br>
 Crimp Terminals Set Kit, 1x <br>
 Dupont Line M-M + F-M + F-F Jumper Wire 10cm, 20CM, 30x <br>
 WAGO Terminals Series Splicing Connector 221-413, 10x <br>
@@ -96,38 +96,43 @@ A complete list of all components is in the [components](support/support.xlsx) s
 All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. Otherwise, black filament should be used to reduce light reflections. The individual STL and 3MF files as well as the complete Fusion360 project are [here](support/3d). <br>
 
 ### Step 2: Assembly
-To assemble iCat from individual parts, follow these instructions:
-1. Insert M3 nuts and neodymium magnets into both “base” parts.
+To assemble iCat from individual parts, follow these instructions below, the [pinout sheet](support/support.xlsx) and the provided wiring diagram:
+![alt text](support/fritzing/iCat_v2.png)
+1. Insert all M3 nuts and four neodymium magnets into both “base” parts.
 ![alt text](support/media/pics/iCat-3.jpg)
-2. Slide linear guide into “base-1” part and put both “base” parts together. Secure the connection between “base-1” and “base-2” with 2 M3x6 screws. Attach “mounting plate” to the “base” using 2 M3x6 screws and secure the linear guide using 4 M3x5 screws.
+2. Slide the linear guide into the “base-1”, put both “base” parts together, and secure the connection between them with two M3x6 screws. Attach the “mounting plate” to the it using two M3x6 screws and secure the linear guide using four M3x5 screws.
 ![alt text](support/media/pics/iCat-4.jpg)
 ![alt text](support/media/pics/iCat-6.jpg)
-3. Fix the “motor plates” to NEMA motors using 8 M3x4 screws according to the picture below. Attach GT2 Pulley to the NEMA motor with vertically oriented pin connection. 
+3. Fix the “motor plates” to NEMA motors using eighth M3x4 screws according to the picture below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically.
 ![alt text](support/media/pics/iCat-5.jpg)
-4. Secure the “motor plates on the “base” using 2x2 M3x4 screws.
+4. Secure the “motor plates” on the “base” using M3x4 screws.
 ![alt text](support/media/pics/iCat-7.jpg)
-5. Insert 3 nuts into the “cargo plate-2” fasten GT2 Idler to it using 1 M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the picture below.
+5. Insert three M3 nuts into the “cargo plate-2” and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the picture below.
 ![alt text](support/media/pics/iCat-8.jpg)
-6. Secure the “cargo” to the Linear Guide Carriage using 2 M3x4 screws and place the belt ……
+6. Secure the “cargo” to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the “cargo plate-2” to the “cargo plate-1” using prepared screws. Gently tighten these screws, do not overtighten these screws, otherwise the “base” will bend.
 ![alt text](support/media/pics/iCat-9.jpg)
+7. Insert M3x6 screws into Arduino Uno and attach the CNC Shield to it. To adjust micro-stepping (1/16 step), set up the M2 pin HIGH by connecting the black jumper wire to the CNC Shield as shown in the picture below (red circle and arrow). Plug the DRV8825 Stepper Motor Drivers into the shield and connect power supply wires to the CNC Shield and to the WAGO terminals.
 ![alt text](support/media/pics/iCat-10.jpg)
+NOTE: Before proceeding any further, the voltage reference (Vref) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of the currently used steeper motors is 1.8 A. To calculate the Vref, use this equation:
+Vref = Imax/2 =1.8/2 = 0.9V
+In order to set up the Vref, plug in the Arduino UNO with CNC Shield and the DRV8825 Stepper Motor Drivers to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage. <br>
+8. Similar to the previous step, interconnect WAGO terminals and IRF520 Driver Module using additional power wires. Connect the wire end of the first Pigtail Cable Jack to WAGO terminals. The wire end of the other Pigtail Cable Jack needs to be connected to the IRF520 Driver Module. Crimp any wires, if necessary.
 ![alt text](support/media/pics/iCat-11.jpg)
+9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the “base” using previously inserted screws.
 ![alt text](support/media/pics/iCat-12.jpg)
+10. 
 ![alt text](support/media/pics/iCat-13.jpg)
 ![alt text](support/media/pics/iCat-14.jpg)
 ![alt text](support/media/pics/iCat-15.jpg)
 ![alt text](support/media/pics/iCat-16.jpg)
 ![alt text](support/media/pics/iCat-17.jpg)
-7. fdhshf
 ![alt text](support/media/pics/iCat-18.jpg)
 ![alt text](support/media/pics/iCat-19.jpg)
-8. fhgfdgh
 ![alt text](support/media/pics/iCat-36.jpg)
 ![alt text](support/media/pics/iCat-37.jpg)
 ![alt text](support/media/pics/iCat-38.jpg)
 ![alt text](support/media/pics/iCat-21.jpg)
 
-10. fghsxgfs
 
 
 ### Step 3: Programming and usage
