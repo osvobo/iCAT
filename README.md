@@ -71,12 +71,12 @@ FEP tube clear - other sizes, 5 m <br>
 Siliconrubber  tube 1x2 mm, 3 m <br>
 
 ### Wiring:
-Female Plug 12V DC Power Pigtail Cable Jack, 5x <br>
-Male DC Connectors 2.1x5.5mm, 5x <br>
+Female Plug 12V DC Power Pigtail Cable Jack, 2x <br>
+Female and Male DC Connectors 2.1x5.5mm, 1x <br>
 Crimp Terminals Set Kit, 1x <br>
 Dupont Line M-M + F-M + F-F Jumper Wire 10cm, 20CM, 30x <br>
-WAGO Terminals Series Splicing Connector 221-413, 10x <br>
-Mini Solderless Prototype Breadboard, 7x <br>
+WAGO Terminals Series Splicing Connector 221-413, 2x <br>
+Mini Solderless Prototype Breadboard, 3x <br>
 
 ### 3D print:
 3D printer, 1x <br>
@@ -95,55 +95,72 @@ A complete list of all components is in the [components](support/support.xlsx) s
 ### Step 1: 3D printing
 All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. Otherwise, black filament should be used to reduce light reflections. The individual STL and 3MF files as well as the complete Fusion360 project are [here](support/3d). <br>
 
-### Step 2: Assembly
-To assemble iCat from individual parts, follow these instructions below, the [pinout sheet](support/support.xlsx) and the provided wiring diagram:
+### Step 2: iCat assembly
+To assemble iCat from individual parts, follow these instructions below, the [pinout sheet](support/support.xlsx) and the provided wiring diagram: <br>
 ![alt text](support/fritzing/iCat_v2.png)
-1. Insert all M3 nuts and four neodymium magnets into both “base” parts.
+1. Insert all M3 nuts and four neodymium magnets into both “base” parts. <br>
 ![alt text](support/media/pics/iCat-3.jpg)
-2. Slide the linear guide into the “base-1”, put both “base” parts together, and secure the connection between them with two M3x6 screws. Attach the “mounting plate” to the it using two M3x6 screws and secure the linear guide using four M3x5 screws.
+2. Slide the linear guide into the “base-1”, put both “base” parts together, and secure the connection between them with two M3x6 screws. Attach the “mounting plate” to the it using two M3x6 screws and secure the linear guide using four M3x5 screws. <br>
 ![alt text](support/media/pics/iCat-4.jpg)
 ![alt text](support/media/pics/iCat-6.jpg)
-3. Fix the “motor plates” to NEMA motors using eighth M3x4 screws according to the picture below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically.
+3. Fix the “motor plates” to NEMA motors using eighth M3x4 screws according to the image below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically. <br>
 ![alt text](support/media/pics/iCat-5.jpg)
-4. Secure the “motor plates” on the “base” using M3x4 screws.
+4. Secure the “motor plates” on the “base” using M3x4 screws. <br>
 ![alt text](support/media/pics/iCat-7.jpg)
-5. Insert three M3 nuts into the “cargo plate-2” and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the picture below.
+5. Insert three M3 nuts into the “cargo plate-2” and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the image below. <br>
 ![alt text](support/media/pics/iCat-8.jpg)
-6. Secure the “cargo” to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the “cargo plate-2” to the “cargo plate-1” using prepared screws. Gently tighten these screws, do not overtighten these screws, otherwise the “base” will bend.
+6. Secure the “cargo” to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the “cargo plate-2” to the “cargo plate-1” using prepared screws. Gently tighten these screws, do not overtighten these screws, otherwise the “base” will bend. <br>
 ![alt text](support/media/pics/iCat-9.jpg)
-7. Insert M3x6 screws into Arduino Uno and attach the CNC Shield to it. To adjust micro-stepping (1/16 step), set up the M2 pin HIGH by connecting the black jumper wire to the CNC Shield as shown in the picture below (red circle and arrow). Plug the DRV8825 Stepper Motor Drivers into the shield and connect power supply wires to the CNC Shield and to the WAGO terminals.
-![alt text](support/media/pics/iCat-10.jpg)
-NOTE: Before proceeding any further, the voltage reference (Vref) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of the currently used steeper motors is 1.8 A. To calculate the Vref, use this equation:
-Vref = Imax/2 =1.8/2 = 0.9V
-In order to set up the Vref, plug in the Arduino UNO with CNC Shield and the DRV8825 Stepper Motor Drivers to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage. <br>
-8. Similar to the previous step, interconnect WAGO terminals and IRF520 Driver Module using additional power wires. Connect the wire end of the first Pigtail Cable Jack to WAGO terminals. The wire end of the other Pigtail Cable Jack needs to be connected to the IRF520 Driver Module. Crimp any wires, if necessary.
+7. Insert the M3x6 screws into the mounting holes of the Arduino Uno and plug the CNC shield onto the Arduino, ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the M2 pin of the CNC Shield HIGH by connecting the black jumper wire as shown in the image below (red circle and arrow). Attach the DRV8825 Stepper Motor Drivers to the CNC Shield and connect the power supply wires to both the shield and the WAGO terminals. <br>
+![alt text](support/media/pics/iCat-10a.jpg)
+*NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of the currently used steeper motors is 1.8 A. To calculate the Vref, use this equation:* <br>
+**V<sub>REF</sub> = I<sub>max</sub>/2** <br>
+**V<sub>REF</sub> = 1.8/2 = 0.9 V** <br>
+*In order to set up the Vref, plug in the Arduino UNO with CNC Shield and the DRV8825 Stepper Motor Drivers to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage.* <br>
+8. Similarly to the previous step, interconnect the WAGO terminals with the IRF520 Driver Module using additional power wires. Next, connect the wire end of the first Pigtail Cable Jack to the WAGO terminals. The wire end of the other Pigtail Cable Jack needs to be connected to the IRF520 Driver Module. If needed, crimp the ends of any wires. <br>
 ![alt text](support/media/pics/iCat-11.jpg)
-9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the “base” using previously inserted screws.
+9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the “base” using previously inserted screws. <br>
 ![alt text](support/media/pics/iCat-12.jpg)
-10. 
-![alt text](support/media/pics/iCat-13.jpg)
+10. Install wiring components on three mini breadboards according to the image below. First, plug 10 kOhm resistor into the “thermistor” breadboard. Shorten the resistor leads, if necessary. Plug 10 kOhm thermistor, while one of its leads connects it with the resistor. Connect the Male-Female Dupont wire to it. This will be connected to the analog input (“Abort” pin) on the CNC shield later on. The other Dupont wires need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the “trigger IN” breadboard by plugging a 4.7 kOhm resistor into it and connecting its terminals to the Male DC connector. Dupont wires will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input (“Hold” pin) on the CNC Shield. Third, plug 10 kOhm potentiometer into the last breadboard. Two Dupont wires will be connected to the side and the middle terminals later on, connecting it to PWM digital input (“Step Y” pin of the CNC shield) and to the IRF520 Driver Module signal input. If needed, crimp the ends of any wires. <br>
+![alt text](support/media/pics/iCat-13a.jpg)
+11. Install “potentiometer” breadboard and DC Female pigtail in to the “base” and cover it with the “base adapter”. <br>
 ![alt text](support/media/pics/iCat-14.jpg)
+12. Install “trigger IN” breadboard and fit Male DC connector in the “base adapter”. <br>
 ![alt text](support/media/pics/iCat-15.jpg)
+13. Install the IRF520 Driver Module and plug its Dupont wires (ground, 5 V). Plug the signal input as described in step 10. Fit Male DC connector connected to IRF520 Module in the upper right corner of the “base”. Secure the potentiometer by its nut and attach the “knob” to it. <br>
 ![alt text](support/media/pics/iCat-16.jpg)
+14. Install “thermistor” breadboard in the “base”. Connect its Dupont wires from all breadboards as described in step 10. Connect LED to 5 V, ground, and digital output (“Dir Y” pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the “lid”. <br>
 ![alt text](support/media/pics/iCat-17.jpg)
-![alt text](support/media/pics/iCat-18.jpg)
+![alt text](support/media/pics/iCat-18a.jpg)
+*NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the CNC Shield to connect the IRF520 Driver Module and the thermistor.* <br>
+15. Attach the “lid” to the “base” and attach Arducam to the “cargo” using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
 ![alt text](support/media/pics/iCat-19.jpg)
+<br>
+### Step 3: Chamber assembly
+To install the “cover” on the sample “chamber”, follow these steps: <br>
+1. Apply grease around the perimeter of the “chamber” window.
 ![alt text](support/media/pics/iCat-36.jpg)
+2. Gently place the Microscope Cover Glass onto the applied grease. Ensure that the grease spreads evenly under the coverslip and that it is centered.
 ![alt text](support/media/pics/iCat-37.jpg)
+3. Secure the attached cover glass with eight M3x4 screws, and tighten the screws gently.
 ![alt text](support/media/pics/iCat-38.jpg)
+4. Slide the Peltier element to the back of the chamber and connect it to the female DC connector on the side of the “base”.
 ![alt text](support/media/pics/iCat-21.jpg)
-
-
-
-### Step 3: Programming and usage
+<br>
+### Step 4: Programming and usage
 1. afsfasfsa
+<br>
+
+2. afsfasfsa
 ![alt text](support/media/pics/iCat-41.jpg)
 ![alt text](support/media/pics/iCat-40.jpg)
 ![alt text](support/media/pics/iCat-39.jpg)
+<br>
 
-2. fdgsxhfghj
+3. fdgsxhfghj
 ![alt text](support/media/pics/iCat-23.jpg)
 ![alt text](support/media/pics/iCat-24.jpg)
+<br>
 
 
 
@@ -159,6 +176,3 @@ Insert M4 nuts at the bottom of the stage.
 Attach 20 teeth pulley to the NEMA motor and both motors with their adapters using M4 screws. Add cover for camera wiring to steeper rotation motor.
 Assemble the camera, camera adapter, spacers, and belt.
 Connect the male power jack to the Peltier element.
-
-# THIS REPOSITORY IS UNDER CONSTRUCTION 
-![image](https://github.com/osvobo/iCat/assets/68607250/d3a2ea69-4e26-4ef7-bf7c-908aaa448af7)
