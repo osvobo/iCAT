@@ -121,20 +121,21 @@ To assemble iCat from individual parts, follow these instructions below, the [pi
 ![alt text](support/media/pics/iCat-11.jpg)
 9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the “base” using previously inserted screws. <br>
 ![alt text](support/media/pics/iCat-12.jpg)
-10. Install wiring components on three mini breadboards according to the image below. First, plug 10 kOhm resistor into the “thermistor” breadboard. Shorten the resistor leads, if necessary. Plug 10 kOhm thermistor, while one of its leads connects it with the resistor. Connect the Male-Female Dupont wire to it. This will be connected to the analog input (“Abort” pin) on the CNC shield later on. The other Dupont wires need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the “trigger IN” breadboard by plugging a 4.7 kOhm resistor into it and connecting its terminals to the Male DC connector. Dupont wires will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input (“Hold” pin) on the CNC Shield. Third, plug 10 kOhm potentiometer into the last breadboard. Two Dupont wires will be connected to the side and the middle terminals later on, connecting it to PWM digital input (“Step Y” pin of the CNC shield) and to the IRF520 Driver Module signal input. If needed, crimp the ends of any wires. <br>
+10. Install wiring components on three mini breadboards according to the image below. First, plug 10 kOhm resistor into the “Thermistor” breadboard. Shorten the resistor leads, if necessary. Plug 10 kOhm thermistor, while one of its leads connects it with the resistor. Connect the Male-Female Dupont wire to it. This will be connected to the analog input (“Abort” pin) on the CNC shield later on. The other Dupont wires need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the “Trigger IN” breadboard by plugging a 4.7 kOhm resistor into it and connecting its terminals to the Male DC connector. Dupont wires will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input (“Hold” pin) on the CNC Shield. Third, plug 10 kOhm potentiometer into the last breadboard. Two Dupont wires will be connected to the side and the middle terminals later on, connecting it to PWM digital input (“Step Y” pin of the CNC shield) and to the IRF520 Driver Module signal input. If needed, crimp the ends of any wires. <br>
 ![alt text](support/media/pics/iCat-13a.jpg)
-11. Install “potentiometer” breadboard and DC Female pigtail in to the “base” and cover it with the “base adapter”. <br>
+11. Install the “Potentiometer” breadboard and DC Female pigtail in to the “base” and cover it with the “base adapter”. <br>
 ![alt text](support/media/pics/iCat-14.jpg)
-12. Install “trigger IN” breadboard and fit Male DC connector in the “base adapter”. <br>
+12. Install the “Trigger IN” breadboard and fit Male DC connector in the “base adapter”. <br>
 ![alt text](support/media/pics/iCat-15.jpg)
 13. Install the IRF520 Driver Module and plug its Dupont wires (ground, 5 V). Plug the signal input as described in step 10. Fit Male DC connector connected to IRF520 Module in the upper right corner of the “base”. Secure the potentiometer by its nut and attach the “knob” to it. <br>
 ![alt text](support/media/pics/iCat-16.jpg)
-14. Install “thermistor” breadboard in the “base”. Connect its Dupont wires from all breadboards as described in step 10. Connect LED to 5 V, ground, and digital output (“Dir Y” pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the “lid”. <br>
+14. Install the “Thermistor” breadboard in the “base”. Connect Dupont wires of all the breadboards as described in step 10. Connect LED to 5 V, ground, and digital output (“Dir Y” pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the “lid”. <br>
 ![alt text](support/media/pics/iCat-17.jpg)
 ![alt text](support/media/pics/iCat-18a.jpg)
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the CNC Shield to connect the IRF520 Driver Module and the thermistor.* <br>
 15. Attach the “lid” to the “base” and attach Arducam to the “cargo” using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
 ![alt text](support/media/pics/iCat-19.jpg)
+![alt text](support/media/pics/iCat-20a.jpg)
 <br>
 
 ### Part 3: Chamber assembly
@@ -145,9 +146,9 @@ To install the “cover” on the sample “chamber”, follow these steps: <br>
 ![alt text](support/media/pics/iCat-37.jpg)
 3. Secure the attached cover glass with eight M3x4 screws, and tighten the screws gently.
 ![alt text](support/media/pics/iCat-38.jpg)
-4. Slide the Peltier element to the back of the chamber and connect it to the female DC connector on the side of the “base”.
+4. Slide the Peltier element to the back of the chamber and connect it to the female DC connector on the side of the “base”. All iCat connectors are depicted below.
 ![alt text](support/media/pics/iCat-21.jpg)
-![alt text](support/media/pics/iCat-20.jpg)
+![alt text](support/media/pics/iCat-20a.jpg)
 <br>
 
 ### Step 4: Programming and usage
@@ -164,18 +165,3 @@ To install the “cover” on the sample “chamber”, follow these steps: <br>
 ![alt text](support/media/pics/iCat-23.jpg)
 ![alt text](support/media/pics/iCat-24.jpg)
 <br>
-
-
-
-
-Parts That Need To Be Preassembled
-Insert the LED strip inside the stage tunnel and face the strip upwards. Be careful not to damage the top layer of the stage as it might be fragile.
-Solder wires to the LED strip.
-Assemble power wires and solder them to the Peltier element power jack.
-Solder and attach wires to PWM controllers.
-Solder and connect the main power jack with the main switch.
-Solder ground and input signal wires to the Trigger out power jack. Connect positive and negative terminals of the power jack with a 4.7 kOhm pull-down resistor.
-Insert M4 nuts at the bottom of the stage.
-Attach 20 teeth pulley to the NEMA motor and both motors with their adapters using M4 screws. Add cover for camera wiring to steeper rotation motor.
-Assemble the camera, camera adapter, spacers, and belt.
-Connect the male power jack to the Peltier element.
