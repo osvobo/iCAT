@@ -92,10 +92,10 @@ A complete list of all components is in the [components](support/support.xlsx) s
 ![alt text](support/media/pics/iCat-2.jpg)
 
 ## Instructions
-### Step 1: 3D printing
+### Part 1: 3D printing
 All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. Otherwise, black filament should be used to reduce light reflections. The individual STL and 3MF files as well as the complete Fusion360 project are [here](support/3d). <br>
 
-### Step 2: iCat assembly
+### Part 2: iCat assembly
 To assemble iCat from individual parts, follow these instructions below, the [pinout sheet](support/support.xlsx) and the provided wiring diagram: <br>
 ![alt text](support/fritzing/iCat_v2.png)
 1. Insert all M3 nuts and four neodymium magnets into both “base” parts. <br>
@@ -136,7 +136,8 @@ To assemble iCat from individual parts, follow these instructions below, the [pi
 15. Attach the “lid” to the “base” and attach Arducam to the “cargo” using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
 ![alt text](support/media/pics/iCat-19.jpg)
 <br>
-### Step 3: Chamber assembly
+
+### Part 3: Chamber assembly
 To install the “cover” on the sample “chamber”, follow these steps: <br>
 1. Apply grease around the perimeter of the “chamber” window.
 ![alt text](support/media/pics/iCat-36.jpg)
@@ -146,7 +147,9 @@ To install the “cover” on the sample “chamber”, follow these steps: <br>
 ![alt text](support/media/pics/iCat-38.jpg)
 4. Slide the Peltier element to the back of the chamber and connect it to the female DC connector on the side of the “base”.
 ![alt text](support/media/pics/iCat-21.jpg)
+![alt text](support/media/pics/iCat-20.jpg)
 <br>
+
 ### Step 4: Programming and usage
 1. afsfasfsa
 <br>
