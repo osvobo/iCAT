@@ -1,9 +1,8 @@
 # iCat: A Multifunctional Open-Source Accessory for Advanced Light Microscopy
-
 "i" - Innovative: iCat represents an innovative approach to light microscopy, incorporating advanced features like controlled axial rotation and tracking. It introduces a novel solution for imaging and studying biological specimens with enhanced capabilities, pushing the boundaries of traditional microscopy techniques. <br>
 "C" - Controlled: iCat offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
 "a" - Axial: iCat's unique capability to rotate specimens along their axial axis sets it apart from conventional light microscopy techniques, allowing researchers to observe dynamic processes and capture detailed time-lapse sequences. <br>
-"t" - Tilt: iCat offers the unique capability of "Controlled Axial Tilt," providing researchers with a 360-degree perspective. This groundbreaking feature empowers researchers to examine specimens in three dimensions, facilitating the exploration of dynamic cellular processes, developmental biology, and beyond. <br>
+"t" - Tilt: iCat offers the unique capability of "Controlled Axial Tilt" providing researchers with a 360-degree perspective. This groundbreaking feature empowers researchers to examine specimens in three dimensions, facilitating the exploration of dynamic cellular processes, developmental biology, and beyond. <br>
 ![iCat rendered-front](https://github.com/osvobo/iCat/blob/main/support/media/promo/iCat_v2a_2024-Feb-22_02-36-14PM-000_CustomizedView18085180867.png)
 <br>
 
@@ -68,7 +67,7 @@ Sleeving Cord Protector, 6-12 mm, 1x <br>
 Neodymium Magnet 5mm x 2mm, 8x <br>
 FEP tube clear 0.8 I.D./1.2 O.D., 10-25 m <br>
 FEP tube clear - other sizes, 5 m <br>
-Siliconrubber  tube 1x2 mm, 3 m <br>
+Silicon rubber tube 1x2 mm, 3 m <br>
 
 ### Wiring:
 Female Plug 12V DC Power Pigtail Cable Jack, 2x <br>
@@ -98,18 +97,18 @@ All 3D-printed parts can be printed from PETG or PLA. To print the chamber, it i
 ### Part 2: iCat assembly
 To assemble iCat from individual parts, follow these instructions below, the [pinout sheet](support/support.xlsx) and the provided wiring diagram: <br>
 ![alt text](support/fritzing/iCat_v2.png)
-1. Insert all M3 nuts and four neodymium magnets into both “base” parts. <br>
+1. Insert all M3 nuts and four neodymium magnets into both 'base' parts. <br>
 ![alt text](support/media/pics/iCat-3.jpg)
-2. Slide the linear guide into the “base-1”, put both “base” parts together, and secure the connection between them with two M3x6 screws. Attach the “mounting plate” to the it using two M3x6 screws and secure the linear guide using four M3x5 screws. <br>
+2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' to the it using two M3x6 screws and secure the linear guide using four M3x5 screws. <br>
 ![alt text](support/media/pics/iCat-4.jpg)
 ![alt text](support/media/pics/iCat-6.jpg)
-3. Fix the “motor plates” to NEMA motors using eighth M3x4 screws according to the image below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically. <br>
+3. Fix the 'motor plates' to NEMA motors using eighth M3x4 screws according to the image below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically. <br>
 ![alt text](support/media/pics/iCat-5.jpg)
-4. Secure the “motor plates” on the “base” using M3x4 screws. <br>
+4. Secure the 'motor plates' on the 'base' using M3x4 screws. <br>
 ![alt text](support/media/pics/iCat-7.jpg)
-5. Insert three M3 nuts into the “cargo plate-2” and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the “cargo” according to the image below. <br>
+5. Insert three M3 nuts into the 'cargo plate-2' and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the 'cargo' according to the image below. <br>
 ![alt text](support/media/pics/iCat-8.jpg)
-6. Secure the “cargo” to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the “cargo plate-2” to the “cargo plate-1” using prepared screws. Gently tighten these screws, do not overtighten these screws, otherwise the “base” will bend. <br>
+6. Secure the 'cargo' to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the 'cargo plate-2' to the 'cargo plate-1' using prepared screws. Gently tighten these screws, do not overtighten these screws, otherwise the 'base' will bend. <br>
 ![alt text](support/media/pics/iCat-9.jpg)
 7. Insert the M3x6 screws into the mounting holes of the Arduino Uno and plug the CNC shield onto the Arduino, ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the M2 pin of the CNC Shield HIGH by connecting the black jumper wire as shown in the image below (red circle and arrow). Attach the DRV8825 Stepper Motor Drivers to the CNC Shield and connect the power supply wires to both the shield and the WAGO terminals. <br>
 ![alt text](support/media/pics/iCat-10a.jpg)
@@ -119,49 +118,65 @@ To assemble iCat from individual parts, follow these instructions below, the [pi
 *In order to set up the Vref, plug in the Arduino UNO with CNC Shield and the DRV8825 Stepper Motor Drivers to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage.* <br>
 8. Similarly to the previous step, interconnect the WAGO terminals with the IRF520 Driver Module using additional power wires. Next, connect the wire end of the first Pigtail Cable Jack to the WAGO terminals. The wire end of the other Pigtail Cable Jack needs to be connected to the IRF520 Driver Module. If needed, crimp the ends of any wires. <br>
 ![alt text](support/media/pics/iCat-11.jpg)
-9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the “base” using previously inserted screws. <br>
+9. Attach the Ardunio UNO coupled with the CNC Shield and all the wirings to the 'base' using previously inserted screws. <br>
 ![alt text](support/media/pics/iCat-12.jpg)
-10. Install wiring components on three mini breadboards according to the image below. First, plug 10 kOhm resistor into the “Thermistor” breadboard. Shorten the resistor leads, if necessary. Plug 10 kOhm thermistor, while one of its leads connects it with the resistor. Connect the Male-Female Dupont wire to it. This will be connected to the analog input (“Abort” pin) on the CNC shield later on. The other Dupont wires need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the “Trigger IN” breadboard by plugging a 4.7 kOhm resistor into it and connecting its terminals to the Male DC connector. Dupont wires will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input (“Hold” pin) on the CNC Shield. Third, plug 10 kOhm potentiometer into the last breadboard. Two Dupont wires will be connected to the side and the middle terminals later on, connecting it to PWM digital input (“Step Y” pin of the CNC shield) and to the IRF520 Driver Module signal input. If needed, crimp the ends of any wires. <br>
+10. Install wiring components on three mini breadboards according to the image below. First, plug 10 kOhm resistor into the 'Thermistor' breadboard. Shorten the resistor leads, if necessary. Plug 10 kOhm thermistor, while one of its leads connects it with the resistor. Connect the Male-Female Dupont wire to it. This will be connected to the analog input ('Abort' pin) on the CNC shield later on. The other Dupont wires need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the 'Trigger IN' breadboard by plugging a 4.7 kOhm resistor into it and connecting its terminals to the Male DC connector. Dupont wires will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input ('Hold' pin) on the CNC Shield. Third, plug 10 kOhm potentiometer into the last breadboard. Two Dupont wires will be connected to the side and the middle terminals later on, connecting it to PWM digital input ('Step Y' pin of the CNC shield) and to the IRF520 Driver Module signal input. If needed, crimp the ends of any wires. <br>
 ![alt text](support/media/pics/iCat-13a.jpg)
-11. Install the “Potentiometer” breadboard and DC Female pigtail in to the “base” and cover it with the “base adapter”. <br>
+11. Install the 'Potentiometer' breadboard and DC Female pigtail in to the 'base' and cover it with the 'base adapter'. <br>
 ![alt text](support/media/pics/iCat-14.jpg)
-12. Install the “Trigger IN” breadboard and fit Male DC connector in the “base adapter”. <br>
+12. Install the 'Trigger IN' breadboard and fit Male DC connector in the 'base adapter'. <br>
 ![alt text](support/media/pics/iCat-15.jpg)
-13. Install the IRF520 Driver Module and plug its Dupont wires (ground, 5 V). Plug the signal input as described in step 10. Fit Male DC connector connected to IRF520 Module in the upper right corner of the “base”. Secure the potentiometer by its nut and attach the “knob” to it. <br>
+13. Install the IRF520 Driver Module and plug its Dupont wires (ground, 5 V). Plug the signal input as described in step 10. Fit Male DC connector connected to IRF520 Module in the upper right corner of the 'base'. Secure the potentiometer by its nut and attach the 'knob' to it. <br>
 ![alt text](support/media/pics/iCat-16.jpg)
-14. Install the “Thermistor” breadboard in the “base”. Connect Dupont wires of all the breadboards as described in step 10. Connect LED to 5 V, ground, and digital output (“Dir Y” pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the “lid”. <br>
+14. Install the 'Thermistor' breadboard in the 'base'. Connect Dupont wires of all the breadboards as described in step 10. Connect LED to 5 V, ground, and digital output ('Dir Y' pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. <br>
 ![alt text](support/media/pics/iCat-17.jpg)
 ![alt text](support/media/pics/iCat-18a.jpg)
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the CNC Shield to connect the IRF520 Driver Module and the thermistor.* <br>
-15. Attach the “lid” to the “base” and attach Arducam to the “cargo” using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
+15. Attach the 'lid' to the 'base' and attach Arducam to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
 ![alt text](support/media/pics/iCat-19.jpg)
 ![alt text](support/media/pics/iCat-20a.jpg)
-<br>
+16. Use 'mounting screws' to connect the iCat's 'mounting plate' to the stage of the microscope. <br>
 
 ### Part 3: Chamber assembly
-To install the “cover” on the sample “chamber”, follow these steps: <br>
-1. Apply grease around the perimeter of the “chamber” window.
+To install the 'cover' on the sample 'chamber', follow these steps: <br>
+1. Apply grease around the perimeter of the 'chamber' window.
 ![alt text](support/media/pics/iCat-36.jpg)
 2. Gently place the Microscope Cover Glass onto the applied grease. Ensure that the grease spreads evenly under the coverslip and that it is centered.
 ![alt text](support/media/pics/iCat-37.jpg)
 3. Secure the attached cover glass with eight M3x4 screws, and tighten the screws gently.
 ![alt text](support/media/pics/iCat-38.jpg)
-4. Slide the Peltier element to the back of the chamber and connect it to the female DC connector on the side of the “base”. All iCat connectors are depicted below.
+*NOTE: After the initial assembly, test the chamber by filling it with water and letting it stand overnight. There should be no leaks.* <br>
+4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. All iCat connectors are depicted below.
 ![alt text](support/media/pics/iCat-21.jpg)
 ![alt text](support/media/pics/iCat-20a.jpg)
 <br>
 
-### Step 4: Programming and usage
-1. afsfasfsa
-<br>
+### Part 4: Installation
+1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application]( https://processing.org/download). Alternatively, you can download the [Processing sketch folder](processing/) and run [```iCat.exe```](processing/iCat.exe) file directly, without needing to install Processing.
+*NOTE: If you run the [```iCat.exe```](processing/iCat.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](processing/) does not contain Java.* <br>
+2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
+3. Open the Arduino IDE by opening the [```main.ino```](main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper]( https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM]( https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
+4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
+```#define OV5642_MINI_5MP_PLUS``` <br>
+5. Test the iCat by connecting the Arduino to the PC using USB-B cable, connecting the 12 V main power, the trigger IN, and the Peltier connector. Open the [```main.pde```](main.pde) and click on the arrow in the upper left corner, this will open the Graphical User Interface (GUI) of the iCat. <br>
+6. Select the port to which is the iCat connected. After successful connection, the message will appear in the console: *"iCat is ready"*. <br>
+![alt text](support/media/pics/processing.jpg)
 
-2. afsfasfsa
+### Part 5: Usage
+These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCat and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be used, to image larger samples, use larger FEP tube. In such a case, the chamber needs to be modified. Using the iCat in combination with other upright microscopes should be possible, however this has not been tested. <br>
+1. Cut 9 cm of FEP tube. <br>
+2. Insert FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of FEP tube.
+3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
+3. Attach a borosilicate glass Pasteur pipette to pipette pump and aspirate one zebrafish embryo into the pipette. <br>
+4. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify.
 ![alt text](support/media/pics/iCat-41.jpg)
 ![alt text](support/media/pics/iCat-40.jpg)
+5. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
 ![alt text](support/media/pics/iCat-39.jpg)
+3. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCat and set-up desired temperature. <br>
+![alt text](support/media/pics/iCat-23.jpg)
 <br>
 
-3. fdgsxhfghj
-![alt text](support/media/pics/iCat-23.jpg)
+### Start imaging!
 ![alt text](support/media/pics/iCat-24.jpg)
 <br>
