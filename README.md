@@ -113,7 +113,7 @@ To assemble iCat from individual parts, follow the instructions below.
 6. Secure the 'cargo' to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the 'cargo plate-2' to the 'cargo plate-1' using prepared screws. Do not overtighten these screws, otherwise the 'base' will bend. <br>
 ![alt text](support/media/pics/iCat-9.jpg) <br><br>
 7. Insert the M3x6 screws into the mounting holes of the Arduino Uno and plug the CNC shield onto the Arduino, ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the M2 pin of the CNC Shield HIGH by connecting the black jumper caps, as shown in the image below. Attach the DRV8825 Stepper Motor Drivers to the CNC Shield and connect the power supply wires to both the shield and the WAGO terminals. <br>
-![alt text](support/media/pics/iCat-10a.jpg)
+![alt text](support/media/pics/iCat-10a.jpg) <br>
 *NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used steeper motors is 1.8 A. To calculate the Vref, use this equation:* <br>
 **V<sub>REF</sub> = I<sub>max</sub>/2** <br>
 **V<sub>REF</sub> = 1.8/2 = 0.9 V** <br>
@@ -132,13 +132,13 @@ To assemble iCat from individual parts, follow the instructions below.
 ![alt text](support/media/pics/iCat-16.jpg) <br><br>
 14. Install the 'Thermistor' breadboard in the 'base'. Connect Dupont wires of all the breadboards as described in step 10. Connect LED to 5 V, ground, and digital output ('Dir Y' pin) on the CNC Shield. Plug eight Dupont wires to the Arducam and connect them to the CNC Shield according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. <br>
 ![alt text](support/media/pics/iCat-17.jpg)
-![alt text](support/media/pics/iCat-18a.jpg)
+![alt text](support/media/pics/iCat-18a.jpg) <br>
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the CNC Shield to connect the IRF520 Driver Module and the thermistor.* <br><br>
 15. Attach the 'lid' to the 'base' and attach Arducam to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
-![alt text](support/media/pics/iCat-19.jpg)
-![alt text](support/media/pics/iCat-20a.jpg) <br><br>
+![alt text](support/media/pics/iCat-19.jpg)<br><br>
 16. Use 'mounting screws' to connect the iCat's 'mounting plate' to the stage of the microscope. <br><br>
 >*NOTE: If needed, check the [pinout sheet](support/support.xlsx) and the wiring diagram.*
+*NOTE: I needed, check the [pinout sheet](support/support.xlsx), and the wiring diagram. 
 ![alt text](support/fritzing/iCat_v2.png) <br><br>
 
 ### Part 3: Chamber assembly
@@ -169,18 +169,17 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 ### Part 5: Usage
 These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCat and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be used, to image larger samples, use larger FEP tube. In such a case, the chamber needs to be modified. Using the iCat in combination with other upright microscopes should be possible, however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
-2. Insert FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of FEP tube.
+2. Insert FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
 3. Attach a borosilicate glass Pasteur pipette to pipette pump and aspirate one zebrafish embryo into the pipette. <br>
-4. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify.
+4. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br>
 ![alt text](support/media/pics/iCat-41.jpg)
-![alt text](support/media/pics/iCat-40.jpg)
+![alt text](support/media/pics/iCat-40.jpg) <br><br>
 5. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
-![alt text](support/media/pics/iCat-39.jpg)
+![alt text](support/media/pics/iCat-39.jpg) <br><br>
 3. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCat and set-up desired temperature. <br>
-![alt text](support/media/pics/iCat-23.jpg)
+![alt text](support/media/pics/iCat-23.jpg) <br><br>
 <br>
-
 ### Start imaging!
 ![alt text](support/media/pics/iCat-24.jpg)
-<br>
+<br><br>
