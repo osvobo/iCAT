@@ -37,7 +37,9 @@ iCat represents a significant advancement in light microscopy, addressing the li
 
 # Methods
 ## Supplies
-One of the key advantages of iCat is its open-source nature, which promotes accessibility, customization, and collaborative development. The device can be fabricated using 3D printing technology, ensuring low-cost production and ease of assembly. All the electrical and mechanical components required for iCat can be readily obtained for less than $300, making it feasible for researchers with varying resources and expertise levels to replicate and utilize the device in their laboratories. <br>
+One of the key advantages of iCat is its open-source nature, which promotes accessibility, customization, and collaborative development. The device can be fabricated using 3D printing technology, ensuring low-cost production and easy assembly. All the electrical and mechanical components required for iCat can be readily obtained for less than $300, making it feasible for researchers with varying resources and expertise levels to replicate and utilize the device in their laboratories. For an overview of the required components, see the illustrative image and list below.
+![alt text](support/media/pics/iCat-2.jpg)
+<br>
 
 ### Electronics:
 Arduino Uno Rev3, 1x <br>
@@ -86,9 +88,7 @@ Pipette Pump 10ml, 1x <br>
 Borosilicate Glass Pasteur Pipettes, 1x <br>
 Crimping Tools SN-58B + 4 jaws, 1x <br>
 Screwdriver Set, 1x <br>
-
-A complete list of all components is in the [components](support/support.xlsx) sheet.
-![alt text](support/media/pics/iCat-2.jpg)
+*NOTE: The complete shopping list is in the [components sheet](support/support.xlsx).*
 
 ## Instructions
 ### Part 1: 3D printing
@@ -152,7 +152,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <br>
 
 ### Part 4: Installation
-1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application]( https://processing.org/download). Alternatively, you can download the [Processing sketch folder](processing/) and run [```iCat.exe```](processing/iCat.exe) file directly, without needing to install Processing.
+1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application]( https://processing.org/download). Alternatively, you can download the [Processing sketch folder](processing/) and run [```iCat.exe```](processing/iCat.exe) file directly, without needing to install Processing. <br>
 *NOTE: If you run the [```iCat.exe```](processing/iCat.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](processing/) does not contain Java.* <br>
 2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
 3. Open the Arduino IDE by opening the [```main.ino```](main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper]( https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM]( https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
