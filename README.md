@@ -137,7 +137,8 @@ To assemble iCat from individual parts, follow the instructions below.
 15. Attach the 'lid' to the 'base' and attach Arducam to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. <br>
 ![alt text](support/media/pics/iCat-19.jpg)<br><br>
 16. Use 'mounting screws' to connect the iCat's 'mounting plate' to the stage of the microscope. <br><br>
->*NOTE: If needed, check the [pinout sheet](support/support.xlsx) and the wiring diagram.*
+
+*NOTE: If needed, check the [pinout sheet](support/support.xlsx) and the wiring diagram.*
 *NOTE: I needed, check the [pinout sheet](support/support.xlsx), and the wiring diagram. 
 ![alt text](support/fritzing/iCat_v2.png) <br><br>
 
