@@ -21,6 +21,7 @@ PImage img;
 long picNum = 0;
 int millisInit;
 int port = 0;
+int peltPower = 0;
 
  
 
@@ -569,52 +570,56 @@ void thermostat() {
       output.print("valueDiff: " + valueDiff);
     
     if(valueDiff <0 ) {
-      println("heating OFF");
+      peltPower = 5;
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heating OFF");
+        println("heating OFF");
       peltColor = color(background4);
-      write(5, 0, 3);
+      write(peltPower, 0, 3);
     }
     if(valueDiff >=0 && valueDiff <0.2 ) {
-      println("heat ON! 5");
+      peltPower = 5;
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON! 2");
+        output.print("heat ON!" + peltPower);
       peltColor = color(60);
-      write(5, 0, 3);
+      write(peltPower, 0, 3);
     }
     if(valueDiff >=0.2 && valueDiff <0.5 ) {
+      peltPower = 10;
       println("heat ON! 10");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON! 5");
+        output.print("heat ON!" + peltPower);
       peltColor = color(60);
-      write(10, 0, 3);
+      write(peltPower, 0, 3);
     }
     if(valueDiff >=0.5 && valueDiff <2 ) {
+      peltPower = 15;      
       println("heat ON! 15");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON! 10");
+        output.print("heat ON!" + peltPower);
       peltColor = color(120);
-      write(15, 0, 3);
+      write(peltPower, 0, 3);
     }
     if(valueDiff >=2 && valueDiff <4 ) {
+      peltPower = 20;      
       println("heat ON! 20");
       output.println();
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON! 20");
+        output.print("heat ON!" + peltPower);
       peltColor = color(180);
-      write(20, 0, 3);
+      write(peltPower, 0, 3);
     }
     if(valueDiff >=4 ) {
+      peltPower = 30;
       println("heat ON! 30");
       output.println();      
         output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON! 30");
+        output.print("heat ON!" + peltPower);
       peltColor = color(240);
-      write(30, 0, 3);
+      write(peltPower, 0, 3);
     }
   }
   if(cp5.getController("heating").getValue() == 0) {

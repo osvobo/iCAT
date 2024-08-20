@@ -138,8 +138,7 @@ To assemble iCat from individual parts, follow the instructions below.
 ![alt text](support/media/pics/iCat-19.jpg)<br><br>
 16. Use 'mounting screws' to connect the iCat's 'mounting plate' to the stage of the microscope. <br><br>
 
-*NOTE: If needed, check the [pinout sheet](support/support.xlsx) and the wiring diagram.*
-*NOTE: I needed, check the [pinout sheet](support/support.xlsx), and the wiring diagram. 
+>*NOTE: If needed, check the [pinout sheet](support/support.xlsx), and the wiring diagram. 
 ![alt text](support/fritzing/iCat_v2.png) <br><br>
 
 ### Part 3: Chamber assembly
@@ -152,7 +151,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 ![alt text](support/media/pics/iCat-38.jpg)
 *NOTE: After the initial assembly, test the chamber by filling it with water and letting it stand overnight. There should be no leaks.* <br><br>
 4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. All iCat connectors are depicted below.
-![alt text](support/media/pics/iCat-21.jpg)
+![alt text](support/media/pics/iCat-21a.jpg)
 ![alt text](support/media/pics/iCat-20a.jpg) <br><br>
 
 
@@ -168,19 +167,31 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 ![alt text](support/media/pics/processing.jpg) <br><br>
 
 ### Part 5: Usage
-These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCat and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be used, to image larger samples, use larger FEP tube. In such a case, the chamber needs to be modified. Using the iCat in combination with other upright microscopes should be possible, however this has not been tested. <br>
+These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCat and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the chamber needs to be modified. Using the iCat in combination with other upright microscopes should be possible however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
-2. Insert FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of FEP tube. <br>
+2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
-3. Attach a borosilicate glass Pasteur pipette to pipette pump and aspirate one zebrafish embryo into the pipette. <br>
-4. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br>
+4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one zebrafish embryo into the pipette. <br>
+5. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br>
 ![alt text](support/media/pics/iCat-41.jpg)
 ![alt text](support/media/pics/iCat-40.jpg) <br><br>
-5. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
+6. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
 ![alt text](support/media/pics/iCat-39.jpg) <br><br>
-3. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCat and set-up desired temperature. <br>
-![alt text](support/media/pics/iCat-23.jpg) <br><br>
-<br>
+7. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCat and set up the desired chamber temperature. <br>
+![alt text](support/media/pics/iCat-23.jpg)
+*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the chamber. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by adjusting the Peltier output(*```peltPower```*) *parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.* <br>
+```
+if(valueDiff <0 ) {
+    peltPower = 5;
+    output.println();
+        output.printf("%02d:%02d:%02d   ", hour, min, sec);
+        println("heating OFF");
+    peltColor = color(background4);
+    write(peltPower, 0, 3);
+}
+```
+8. Use intuitive axial rotation wheel to orient your sample along its x-axis. <br>
+
 ### Start imaging!
 ![alt text](support/media/pics/iCat-24.jpg)
 <br><br>
