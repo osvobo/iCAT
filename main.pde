@@ -392,19 +392,19 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
   labelBang5.getStyle().setPaddingTop(5);
   labelBang5.getStyle().setPaddingLeft(-30);  
 
-  Bang6 = cp5.addBang("cam5")
-             .setPosition(375, camH)
-             .setSize(50,50)
-             .setLabel("5")
-             .setFont(font1)
-             .setColorValue(0xffaaaaaa)
-             .setColorLabel(0xffffffff)
-             .setColorForeground(background2)
-             ; 
-  Label labelBang6 = Bang6.getCaptionLabel();
-  labelBang6.align(ControlP5.RIGHT_OUTSIDE, RIGHT);
-  labelBang6.getStyle().setPaddingTop(5);
-  labelBang6.getStyle().setPaddingLeft(-30);  
+  //Bang6 = cp5.addBang("cam5")
+  //           .setPosition(375, camH)
+  //           .setSize(50,50)
+  //           .setLabel("5")
+  //           .setFont(font1)
+  //           .setColorValue(0xffaaaaaa)
+  //           .setColorLabel(0xffffffff)
+  //           .setColorForeground(background2)
+  //           ; 
+  //Label labelBang6 = Bang6.getCaptionLabel();
+  //labelBang6.align(ControlP5.RIGHT_OUTSIDE, RIGHT);
+  //labelBang6.getStyle().setPaddingTop(5);
+  //labelBang6.getStyle().setPaddingLeft(-30);  
   
   Bang7 = cp5.addBang("camS")
              .setPosition(940, camH)
@@ -462,7 +462,6 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
 
 
 void draw() {   
-    
 sec = second();  // Values from 0 - 59
 min = minute();  // Values from 0 - 59
 hour = hour();    // Values from 0 - 23
@@ -707,7 +706,7 @@ if(theEvent.getController().getName()=="heating") {
       println("Serial index set to: " + theEvent.getController().getValue());
       millisInit = millis();
       println("millisInit: " + millisInit);
-      delay(500); 
+      delay(3000); 
     }    
   }
 }
