@@ -150,7 +150,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 3. Secure the attached cover glass with eight M3x4 screws, and tighten the screws gently.
 ![alt text](support/media/pics/iCat-38.jpg)
 *NOTE: After the initial assembly, test the chamber by filling it with water and letting it stand overnight. There should be no leaks.* <br><br>
-4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. All iCat connectors are depicted below.
+4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCat connectors are depicted below.
 ![alt text](support/media/pics/iCat-21a.jpg)
 ![alt text](support/media/pics/iCat-20a.jpg) <br><br>
 
