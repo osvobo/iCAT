@@ -93,7 +93,8 @@ Screwdriver Set, 1x <br>
 All 3D-printed parts can be printed using PETG or PLA filaments. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. For the remaining parts, black filament should be used to reduce light reflections. The individual STL and 3MF files and the complete Fusion360 project are in the [3D folder](support/3d). <br>
 
 ### Part 2: iCat assembly
-To assemble iCat from individual parts, follow the instructions below.
+To assemble iCat from individual parts, follow the instructions below. If needed, see the [pinout sheet](support/support.xlsx), and the wiring diagram. 
+![alt text](support/fritzing/iCat_v2.png) <br><br>
 1. Insert all M3 nuts and four neodymium magnets into both 'base' parts. <br>
 ![alt text](support/media/pics/iCat-3.jpg)
 2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' using two M3x6 screws and secure the linear guide with four M3x5 screws. <br>
@@ -134,8 +135,6 @@ To assemble iCat from individual parts, follow the instructions below.
 ![alt text](support/media/pics/iCat-19.jpg)<br><br>
 16. Use 'mounting screws' to connect the iCat's 'mounting plate' to the stage of the microscope. <br><br>
 
->*NOTE: If needed, check the [pinout sheet](support/support.xlsx), and the wiring diagram. 
-![alt text](support/fritzing/iCat_v2.png) <br><br>
 
 ### Part 3: Chamber assembly
 To install the 'cover' on the sample 'chamber', follow these steps: <br>
@@ -175,7 +174,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 ![alt text](support/media/pics/iCat-39.jpg) <br><br>
 7. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCat and set up the desired chamber temperature. <br>
 ![alt text](support/media/pics/iCat-23.jpg)
-*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the chamber. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by adjusting the Peltier output(*```peltPower```*) *parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.* <br>
+*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the chamber. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
     peltPower = 5;
