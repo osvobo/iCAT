@@ -3,7 +3,7 @@
 "C" - Controlled: iCAT offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
 "a" - Axial: iCAT's unique capability to rotate specimens along their axial axis sets it apart from conventional light microscopy techniques, allowing researchers to observe dynamic processes and capture detailed time-lapse sequences. <br>
 "t" - Tilt: iCAT offers the unique capability of "Controlled Axial Tilt" providing researchers with a 360-degree perspective. This groundbreaking feature empowers researchers to examine specimens in three dimensions, facilitating the exploration of dynamic cellular processes, developmental biology, and beyond. <br>
-![iCAT rendered-front](https://github.com/osvobo/iCAT/blob/main/support/media/promo/iCAT_v2a_2024-Feb-22_02-36-14PM-000_CustomizedView18085180867.png)
+![iCAT rendered-front](support/media/pics/iCATr-2.png)
 <br><br>
 
 
