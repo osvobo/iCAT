@@ -12,7 +12,6 @@ In the field of light microscopy, imaging specimens from multiple angles and mai
 ![iCAT-detail](support/media/iCAT-30.jpg)
 <br><br>
 
-[3D iCAT](support/mesh/mesh.md)
 
 # Design and Functionality
 ## Rotational Capabilities
