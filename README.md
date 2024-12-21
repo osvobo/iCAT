@@ -136,6 +136,15 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 ![alt text](support/media/iCAT-19.jpg)<br><br>
 16. Use 'mounting screws' to connect the iCAT's 'mounting plate' to the stage of the microscope. <br><br>
 
+So far, the iCAT was successfully mounted and used in combination with the following microscopes. <br><br>
+ZEISS Axio Examiner:
+![alt text](support/media/iCAT-23.jpg)
+![alt text](support/media/iCAT-44.jpg)
+<br><br>
+ZEISS Axio Zoom.V16:
+![alt text](support/media/iCAT-42.jpg)
+![alt text](support/media/iCAT-43.jpg)
+
 
 ### Part 3: Chamber assembly
 To install the 'cover' on the sample 'chamber', follow these steps: <br>
@@ -174,7 +183,6 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 6. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
 ![alt text](support/media/iCAT-39.jpg) <br><br>
 7. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCAT and set up the desired chamber temperature. <br>
-![alt text](support/media/iCAT-23.jpg)
 *NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the chamber. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
@@ -186,7 +194,7 @@ if(valueDiff <0 ) {
     write(peltPower, 0, 3);
 }
 ```
-8. Use intuitive axial rotation wheel to orient your sample along its x-axis. <br>
+8. Use intuitive axial rotation wheel to orient your sample along its x-axis. <br><br>
 
 ### Start imaging!
 ![alt text](support/media/iCAT-24.jpg)
