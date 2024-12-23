@@ -41,7 +41,7 @@ def append_to_file(target_path, content):
 
 def main():
     source_file = "README.md"  # Path to the source Markdown file
-    target_file = "./support/instructions-short.md"  # Path to the target Markdown file
+    target_file = "./instructions-short.md"  # Path to the target Markdown file
     chapters_to_extract = [
         "# iCAT: A Multifunctional Open-Source Accessory for Advanced Light Microscopy", 
         "## Supplies"
