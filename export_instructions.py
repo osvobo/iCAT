@@ -40,7 +40,7 @@ def append_to_file(target_path, content):
         #file.write("\n\n")  # Add spacing before the new content
 
 def main():
-    source_file = "README.md"  # Path to the source Markdown file
+    source_file = "./README.md"  # Path to the source Markdown file
     target_file = "./instructions-short.md"  # Path to the target Markdown file
     chapters_to_extract = [
         "# iCAT: A Multifunctional Open-Source Accessory for Advanced Light Microscopy", 
