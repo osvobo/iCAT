@@ -10,7 +10,7 @@ def delete_file(file_path):
     except Exception as e:
         print(f"An error occurred while deleting the file: {e}")
 
-delete_file("./support/instructions-short.md")
+delete_file("./instructions-short.md")
 
 
 
