@@ -1,5 +1,8 @@
 import processing.serial.*;
 import controlP5.*; // import library for knob
+import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
 
 Serial myPort;        // Create serial port object 
 ControlP5 cp5;      // defines the type "cp5" as a variable "type" defined in ControlP5 fo its objects
@@ -27,8 +30,8 @@ int HAlign2 = 110;
 int HAlign3 = 540;
 int HAlign4 = 1200-125;
 int home = 0;
+int recentValue;
 
- 
 
 //int baud = 650000;
 int baud = 115200;
@@ -45,7 +48,7 @@ DropdownList DropList1;
 Toggle Toggle1, Toggle2, Toggle3, Toggle4;
 
 
-//output1
+//output
 int sec = second();  // Values from 0 - 59hheea
 int min = minute();  // Values from 0 - 59
 int hour = hour();    // Values from 0 - 23
@@ -233,7 +236,7 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
                .setPosition(width-500,30) // ditance from L/T
                .setRadius(220)  // for knob
                .setLabel("Rotation [°]")
-               .setScrollSensitivity(0.1/27)
+               .setScrollSensitivity(0.004579)
                .setDragDirection(Knob.HORIZONTAL)
                .setStartAngle(4.74)
                .setConstrained(false)
@@ -265,6 +268,9 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
     }
   }
 });
+last();
+  
+
 
 
 
@@ -616,14 +622,12 @@ void push1() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int1").getValue());
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
-  Knob1.setValue(push);
 }
 
 void push2() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int2").getValue());
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
-  Knob1.setValue(push);
 }
 
 
@@ -855,9 +859,10 @@ void handleMessage(byte[] data) {
         String[] parts = message.split(" "); // Split message into parts
         int output2_val = Integer.parseInt(parts[2]) * -1;
         println("output2_val: "+output2_val); 
+        Knob1.setValue(output2_val);
         
         output2.println();
-          output2.printf("%02d:%02d:%02d   ", hour, min, sec);
+          output2.printf("%02d:%02d:%02d ", hour, min, sec);
           output2.print("Motor1: " + output2_val);    
       }      
       break;
@@ -883,7 +888,6 @@ void handleMessage(byte[] data) {
 
 
 void serialEvent(Serial myPort) {
-
   try {
     // First, set up to receive a header
     if (!headerRead)
@@ -926,11 +930,97 @@ void serialEvent(Serial myPort) {
       handleMessage(data);
     }
   }
-  
   catch(Exception e) {
     println("Error while reading serial line: " + e.getMessage());
   }
   // Cleanup - expecting header again
   myPort.buffer(HEADER_SIZE);
   headerRead = false;
-}   
+}
+
+
+  
+  
+  
+  
+ void last() {
+  
+  String folderPath = dataPath(sketchPath()+"/logs/rotate"); // Replace with the path to your folder
+  String mostRecentEntry;
+
+
+  println();
+  println("XXXXXXXXXXXXXXX");
+  println();
+   
+   
+  
+  // Get the most recent Motor1 value from the latest file
+  recentValue = getMostRecentMotor1Value(folderPath);
+  
+  // Display the result
+  if (recentValue != -1) {
+    println("Most Recent Motor1 Value: " + recentValue);
+    Knob1.setValue(recentValue);
+  } else {
+    println("No Most Recent Motor1 Value found:" + recentValue);
+  }
+    
+  
+  println();
+  println("XXXXXXXXXXXXXXX");
+  println();
+}
+
+int getMostRecentMotor1Value(String folderPath) {
+  // Get the folder and its files
+  File folder = new File(folderPath);
+  if (!folder.exists() || !folder.isDirectory()) {
+    println("Error: Folder does not exist or is not a directory.");
+    return -1; // Error case
+  }
+  
+  // Get the .txt files in the folder
+  File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
+  if (files == null || files.length == 0) {
+    println("No .txt files found in the folder.");
+    return -1; // No files
+  }
+  
+  // Sort files by last modified time (most recent first)
+  Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
+  File latestFile = files[1];
+  println("Most recent file: " + latestFile.getName());
+  
+  // Read the latest file and extract the most recent Motor1 value
+  String[] lines = loadStrings(latestFile);
+  if (lines == null || lines.length == 0) {
+    println("Error: The file is empty.");
+    return 0;
+  }
+  
+  // Find the last Motor1 entry
+  for (int i = lines.length - 1; i >= 0; i--) {
+    String line = lines[i].trim();
+    if (line.contains("Motor1:")) {
+      try {
+        // Extract the value after "Motor1:"
+        String valueStr = line.split("Motor1:")[1].trim();
+        int value = Integer.parseInt(valueStr);
+        return value; // Return the most recent valid value
+      } catch (Exception e) {
+        println("Error parsing line: " + line);
+      }
+    }
+  }
+  
+  // If no valid entry is found
+  println("No valid Motor1 entry found in the file.");
+  return -1;
+  
+}
+
+  
+//fix start pos after start when toucjing the wheel
+//odecist recentValue!!!!!
+//udelat aby otacelo se podle souboru
