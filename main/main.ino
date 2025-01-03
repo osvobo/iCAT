@@ -288,25 +288,31 @@ void led(int led_val) {
 }
 
 void pelt(int pelt_val) {
-  //Serial.println("true pelt");
-  //Serial.print("Arduino: pelt ");
-  //Serial.println(pelt_val);
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: pelt %d", pelt_val);
+  SendMessage(logMessage);
   analogWrite(pelt_pin, pelt_val);
 }
 
 
 void motor1(long motor1_val) {
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: motor1 %d", motor1_val);
+  SendMessage(logMessage);
+
   motor1_val = motor1_val * 16 / 1.8;  //value * 16(microsteepeing when all 3 pins connected) *200 (steps/cycle) / 360 (°)
   digitalWrite(EN, LOW);
   stepper1.moveTo(motor1_val);
   stepper1.runToPosition();
-  //Serial.print("motor1 moved (sent value*16/1.8) to: ");
-  //Serial.println(motor1_val);
   digitalWrite(EN, HIGH);
 }
 
 
 void motor2(long motor2_val) {
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: motor2 %d", motor2_val);
+  SendMessage(logMessage);
+
   motor2_val = motor2_val * 8;
   digitalWrite(EN, LOW);
   stepper2.moveTo(motor2_val);

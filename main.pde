@@ -45,14 +45,14 @@ DropdownList DropList1;
 Toggle Toggle1, Toggle2, Toggle3, Toggle4;
 
 
-//output
+//output1
 int sec = second();  // Values from 0 - 59hheea
 int min = minute();  // Values from 0 - 59
 int hour = hour();    // Values from 0 - 23
 int day = day();  
 int month = month();
 int year = year(); 
-PrintWriter output;
+PrintWriter output1, output2;
 
 
 void setup() {
@@ -75,23 +75,28 @@ void setup() {
   cp5.setFont(font1);
 
 //writer
-output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
+output1 = createWriter("logs/log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
+output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
 
 // serial
   DropList1 = cp5.addDropdownList("myList-DropList1")
           .setPosition(HAlign4-10, 575)
           .setSize(100, 200)
           .setHeight(210)
-          .setItemHeight(40)
-          .setBarHeight(50)
-          .setFont(font1)
+          .setItemHeight(35)
+          .setBarHeight(40)
+          .setFont(font2)
           .setColorBackground(background2)
           .setColorActive(background5)
           ;
   DropList1.getCaptionLabel().set("PORT"); //set PORT before anything is selected
   portName = Serial.list()[port]; //0 as default   
-  myPort = new Serial(this, portName, baud);      
+  myPort = new Serial(this, portName, baud);   
   //myPort.bufferUntil('\n');
+  Label labelDropList1 = DropList1.getCaptionLabel();
+  labelDropList1.align(ControlP5.RIGHT_OUTSIDE, CENTER);
+  labelDropList1.getStyle().setPaddingTop(5);
+  labelDropList1.getStyle().setPaddingLeft(5);
 
 
 //led
@@ -141,7 +146,7 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
   labelBang1.toUpperCase(false);
 
 
-//temp output
+//temp out
   Slider3 = cp5.addSlider("tempOut")
                .setRange(24,32)
                .setValue(0)
@@ -562,24 +567,25 @@ year = year();
   if ( myPort.available() > 0) {
     //println(myPort.readStringUntil('\n')); //read until new input
   } 
-  output.flush();
+  output1.flush();
+  output2.flush();
 } 
 
 
 void write (int val, int append1, int append2) {
   println("sent value: "+val); 
-  output.println();
-    output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("sent value: "+val);
+  output1.println();
+    output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+    output1.print("sent value: "+val);
         String s0 = Integer.toString(val);
         String s1 = Integer.toString(append1);
         String s2 = Integer.toString(append2);
         String s = s0 + s1 + s2;
         int c = Integer.parseInt(s);
   println("sent message: "+c);       
-  output.println();
-    output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("sent message: "+c);
+  output1.println();
+    output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+    output1.print("sent message: "+c);   
   myPort.write(Integer.toString(c)); 
   myPort.write('e');
 }
@@ -614,7 +620,7 @@ void push1() {
 }
 
 void push2() {
-  int push = Math.round(Knob1.getValue()) + int(cp5.getController("int1").getValue());
+  int push = Math.round(Knob1.getValue()) + int(cp5.getController("int2").getValue());
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
   Knob1.setValue(push);
@@ -630,24 +636,16 @@ void setH() {
 void goH() {
   if (cp5.getController("setH").getValue() == 1) {
     println("home is set: " + home);
-    if(home > 0) {
-      write(home, 0, 7);
-    } else if(home < 0) {
-      write(home, 0, 6);
-    }    
+    if( home > 0) {write(home, 0, 7);}
+    if( home < 0) {write(home, 0, 6);}
+    Knob1.setValue(home);
   } 
   else {
     println("home is not set: " + 0);
     write(0, 0, 7);
+    Knob1.setValue(0);
   }
 }
-
-
-//if set home active, remember it, if inactive, h is zero
-
-
-
-
 
 
 void motor2(int val) {
@@ -662,69 +660,69 @@ void thermostat() {
   if(cp5.getController("heating").getValue() == 1) {
     float valueOut = cp5.getController("tempOut").getValue();
     println("valueOut: " + valueOut);
-    output.println();
-      output.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output.print("valueOut: " + valueOut);
+    output1.println();
+      output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+      output1.print("valueOut: " + valueOut);
     float valueIn = cp5.getController("tempIn").getValue();
     println("valueIn: " + valueIn);
-    output.println();
-      output.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output.print("valueIn: " + valueIn);
+    output1.println();
+      output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+      output1.print("valueIn: " + valueIn);
     float valueDiff = valueOut-valueIn;
     println("valueDiff: " + valueDiff);
-    output.println();    
-      output.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output.print("valueDiff: " + valueDiff);
+    output1.println();    
+      output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+      output1.print("valueDiff: " + valueDiff);
     
     if(valueDiff <0 ) {
       peltPower = 5;
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
         println("heating OFF");
       peltColor = color(background4);
       write(peltPower, 0, 3);
     }
     if(valueDiff >=0 && valueDiff <0.2 ) {
       peltPower = 5;
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON!" + peltPower);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat ON!" + peltPower);
       peltColor = color(60);
       write(peltPower, 0, 3);
     }
     if(valueDiff >=0.2 && valueDiff <0.5 ) {
       peltPower = 10;
       println("heat ON! 10");
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON!" + peltPower);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat ON!" + peltPower);
       peltColor = color(60);
       write(peltPower, 0, 3);
     }
     if(valueDiff >=0.5 && valueDiff <2 ) {
       peltPower = 15;      
       println("heat ON! 15");
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON!" + peltPower);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat ON!" + peltPower);
       peltColor = color(120);
       write(peltPower, 0, 3);
     }
     if(valueDiff >=2 && valueDiff <4 ) {
       peltPower = 20;      
       println("heat ON! 20");
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON!" + peltPower);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat ON!" + peltPower);
       peltColor = color(180);
       write(peltPower, 0, 3);
     }
     if(valueDiff >=4 ) {
       peltPower = 30;
       println("heat ON! 30");
-      output.println();      
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heat ON!" + peltPower);
+      output1.println();      
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat ON!" + peltPower);
       peltColor = color(240);
       write(peltPower, 0, 3);
     }
@@ -732,9 +730,9 @@ void thermostat() {
   if(cp5.getController("heating").getValue() == 0) {
     cp5.getController("tempOut").setValue(24);
           println("heating OFF");
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heating OFF");
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heating OFF");
       peltColor = color(0);
       write(0, 0, 3);
   }
@@ -753,10 +751,10 @@ void controlEvent(ControlEvent theEvent) {
 //heating  
 if(theEvent.getController().getName()=="heating") {
   if(cp5.getController("heating").getValue() == 0) {
-      println("heating OFF");
-      output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output.print("heating OFF");
+      println("heating OF");
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heating OFF");
       peltColor = color(0);
       write(0, 0, 3);
       cp5.getController("tempOut").setValue(24);
@@ -840,6 +838,9 @@ void handleMessage(byte[] data) {
       println("Temperature: " + temp);
       Slider4.setValue(temp);
       Chart1.push("currentTemp", temp);
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("Temperature: " + temp);    
       thermostat();
       break;
     }
@@ -848,6 +849,17 @@ void handleMessage(byte[] data) {
     {
       String message = new String(data);
       println(message);
+      
+       //generate log for motor1
+      if (message.startsWith("Arduino: motor1")) {
+        String[] parts = message.split(" "); // Split message into parts
+        int output2_val = Integer.parseInt(parts[2]) * -1;
+        println("output2_val: "+output2_val); 
+        
+        output2.println();
+          output2.printf("%02d:%02d:%02d   ", hour, min, sec);
+          output2.print("Motor1: " + output2_val);    
+      }      
       break;
     }
     
@@ -873,7 +885,6 @@ void handleMessage(byte[] data) {
 void serialEvent(Serial myPort) {
 
   try {
-    
     // First, set up to receive a header
     if (!headerRead)
     {
@@ -897,7 +908,6 @@ void serialEvent(Serial myPort) {
       myPort.buffer(dataSize);
       return;
     }
-    
     // Reading body
     else
     {
