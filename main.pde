@@ -78,7 +78,6 @@ void setup() {
 output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
 
 // serial
-  println(Serial.list());
   DropList1 = cp5.addDropdownList("myList-DropList1")
           .setPosition(HAlign4-10, 575)
           .setSize(100, 200)
@@ -371,7 +370,7 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
  Bang10 = cp5.addBang("goH")
              .setPosition(HAlign4+20,515)
              .setSize(70, 40)
-             .setLabel("Home")
+             .setLabel("go H")
              .setFont(font2)
              .setColorForeground(background2)
              .setColorActive(background5)
@@ -381,13 +380,7 @@ output = createWriter("log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec
   labelBang10.align(ControlP5.RIGHT_OUTSIDE, CENTER);
   labelBang10.getStyle().setPaddingTop(0);
   labelBang10.getStyle().setPaddingLeft(-65)
-  ;          
-              
-           
-        
-        
-        
-          
+  ;              
           
           
 //text
@@ -574,19 +567,19 @@ year = year();
 
 
 void write (int val, int append1, int append2) {
-  println("theValue is: "+val); 
+  println("sent value: "+val); 
   output.println();
     output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("theValue is: "+val);
+    output.print("sent value: "+val);
         String s0 = Integer.toString(val);
         String s1 = Integer.toString(append1);
         String s2 = Integer.toString(append2);
         String s = s0 + s1 + s2;
         int c = Integer.parseInt(s);
-  println("sent: "+c);       
+  println("sent message: "+c);       
   output.println();
     output.printf("%02d:%02d:%02d   ", hour, min, sec);
-    output.print("sent: "+c);
+    output.print("sent message: "+c);
   myPort.write(Integer.toString(c)); 
   myPort.write('e');
 }
@@ -635,9 +628,19 @@ void setH() {
 
 
 void goH() {
-  if (cp5.getController("setH").getValue() == 1) {println("home is set: " + home);} 
-  else {println("home is not set: " + 0);}
+  if (cp5.getController("setH").getValue() == 1) {
+    println("home is set: " + home);
+    if(home > 0) {
+      write(home, 0, 7);
+    } else if(home < 0) {
+      write(home, 0, 6);
+    }    
+  } 
+  else {
+    println("home is not set: " + 0);
+    write(0, 0, 7);
   }
+}
 
 
 //if set home active, remember it, if inactive, h is zero
@@ -881,14 +884,16 @@ void serialEvent(Serial myPort) {
       // Read Header
       header = myPort.readBytes(HEADER_SIZE);
       headerRead = true;
-      for (int i = 0; i < HEADER_SIZE; i++) {
-        print(Integer.toString(Byte.toUnsignedInt(header[i])) + ",");
-      }
-      println();
+// Log
+//for (int i = 0; i < HEADER_SIZE; i++) {
+//  print(Integer.toString(Byte.toUnsignedInt(header[i])) + ",");
+//}
+//println();
       messageType =  Byte.toUnsignedInt(header[1]) | (Byte.toUnsignedInt(header[0]) << 8);
       dataSize    =  Byte.toUnsignedInt(header[3]) | (Byte.toUnsignedInt(header[2]) << 8);
-      println("Header received, type:" + messageType + " dataSize: " + dataSize);
-      // Set up the serial line to receive expected amount of bytes
+// Log
+//println("Header received, type:" + messageType + " dataSize: " + dataSize);
+// Set up the serial line to receive expected amount of bytes
       myPort.buffer(dataSize);
       return;
     }
@@ -903,12 +908,11 @@ void serialEvent(Serial myPort) {
       // Read data
       byte[] data = new byte[dataSize];
       data = myPort.readBytes(dataSize);
-      // Log 
-      print("Message body received, bytes: ");
-      for (int i = 0; i < dataSize; i++) {
-        print(Integer.toString(Byte.toUnsignedInt(data[i])) + ",");
-      }
-      println();
+      
+// Log 
+//print("Message body received, bytes: ");
+//for (int i = 0; i < dataSize; i++) { print(Integer.toString(Byte.toUnsignedInt(data[i])) + ","); }
+//println();
       handleMessage(data);
     }
   }
