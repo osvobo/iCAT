@@ -139,7 +139,7 @@ void setup() {
   myCAM1.OV5642_set_JPEG_size(OV5642_320x240);
   delay(1000);
   myCAM1.clear_fifo_flag();
-  SendMessage("iCat is ready!");
+  SendMessage("iCAT is ready!");
   t = millis();
 }
 
@@ -187,10 +187,11 @@ void loop() {
       snprintf(logMessage, sizeof(logMessage), "int: %d", int12[inti]);
       SendMessage(logMessage);
 
-      snprintf(logMessage, sizeof(logMessage), "Position before int1: %d", intV);
+      snprintf(logMessage, sizeof(logMessage), "Position before int: %d", intV);
       SendMessage(logMessage);
       intV = intV + int12[inti];
-      snprintf(logMessage, sizeof(logMessage), "Position after int1: %d", intV);
+      snprintf(logMessage, sizeof(logMessage), "Position after int: %d", intV);
+      SendMessage(logMessage);
       motor1(intV);
       motor1(intV);
       delay(1000);
@@ -200,6 +201,11 @@ void loop() {
       }
     }
   }
+  //else if (interval == 1) {
+  //    snprintf(logMessage, sizeof(logMessage), "A2low: %d", intervalPin);
+  //    SendMessage(logMessage);
+  //}
+
 
   if (CAM1_EXIST && continuous) {
     streamStartTime = millis();

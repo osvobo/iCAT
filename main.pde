@@ -236,7 +236,7 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
                .setPosition(width-500,30) // ditance from L/T
                .setRadius(220)  // for knob
                .setLabel("Rotation [°]")
-               .setScrollSensitivity(0.004579)
+               .setScrollSensitivity(1/(1.350*200))
                .setDragDirection(Knob.HORIZONTAL)
                .setStartAngle(4.74)
                .setConstrained(false)
@@ -256,18 +256,20 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
         case(ControlP5.ACTION_RELEASE): 
         case(ControlP5.ACTION_RELEASE_OUTSIDE): 
         case(ControlP5.ACTION_WHEEL):
-          //println(cp5.getController("motor1").getValue());
-          int val = Math.round(Knob1.getValue());          
-          if(val > 0) {
+          println(cp5.getController("motor1").getValue());
+          int val = Math.round(Knob1.getValue());
+          println(val);
+          if(val >= 0) {
             write(val, 0, 7);
           } else if(val < 0) {
             write(val, 0, 6);
-          } 
+          }
           break;    
-      }
-    }
-  }
-});
+       }
+     }
+   }
+ });
+
 last();
   
 
@@ -396,7 +398,7 @@ last();
           
 //text
   Textlabel1 = cp5.addTextlabel("label1")
-                .setText("iCat")
+                .setText("iCAT")
                 .setPosition(HAlign1,20)
                 .setColorValue(0xffffffff)
                 .setFont(new ControlFont(f1, 60))
@@ -621,13 +623,15 @@ void int2(int val) {
 void push1() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int1").getValue());
   if( push >= 0) {write(push, 0, 7);}
-  if( push < 0) {write(push, 0, 6);} 
+  if( push < 0) {write(push, 0, 6);}
+  Knob1.setValue(push);
 }
 
 void push2() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int2").getValue());
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
+  Knob1.setValue(push);
 }
 
 
@@ -742,7 +746,8 @@ void thermostat() {
   }
 }
 
-void controlEvent(ControlEvent theEvent) {
+
+void controlEvent(ControlEvent theEvent) {  
 // motor2 reset
  if(theEvent.getController().getName()=="bang1") {
     println("MOTOR2 RESET");
@@ -855,12 +860,18 @@ void handleMessage(byte[] data) {
       println(message);
       
        //generate log for motor1
-      if (message.startsWith("Arduino: motor1")) {
+      if (message.startsWith("Position after int")) {
         String[] parts = message.split(" "); // Split message into parts
-        int output2_val = Integer.parseInt(parts[2]) * -1;
+        int output2_val = (Integer.parseInt(parts[3]) * -1);
         println("output2_val: "+output2_val); 
         Knob1.setValue(output2_val);
-        
+        output2.println();
+          output2.printf("%02d:%02d:%02d ", hour, min, sec);
+          output2.print("Motor1: " + output2_val);  
+      }
+      if (message.startsWith("Arduino: motor1")) {
+        String[] parts = message.split(" "); // Split message into parts
+        int output2_val = (Integer.parseInt(parts[2]) * -1);
         output2.println();
           output2.printf("%02d:%02d:%02d ", hour, min, sec);
           output2.print("Motor1: " + output2_val);    
@@ -962,6 +973,8 @@ void serialEvent(Serial myPort) {
   if (recentValue != -1) {
     println("Most Recent Motor1 Value: " + recentValue);
     Knob1.setValue(recentValue);
+    output2.printf("%02d:%02d:%02d ", hour, min, sec);
+    output2.print("Motor1: " + recentValue);    
   } else {
     println("No Most Recent Motor1 Value found:" + recentValue);
   }
@@ -1002,7 +1015,7 @@ int getMostRecentMotor1Value(String folderPath) {
   // Find the last Motor1 entry
   for (int i = lines.length - 1; i >= 0; i--) {
     String line = lines[i].trim();
-    if (line.contains("Motor1:")) {
+    if (line.contains("Motor1")) {
       try {
         // Extract the value after "Motor1:"
         String valueStr = line.split("Motor1:")[1].trim();
