@@ -78,8 +78,8 @@ void setup() {
   cp5.setFont(font1);
 
 //writer
-output1 = createWriter("logs/log/log_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
-output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"+min+"-"+sec+".txt");
+output1 = createWriter("logs/log/log_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec) + ".txt");
+output2 = createWriter("logs/rotate/rotate_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec) + ".txt");
 
 // serial
   DropList1 = cp5.addDropdownList("myList-DropList1")
@@ -259,6 +259,7 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
           println(cp5.getController("motor1").getValue());
           int val = Math.round(Knob1.getValue());
           println(val);
+          val = val - recentValue;
           if(val >= 0) {
             write(val, 0, 7);
           } else if(val < 0) {
@@ -271,10 +272,6 @@ output2 = createWriter("logs/rotate/rotate_"+year+"-"+month+"-"+day+"_"+hour+"-"
  });
 
 last();
-  
-
-
-
 
 
 //Interval
@@ -577,6 +574,7 @@ year = year();
   } 
   output1.flush();
   output2.flush();
+  examineTemp();
 } 
 
 
@@ -610,11 +608,13 @@ void interval(int val) {
 } 
 
 void int1(int val) {
+  val = val - recentValue;
   if( val <0) {write(val, 2, 6);}
   if( val >=0) {write(val, 2, 7);}
 } 
 
 void int2(int val) {
+  val = val - recentValue;
   if( val <0) {write(val, 2, 8);}
   if( val >=0) {write(val, 2, 9);}
 } 
@@ -622,6 +622,7 @@ void int2(int val) {
 
 void push1() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int1").getValue());
+  push = push - recentValue;
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);}
   Knob1.setValue(push);
@@ -629,6 +630,7 @@ void push1() {
 
 void push2() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int2").getValue());
+  push = push - recentValue;
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
   Knob1.setValue(push);
@@ -950,21 +952,12 @@ void serialEvent(Serial myPort) {
 }
 
 
-  
-  
-  
-  
  void last() {
-  
   String folderPath = dataPath(sketchPath()+"/logs/rotate"); // Replace with the path to your folder
-  String mostRecentEntry;
-
 
   println();
   println("XXXXXXXXXXXXXXX");
-  println();
-   
-   
+  println();   
   
   // Get the most recent Motor1 value from the latest file
   recentValue = getMostRecentMotor1Value(folderPath);
@@ -978,12 +971,12 @@ void serialEvent(Serial myPort) {
   } else {
     println("No Most Recent Motor1 Value found:" + recentValue);
   }
-    
   
   println();
   println("XXXXXXXXXXXXXXX");
   println();
 }
+
 
 int getMostRecentMotor1Value(String folderPath) {
   // Get the folder and its files
@@ -995,10 +988,12 @@ int getMostRecentMotor1Value(String folderPath) {
   
   // Get the .txt files in the folder
   File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".txt"));
-  if (files == null || files.length == 0) {
-    println("No .txt files found in the folder.");
+  if (files == null || files.length == 0 || files.length == 1) {
+    println("No previous .txt files found in the folder.");
     return -1; // No files
   }
+  
+  else {
   
   // Sort files by last modified time (most recent first)
   Arrays.sort(files, Comparator.comparingLong(File::lastModified).reversed());
@@ -1011,6 +1006,7 @@ int getMostRecentMotor1Value(String folderPath) {
     println("Error: The file is empty.");
     return 0;
   }
+  
   
   // Find the last Motor1 entry
   for (int i = lines.length - 1; i >= 0; i--) {
@@ -1026,6 +1022,7 @@ int getMostRecentMotor1Value(String folderPath) {
       }
     }
   }
+  }
   
   // If no valid entry is found
   println("No valid Motor1 entry found in the file.");
@@ -1033,7 +1030,58 @@ int getMostRecentMotor1Value(String folderPath) {
   
 }
 
+
+void examineTemp() {
+  File rootFolder = new File(dataPath(sketchPath()+"/logs/temp"));
   
-//fix start pos after start when toucjing the wheel
-//odecist recentValue!!!!!
-//udelat aby otacelo se podle souboru
+  // Ensure the folder exists
+  if (!rootFolder.exists() || !rootFolder.isDirectory()) {
+    println("Root folder does not exist or is not a directory.");
+    return;
+  }
+
+  // List files in the root folder
+  File[] files = rootFolder.listFiles();
+  if (files == null || files.length == 0) {
+    println("No files found in the root folder.");
+    return;
+  }
+
+  // Process the first file in the folder
+  for (File file : files) {
+    if (file.isFile()) { // Skip directories
+      String fileName = file.getName();
+      //println("Found file: " + fileName);
+
+      if(fileName.equals("temp.txt")) {
+        println(fileName + " exists");
+         //Read and print the file content
+        try {
+          String[] lines = loadStrings(file);
+
+          if (match(lines[0], "^\\d+$") != null) {
+            print(fileName + " value:");
+            println(lines[0]);
+            int val = Integer.parseInt(lines[0]); //+ Math.round(Knob1.getValue());
+            Knob1.setValue(val);
+            val = val - recentValue;
+            if( val >= 0) {write(val, 0, 7);}
+            if( val < 0) {write(val, 0, 6);}
+            
+          } else {
+            println("string");
+          }
+
+        } catch (Exception e) {
+          println("Error reading file: " + e.getMessage());
+        }
+
+        // Rename the file
+        String newFileName = "temp_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec); // Specify the new file name
+        println(newFileName);
+        file.renameTo(new File(file.getParent(), newFileName));
+        break;
+      }
+    }
+  }
+}

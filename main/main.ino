@@ -3,19 +3,6 @@
 #include <ArduCAM.h>
 #include <SPI.h>
 #include "memorysaver.h"
-// #define ntc_pin A0
-// #define ntc_ref 10000
-// #define temp_ref 25
-// #define ntc_no 10
-// #define ntc_beta 3950
-// #define ntc_resistor 10000
-// #define dir1 8
-// #define step1 3
-// #define dir2 4
-// #define step2 5
-// #define EN 7
-// #define IN A1
-// #define motorInterfaceType 1
 
 #define ntc_pin A0
 #define ntc_ref 10000
@@ -36,18 +23,6 @@
 #endif
 #define FRAMES_NUM 0x00
 
-// led and peltier
-// int led_pin = 9;
-// int pelt_pin = 6;
-// int samples[ntc_no];
-// int interval = 0;
-// int intV = 0;
-// int int1 = 0;
-// int int2 = 0;
-// int inti = 0;
-// int motor1_temp = 0;
-// unsigned long t;
-// float temperature;
 
 // led, temperature, peltier, motors
 int pacemaker = 4000;
