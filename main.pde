@@ -1039,14 +1039,14 @@ void examineTemp() {
   
   // Ensure the folder exists
   if (!rootFolder.exists() || !rootFolder.isDirectory()) {
-    println("Root folder does not exist or is not a directory.");
+    //println("Root folder does not exist or is not a directory.");
     return;
   }
 
   // List files in the root folder
   File[] files = rootFolder.listFiles();
   if (files == null || files.length == 0) {
-    println("No files found in the root folder.");
+    //println("No files found in the root folder.");
     return;
   }
 
