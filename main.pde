@@ -246,30 +246,29 @@ output2 = createWriter("logs/rotate/rotate_" + String.format("%04d-%02d-%02d_%02
   Label labelKnob1 = Knob1.getCaptionLabel();
   labelKnob1.align(ControlP5.RIGHT_OUTSIDE, CENTER);
   labelKnob1.getStyle().setPaddingTop(-35);
-  labelKnob1.getStyle().setPaddingLeft(-310);
+  labelKnob1.getStyle().setPaddingLeft(-310); 
+  
   
   Knob1.addCallback(new CallbackListener() {          
   public void controlEvent(CallbackEvent theEvent) {
     // Check if the mouse is inside the knob area
-    if (Knob1.isInside()) {
-      switch(theEvent.getAction()) {
-        case(ControlP5.ACTION_RELEASE): 
-        case(ControlP5.ACTION_RELEASE_OUTSIDE): 
-        case(ControlP5.ACTION_WHEEL):
-          println(cp5.getController("motor1").getValue());
-          int val = Math.round(Knob1.getValue());
-          println(val);
-          val = val - recentValue;
-          if(val >= 0) {
-            write(val, 0, 7);
-          } else if(val < 0) {
-            write(val, 0, 6);
-          }
-          break;    
-       }
-     }
-   }
- });
+    int val;
+    int action = theEvent.getAction();
+
+    // Handle only the ACTION_WHEEL event
+    if (action == ControlP5.ACTION_WHEEL ||action ==  ControlP5.ACTION_RELEASE || action == ControlP5.ACTION_RELEASE_OUTSIDE) {
+      println(cp5.getController("motor1").getValue());
+      val = Math.round(Knob1.getValue());
+      println(val);
+      val = val - recentValue;
+      if(val >= 0) {
+        write(val, 0, 7);
+      } else if(val < 0) {
+        write(val, 0, 6);
+      }
+    }
+  }
+});
 
 last();
 
@@ -622,18 +621,19 @@ void int2(int val) {
 
 void push1() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int1").getValue());
+  Knob1.setValue(push);
   push = push - recentValue;
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);}
-  Knob1.setValue(push);
+
 }
 
 void push2() {
   int push = Math.round(Knob1.getValue()) + int(cp5.getController("int2").getValue());
+  Knob1.setValue(push);
   push = push - recentValue;
   if( push >= 0) {write(push, 0, 7);}
   if( push < 0) {write(push, 0, 6);} 
-  Knob1.setValue(push);
 }
 
 
@@ -646,14 +646,17 @@ void setH() {
 void goH() {
   if (cp5.getController("setH").getValue() == 1) {
     println("home is set: " + home);
+    Knob1.setValue(home);
+    home = home - recentValue;
     if( home > 0) {write(home, 0, 7);}
     if( home < 0) {write(home, 0, 6);}
-    Knob1.setValue(home);
   } 
   else {
     println("home is not set: " + 0);
-    write(0, 0, 7);
     Knob1.setValue(0);
+    home = 0 - recentValue;
+    if( home > 0) {write(home, 0, 7);}
+    if( home < 0) {write(home, 0, 6);}
   }
 }
 
@@ -873,7 +876,7 @@ void handleMessage(byte[] data) {
       }
       if (message.startsWith("Arduino: motor1")) {
         String[] parts = message.split(" "); // Split message into parts
-        int output2_val = (Integer.parseInt(parts[2]) * -1);
+        int output2_val = ((Integer.parseInt(parts[2]) - recentValue) * -1);
         output2.println();
           output2.printf("%02d:%02d:%02d ", hour, min, sec);
           output2.print("Motor1: " + output2_val);    
