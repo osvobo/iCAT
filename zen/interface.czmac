@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script>
+  <Context>Zen26</Context>
+  <Version>1.0</Version>
+  <Language>Python</Language>
+  <Text># File       : interface.py
+# Author     : Ondrej Svoboda
+# Date       : 09.01.2025
+# Institution : IMG
+# Based on: https://github.com/zeiss-microscopy/OAD/blob/master/Scripts/Hardware_and_Acquisition/lls7/LLS7_MultiPosition_v1.0.py
+# Use at your own Risk !!!
+# Compatible with ZEN versions 3.6 and higher
+
+
+import time
+import os
+from datetime import datetime
+from System.IO import File, Directory, Path
+version = 1.0
+Zen.Application.MacroEditor.ClearMessages()
+
+
+#imgfolder = Zen.Application.Environment.GetFolderPath(ZenSpecialFolder.ImageAutoSave)
+iCATfolder = 'C:\\Users\\zeiss\\Desktop\\iCAT' #change this to what ever default location
+relative = 'logs\\rotate'
+
+
+# initialize dialog, add components
+Dialog = ZenWindow()
+Dialog.Initialize('iCAT Axial plug-in ' + str(version))
+Dialog.AddTextBox('Positions', '1) Number of Positions to record', 3)
+Dialog.AddFolderBrowser('outfolder', '2) Specify iCAT temp folder:', iCATfolder)
+Dialog.AddLabel('XXXX')
+Dialog.AddCheckbox('check',"print",0)
+
+
+# show dialog
+result = Dialog.Show()
+if result.HasCanceled:
+    print('Macro was canceled by user.')
+    print(OutputFolder)
+    raise SystemExit
+
+
+# dialog values
+P = result.GetValue('Positions')
+iCATfolder = result.GetValue('outfolder')
+
+
+# defs
+def dircheck(basefolder):
+    base_exists = Directory.Exists(basefolder)
+    if base_exists:
+        newdir = createfolder(basefolder, relative)
+        print(('iCATfolder Exists: ', base_exists))
+    if not base_exists:
+        print('folder does not exists: ', basefolder)
+        sys.exit(1) 
+    return
+
+
+def createfolder(basePath, relativePath):
+    newdir = Path.Combine(basePath, relativePath)
+    try:
+        newdir_exists = Directory.Exists(newdir)
+        if not newdir_exists:
+            Directory.CreateDirectory(newdir)
+            print(('Created new directory: ', newdir))
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise  # This was not a "directory exist" error..
+    return newdir
+
+
+def get_newest_log(folder):
+    try:
+        files = Directory.GetFiles(folder)
+        if not files:
+            return None
+        newest_file = max(files, key=os.path.getmtime)
+        return newest_file
+    except Exception as e:
+        print("Error while accessing files: %s" % str(e))
+        return None
+
+
+def get_newest_value(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if not lines:
+                return None
+            last_line = lines[-1].strip()  # Get the last line and remove any extra whitespace
+            if "Motor1:" in last_line:
+                value = last_line.split("Motor1:")[-1].strip()  # Extract the value
+                return value
+            else:
+                print("No 'Motor1:' value found in the last line.")
+                return None
+    except Exception as e:
+        print("Error while reading file: %s" % str(e))
+        return None
+
+dircheck(iCATfolder)
+print(iCATfolder)
+
+
+Zen.Application.Pause("setup initial angle")
+
+
+for k in range (0, P):
+    newest_file = get_newest_log(Path.Combine(iCATfolder, relative))
+    print(newest_file)
+
+    if newest_file:
+        print("newest log file: %s" % newest_file)
+        value = get_newest_value(newest_file)
+        if value:
+            globals()['angle' + str(k)] = value
+        else:
+            print("No motor1 value")
+            sys.exit(1) 
+    else:
+        print("Folder empty, no motor1 value")
+        sys.exit(1) 
+    print("angle is set: %s" % globals()['angle' + str(k)])
+    
+    
+    # get positions from user
+    Zen.Application.Pause("Center and focus on position %s" % str(k+1))
+    act = Zen.Acquisition.Experiments.ActiveExperiment
+    act.AddSinglePosition(0,Zen.Devices.Stage.ActualPositionX, Zen.Devices.Stage.ActualPositionY, Zen.Devices.Focus.ActualPosition)
+    
+    if k &lt; P - 1:
+        Zen.Application.Pause("Position %s set, set up angle %s" % (str(k+1), str(k+2)))
+    else:
+        # Last iteration, show a custom message
+        Zen.Application.Pause("Position %s set, start imaging" % str(k+1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## get positions from user
+#Zen.Application.Pause("Go to first position!")
+#px = [0 for a in range(P)]
+#py = [0 for a in range(P)]
+#pz = [0 for a in range(P)]
+#
+#px[0] = Zen.Devices.Stage.ActualPositionX
+#py[0] = Zen.Devices.Stage.ActualPositionY
+#pz[0] = Zen.Devices.Focus.ActualPosition
+##print(pz[0])
+#
+#for k in range (1, P):
+#    Zen.Application.Pause("Go to next position!")
+#    px[k] = Zen.Devices.Stage.ActualPositionX
+#    py[k] = Zen.Devices.Stage.ActualPositionY
+#    pz[k] = Zen.Devices.Focus.ActualPosition
+</Text>
+  <Author></Author>
+  <Description></Description>
+  <Keywords></Keywords>
+  <Row>114</Row>
+  <Column>47</Column>
+</Script>
