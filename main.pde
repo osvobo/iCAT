@@ -31,6 +31,7 @@ int HAlign3 = 540;
 int HAlign4 = 1200-125;
 int home = 0;
 int recentValue;
+boolean isReady = false; 
 
 
 //int baud = 650000;
@@ -568,9 +569,6 @@ year = year();
       DropList1.addItem(Serial.list()[i], i); //add the items in the list
     }
   }
-  if ( myPort.available() > 0) {
-    //println(myPort.readStringUntil('\n')); //read until new input
-  } 
   output1.flush();
   output2.flush();
   examineTemp();
@@ -607,13 +605,13 @@ void interval(int val) {
 } 
 
 void int1(int val) {
-  val = val - recentValue;
+  //val = val - recentValue;
   if( val <0) {write(val, 2, 6);}
   if( val >=0) {write(val, 2, 7);}
 } 
 
 void int2(int val) {
-  val = val - recentValue;
+  //val = val - recentValue;
   if( val <0) {write(val, 2, 8);}
   if( val >=0) {write(val, 2, 9);}
 } 
@@ -817,19 +815,27 @@ if(theEvent.getController().getName()=="heating") {
     //print("control event from : "+theEvent.getController().getName());
     //println(", value : "+theEvent.getController().getValue());
 
-// COM dropList    
+  // COM dropList    
     if (DropList1.isMouseOver()) {
+      for (int i = 0; i < 2; i++) {
       portName = Serial.list()[int(theEvent.getController().getValue())]; //port name is set to the selected port in the dropDownMeny
       myPort.clear(); //delete the port
-      myPort.stop(); //stop the port      
+      myPort.stop(); //stop the port
+      //println(portName);
       myPort = new Serial(this, portName, baud); //Create a new connection
-      println("Serial index set to: " + theEvent.getController().getValue());
-      millisInit = millis();
-      println("millisInit: " + millisInit);
-      delay(3000); 
-    }    
+      delay(100);
+      //println(i);
+      }
+    millisInit = millis();
+    println("millisInit: " + millisInit);
+    
+    println();
+    println("XXXXXXXXXXXXXXX");
+    println();   
+    } 
   }
 }
+
 
 private static int HEADER_SIZE = 4;
 private static final int MSG_TYPE_TEMPERATURE = 1;
@@ -843,7 +849,7 @@ private static int dataSize = 0;
 
 
 void handleMessage(byte[] data) {
-   switch (messageType) {
+  switch (messageType) {
     case MSG_TYPE_TEMPERATURE:
     {
       // Temperature is in 2 bytes, respresenting centicelsius - 2851 = 28.51°C
@@ -864,25 +870,25 @@ void handleMessage(byte[] data) {
       String message = new String(data);
       println(message);
       
-       //generate log for motor1
+      //generate log for motor1
       if (message.startsWith("Position after int")) {
         String[] parts = message.split(" "); // Split message into parts
-        int output2_val = (Integer.parseInt(parts[3]) * -1);
+        int output2_val = ((Integer.parseInt(parts[3]) - recentValue) * -1);
         println("output2_val: "+output2_val); 
         Knob1.setValue(output2_val);
-        output2.println();
-          output2.printf("%02d:%02d:%02d ", hour, min, sec);
-          output2.print("Motor1: " + output2_val);  
+        //output2.println();
+        //  output2.printf("%02d:%02d:%02d ", hour, min, sec);
+        //  output2.print("Motor1: " + output2_val);  
       }
       if (message.startsWith("Arduino: motor1")) {
         String[] parts = message.split(" "); // Split message into parts
         int output2_val = ((Integer.parseInt(parts[2]) - recentValue) * -1);
         output2.println();
           output2.printf("%02d:%02d:%02d ", hour, min, sec);
-          output2.print("Motor1: " + output2_val);    
-      }      
-      break;
-    }
+          output2.print("Motor1: " + output2_val);
+      }         
+    }   
+    break;
     
     case MSG_TYPE_IMAGE:
     {
@@ -1033,7 +1039,7 @@ int getMostRecentMotor1Value(String folderPath) {
   
 }
 
-
+// this will increase or decrease rotation angle by value in temp.txt
 void examineTemp() {
   File rootFolder = new File(dataPath(sketchPath()+"/logs/temp"));
   
@@ -1065,7 +1071,7 @@ void examineTemp() {
           if (match(lines[0], "^\\d+$") != null) {
             print(fileName + " value:");
             println(lines[0]);
-            int val = Integer.parseInt(lines[0]); //+ Math.round(Knob1.getValue());
+            int val = Integer.parseInt(lines[0]) + Math.round(Knob1.getValue());            
             Knob1.setValue(val);
             val = val - recentValue;
             if( val >= 0) {write(val, 0, 7);}
@@ -1080,7 +1086,7 @@ void examineTemp() {
         }
 
         // Rename the file
-        String newFileName = "temp_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec); // Specify the new file name
+        String newFileName = "temp_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec) + ".txt"; // Specify the new file name
         println(newFileName);
         file.renameTo(new File(file.getParent(), newFileName));
         break;

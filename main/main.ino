@@ -176,10 +176,10 @@ void loop() {
       }
     }
   }
-  //else if (interval == 1) {
-  //    snprintf(logMessage, sizeof(logMessage), "A2low: %d", intervalPin);
-  //    SendMessage(logMessage);
-  //}
+ // else if (interval == 1) {
+ //     snprintf(logMessage, sizeof(logMessage), "A2low: %d", intervalPin);
+ //     SendMessage(logMessage);
+ // }
 
 
   if (CAM1_EXIST && continuous) {
