@@ -20,16 +20,16 @@ version = 1.0
 Zen.Application.MacroEditor.ClearMessages()
 
 
-#imgfolder = Zen.Application.Environment.GetFolderPath(ZenSpecialFolder.ImageAutoSave)
 iCATfolder = 'C:\\Users\\zeiss\\Desktop\\iCAT' #change this to what ever default location
-relative = 'logs\\rotate'
+inputPath = 'logs\\rotate'
+outputPath = 'logs\\zeiss_setup'
 
 
 # initialize dialog, add components
 Dialog = ZenWindow()
-Dialog.Initialize('iCAT Axial plug-in ' + str(version))
+Dialog.Initialize('iCAT Axial mapping plug-in - setup' + str(version))
 Dialog.AddTextBox('Positions', '1) Number of Positions to record', 3)
-Dialog.AddFolderBrowser('outfolder', '2) Specify iCAT temp folder:', iCATfolder)
+Dialog.AddFolderBrowser('baseFolder', '2) Specify iCAT temp folder:', iCATfolder)
 Dialog.AddLabel('XXXX')
 Dialog.AddCheckbox('check',"print",0)
 
@@ -38,23 +38,21 @@ Dialog.AddCheckbox('check',"print",0)
 result = Dialog.Show()
 if result.HasCanceled:
     print('Macro was canceled by user.')
-    print(OutputFolder)
     raise SystemExit
 
 
 # dialog values
 P = result.GetValue('Positions')
-iCATfolder = result.GetValue('outfolder')
+iCATfolder = result.GetValue('baseFolder')
 
 
-# defs
-def dircheck(basefolder):
-    base_exists = Directory.Exists(basefolder)
+def dircheck(baseFolder, relativeFolder):
+    base_exists = Directory.Exists(baseFolder)
     if base_exists:
-        newdir = createfolder(basefolder, relative)
-        print(('iCATfolder Exists: ', base_exists))
+        newdir = createfolder(baseFolder, relativeFolder)
+        print((relativeFolder, 'folder exists: ', base_exists))
     if not base_exists:
-        print('folder does not exists: ', basefolder)
+        print('folder does not exists: ', baseFolder)
         sys.exit(1) 
     return
 
@@ -72,7 +70,7 @@ def createfolder(basePath, relativePath):
     return newdir
 
 
-def get_newest_log(folder):
+def get_newest_inputFile(folder):
     try:
         files = Directory.GetFiles(folder)
         if not files:
@@ -84,7 +82,7 @@ def get_newest_log(folder):
         return None
 
 
-def get_newest_value(file_path):
+def get_newest_angle(file_path):
     try:
         with open(file_path, 'r') as file:
             lines = file.readlines()
@@ -101,54 +99,62 @@ def get_newest_value(file_path):
         print("Error while reading file: %s" % str(e))
         return None
 
-dircheck(iCATfolder)
-print(iCATfolder)
+
+def write_to_log(message):
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    full_message = "%s %s\n" % (timestamp, message)  # Format message with timestamp
+    try:
+        log_file_handle = open(log_file, 'a')  # Open log file in append mode
+        log_file_handle.write(full_message)
+        log_file_handle.close()  # Explicitly close the file
+    except Exception as e:
+        print("Failed to write to log file: %s" % str(e))
+
+
+timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+dircheck(iCATfolder, inputPath)
+dircheck(iCATfolder, outputPath)
+log_file = os.path.join(iCATfolder, outputPath, 'positions_{}.txt'.format(timestamp))
 
 
 Zen.Application.Pause("setup initial angle")
-
-
 for k in range (0, P):
-    newest_file = get_newest_log(Path.Combine(iCATfolder, relative))
-    print(newest_file)
+    newest_file = get_newest_inputFile(Path.Combine(iCATfolder, inputPath))
 
     if newest_file:
-        print("newest log file: %s" % newest_file)
-        value = get_newest_value(newest_file)
+        print("newest input log file: %s" % newest_file)
+        value = get_newest_angle(newest_file)
         if value:
-            globals()['angle' + str(k)] = value
+            globals()['angle' + str(k+1)] = value
         else:
-            print("No motor1 value")
+            print("No motor1 value available in the input file")
             sys.exit(1) 
     else:
-        print("Folder empty, no motor1 value")
+        print("Input folder empty, check path for iCAT rotate log")
         sys.exit(1) 
-    print("angle is set: %s" % globals()['angle' + str(k)])
+    
+    print("angle%s: %s" % (k+1, globals()['angle' + str(k+1)]))
+    write_to_log("angle%s: %s" % (k+1, globals()['angle' + str(k+1)]))
     
     
     # get positions from user
     Zen.Application.Pause("Center and focus on position %s" % str(k+1))
-    act = Zen.Acquisition.Experiments.ActiveExperiment
-    act.AddSinglePosition(0,Zen.Devices.Stage.ActualPositionX, Zen.Devices.Stage.ActualPositionY, Zen.Devices.Focus.ActualPosition)
+    globals()['x' + str(k+1)] = Zen.Devices.Stage.ActualPositionX
+    globals()['y' + str(k+1)] = Zen.Devices.Stage.ActualPositionY
+    globals()['z' + str(k+1)] = Zen.Devices.Focus.ActualPosition
+    
+    print("x%s: %s" % (k+1, globals()['x' + str(k+1)]))
+    print("y%s: %s" % (k+1, globals()['y' + str(k+1)]))
+    print("z%s: %s" % (k+1, globals()['z' + str(k+1)]))
+    write_to_log("x%s: %s" % (k+1, globals()['x' + str(k+1)]))
+    write_to_log("y%s: %s" % (k+1, globals()['y' + str(k+1)]))
+    write_to_log("z%s: %s" % (k+1, globals()['z' + str(k+1)]))
     
     if k &lt; P - 1:
         Zen.Application.Pause("Position %s set, set up angle %s" % (str(k+1), str(k+2)))
     else:
         # Last iteration, show a custom message
         Zen.Application.Pause("Position %s set, start imaging" % str(k+1))
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -172,6 +178,9 @@ for k in range (0, P):
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>114</Row>
-  <Column>47</Column>
+  <Row>43</Row>
+  <Column>1</Column>
+  <WatchVariables>
+    <Watch></Watch>
+  </WatchVariables>
 </Script>

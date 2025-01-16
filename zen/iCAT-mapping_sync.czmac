@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script>
+  <Context>Zen26</Context>
+  <Version>1.0</Version>
+  <Language>Python</Language>
+  <Text># File       : interface.py
+# Author     : Ondrej Svoboda
+# Date       : 09.01.2025
+# Institution : IMG
+# Based on: https://github.com/zeiss-microscopy/OAD/blob/master/Scripts/Hardware_and_Acquisition/lls7/LLS7_MultiPosition_v1.0.py
+# Use at your own Risk !!!
+# Compatible with ZEN versions 3.6 and higher
+
+
+import time
+import os
+import re
+from datetime import datetime
+from System.IO import File, Directory, Path
+from collections import namedtuple
+version = 1.0
+Zen.Application.MacroEditor.ClearMessages()
+
+
+iCATfolder = 'C:\\Users\\zeiss\\Desktop\\iCAT' #change this to what ever default location
+inputPath = 'logs\\zeiss_setup'
+outputPath = 'logs\\zeiss_sync'
+
+
+# initialize dialog, add components
+Dialog = ZenWindow()
+Dialog.Initialize('iCAT Axial mapping plug-in - sync' + str(version))
+Dialog.AddFolderBrowser('baseFolder', 'Specify iCAT temp folder:', iCATfolder)
+Dialog.AddLabel('XXXX')
+Dialog.AddCheckbox('check',"print",0)
+
+
+# show dialog
+result = Dialog.Show()
+if result.HasCanceled:
+    print('Macro was canceled by user.')
+    raise SystemExit
+
+
+# dialog values
+iCATfolder = result.GetValue('baseFolder')
+
+
+def dircheck(baseFolder, relativeFolder):
+    base_exists = Directory.Exists(baseFolder)
+    if base_exists:
+        newdir = createfolder(baseFolder, relativeFolder)
+        print((relativeFolder, 'folder exists: ', base_exists))
+    if not base_exists:
+        print('folder does not exists: ', baseFolder)
+        sys.exit(1) 
+    return
+
+
+def createfolder(basePath, relativePath):
+    newdir = Path.Combine(basePath, relativePath)
+    try:
+        newdir_exists = Directory.Exists(newdir)
+        if not newdir_exists:
+            Directory.CreateDirectory(newdir)
+            print(('Created new directory: ', newdir))
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise  # This was not a "directory exist" error..
+    return newdir
+
+
+def get_newest_inputFile(folder):
+    try:
+        files = Directory.GetFiles(folder)
+        if not files:
+            return None
+        newest_file = max(files, key=os.path.getmtime)
+        return newest_file
+    except Exception as e:
+        print("Error while accessing files: %s" % str(e))
+        return None
+
+
+def write_to_log(message):
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    full_message = "%s %s\n" % (timestamp, message)  # Format message with timestamp
+    try:
+        log_file_handle = open(log_file, 'a')  # Open log file in append mode
+        log_file_handle.write(full_message)
+        log_file_handle.close()  # Explicitly close the file
+    except Exception as e:
+        print("Failed to write to log file: %s" % str(e))
+
+
+def get_newest_values(file_path):
+    try:
+        with open(file_path, 'r') as file:  # Use the file path passed to the function
+            log_data = file.read()  # Read the entire content of the file
+    except Exception as e:
+        print("Failed to read log file: %s" % str(e))
+        log_data = None
+    
+    if log_data:
+        # Define a dictionary to store the extracted values
+        extracted_values = {}
+        
+        # Match variables using regex for each angle and coordinate
+        for match in re.finditer(r'(angle\d+|x\d+|y\d+|z\d+):\s*(-?\d+)', log_data):
+            variable_name = match.group(1)
+            value = match.group(2)
+            extracted_values[variable_name] = value  # Store the value in dictionary
+        
+        # Print extracted values (optional)
+        for var, val in extracted_values.items():
+            #print("var: %s" % var)
+            #print("val: %s" % val)
+            write_to_log("%s: %s" %(var, val))
+            
+            globals()[var] = val
+            
+    
+        return extracted_values
+    else:
+        return None
+
+
+timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+dircheck(iCATfolder, inputPath)
+dircheck(iCATfolder, outputPath)
+log_file = os.path.join(iCATfolder, outputPath, 'log_{}.txt'.format(timestamp))
+newest_file = get_newest_inputFile(Path.Combine(iCATfolder, inputPath))
+
+
+if newest_file:
+    print("newest input log file: %s" % newest_file)
+    value = get_newest_values(newest_file)
+    if value:
+        print("Values found")
+    else:
+        print("Zeiss setup file empty")
+        sys.exit(1) 
+else:
+    print("Zeiss setup folder empty, run setup first")
+    sys.exit(1) 
+
+print(x1)
+</Text>
+  <Author></Author>
+  <Description></Description>
+  <Keywords></Keywords>
+  <Row>113</Row>
+  <Column>34</Column>
+</Script>
