@@ -3,8 +3,7 @@
   <Context>Zen26</Context>
   <Version>1.0</Version>
   <Language>Python</Language>
-  <Text># File       : interface.py
-# Author     : Ondrej Svoboda
+  <Text># Author     : Ondrej Svoboda
 # Date       : 09.01.2025
 # Institution : IMG
 # Based on: https://github.com/zeiss-microscopy/OAD/blob/master/Scripts/Hardware_and_Acquisition/lls7/LLS7_MultiPosition_v1.0.py
@@ -15,6 +14,7 @@
 import time
 import os
 import re
+import math
 from datetime import datetime
 from System.IO import File, Directory, Path
 from collections import namedtuple
@@ -25,14 +25,13 @@ Zen.Application.MacroEditor.ClearMessages()
 iCATfolder = 'C:\\Users\\zeiss\\Desktop\\iCAT' #change this to what ever default location
 inputPath = 'logs\\zeiss_setup'
 outputPath = 'logs\\zeiss_sync'
+anglePath = 'logs\\rotate'
 
 
 # initialize dialog, add components
 Dialog = ZenWindow()
 Dialog.Initialize('iCAT Axial mapping plug-in - sync' + str(version))
 Dialog.AddFolderBrowser('baseFolder', 'Specify iCAT temp folder:', iCATfolder)
-Dialog.AddLabel('XXXX')
-Dialog.AddCheckbox('check',"print",0)
 
 
 # show dialog
@@ -106,9 +105,11 @@ def get_newest_values(file_path):
         extracted_values = {}
         
         # Match variables using regex for each angle and coordinate
-        for match in re.finditer(r'(angle\d+|x\d+|y\d+|z\d+):\s*(-?\d+)', log_data):
+        for match in re.finditer(r'(angle\d+|x\d+|y\d+|z\d+|Cy|Cz|r):\s*(-?\d+\.?\d*)', log_data):
+        #for match in re.finditer(r'(Cy|Cz|d):\s*(-?\d+\.?\d*)', log_data):
             variable_name = match.group(1)
-            value = match.group(2)
+            value = float(match.group(2))
+            print(variable_name, value)
             extracted_values[variable_name] = value  # Store the value in dictionary
         
         # Print extracted values (optional)
@@ -122,6 +123,24 @@ def get_newest_values(file_path):
     
         return extracted_values
     else:
+        return None
+
+
+def get_newest_angle(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if not lines:
+                return None
+            last_line = lines[-1].strip()  # Get the last line and remove any extra whitespace
+            if "Motor1:" in last_line:
+                value = last_line.split("Motor1:")[-1].strip()  # Extract the value
+                return value
+            else:
+                print("No 'Motor1:' value found in the last line.")
+                return None
+    except Exception as e:
+        print("Error while reading file: %s" % str(e))
         return None
 
 
@@ -144,11 +163,57 @@ else:
     print("Zeiss setup folder empty, run setup first")
     sys.exit(1) 
 
-print(x1)
+
+def calculate_point_on_circle(cy, cz, r, delta):
+    # Convert angle delta from degrees to radians
+    delta_rad = math.radians(delta)
+
+    # Calculate the coordinates of the new point
+    y = cy + r * math.cos(delta_rad)
+    z = cz + r * math.sin(delta_rad)
+
+    return y, z
+
+
+newest_file = get_newest_inputFile(Path.Combine(iCATfolder, anglePath))
+if newest_file:
+    print("newest input log file: %s" % newest_file)
+    value = get_newest_angle(newest_file)
+    if value:
+        angle = float(value)
+    else:
+        print("No motor1 value available in the input file")
+        sys.exit(1) 
+else:
+    print("Input folder empty, check path for iCAT rotate log")
+    sys.exit(1) 
+
+
+print("new angle: %s" % angle)
+y, z = calculate_point_on_circle(Cy, Cz, d/2, 90-angle)
+print(y)
+print(z)
+
+## get positions from user
+#Zen.Application.Pause("Go to first position!")
+#px = [0 for a in range(P)]
+#py = [0 for a in range(P)]
+#pz = [0 for a in range(P)]
+#
+#px[0] = Zen.Devices.Stage.ActualPositionX
+#py[0] = Zen.Devices.Stage.ActualPositionY
+#pz[0] = Zen.Devices.Focus.ActualPosition
+##print(pz[0])
+#
+#for k in range (1, P):
+#    Zen.Application.Pause("Go to next position!")
+#    px[k] = Zen.Devices.Stage.ActualPositionX
+#    py[k] = Zen.Devices.Stage.ActualPositionY
+#    pz[k] = Zen.Devices.Focus.ActualPosition
 </Text>
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>113</Row>
-  <Column>34</Column>
+  <Row>178</Row>
+  <Column>29</Column>
 </Script>

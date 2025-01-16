@@ -3,17 +3,16 @@
   <Context>Zen26</Context>
   <Version>1.0</Version>
   <Language>Python</Language>
-  <Text># File       : interface.py
-# Author     : Ondrej Svoboda
+  <Text># Author     : Ondrej Svoboda
 # Date       : 09.01.2025
 # Institution : IMG
 # Based on: https://github.com/zeiss-microscopy/OAD/blob/master/Scripts/Hardware_and_Acquisition/lls7/LLS7_MultiPosition_v1.0.py
 # Use at your own Risk !!!
 # Compatible with ZEN versions 3.6 and higher
 
-
 import time
 import os
+import math
 from datetime import datetime
 from System.IO import File, Directory, Path
 version = 1.0
@@ -28,10 +27,8 @@ outputPath = 'logs\\zeiss_setup'
 # initialize dialog, add components
 Dialog = ZenWindow()
 Dialog.Initialize('iCAT Axial mapping plug-in - setup' + str(version))
-Dialog.AddTextBox('Positions', '1) Number of Positions to record', 3)
+Dialog.AddTextBox('Positions', '1) Number of Positions to record', 2)
 Dialog.AddFolderBrowser('baseFolder', '2) Specify iCAT temp folder:', iCATfolder)
-Dialog.AddLabel('XXXX')
-Dialog.AddCheckbox('check',"print",0)
 
 
 # show dialog
@@ -143,6 +140,11 @@ for k in range (0, P):
     globals()['y' + str(k+1)] = Zen.Devices.Stage.ActualPositionY
     globals()['z' + str(k+1)] = Zen.Devices.Focus.ActualPosition
     
+    #globals()['x' + str(k+1)] = 10
+    #globals()['y' + str(k+1)] = 20
+    #globals()['z' + str(k+1)] = 0
+    
+    
     print("x%s: %s" % (k+1, globals()['x' + str(k+1)]))
     print("y%s: %s" % (k+1, globals()['y' + str(k+1)]))
     print("z%s: %s" % (k+1, globals()['z' + str(k+1)]))
@@ -152,34 +154,95 @@ for k in range (0, P):
     
     if k &lt; P - 1:
         Zen.Application.Pause("Position %s set, set up angle %s" % (str(k+1), str(k+2)))
+#    else:
+#        # Last iteration, show a custom message
+#        Zen.Application.Pause("Position %s set, start imaging" % str(k+1))
+
+
+print("Compute model:")
+def calculate_circle_properties(y1, z1, y2, z2, diff):
+    # Normalize the angle to the range [0, 360) degrees
+
+    if math.floor(diff/180) % 2 == 0:
+        chord = 0
     else:
-        # Last iteration, show a custom message
-        Zen.Application.Pause("Position %s set, start imaging" % str(k+1))
+        chord = 1
 
+    diff = diff % 360
 
+    # Convert angle from degrees to radians
+    diff_rad = math.radians(diff)
 
-## get positions from user
-#Zen.Application.Pause("Go to first position!")
-#px = [0 for a in range(P)]
-#py = [0 for a in range(P)]
-#pz = [0 for a in range(P)]
-#
-#px[0] = Zen.Devices.Stage.ActualPositionX
-#py[0] = Zen.Devices.Stage.ActualPositionY
-#pz[0] = Zen.Devices.Focus.ActualPosition
-##print(pz[0])
-#
-#for k in range (1, P):
-#    Zen.Application.Pause("Go to next position!")
-#    px[k] = Zen.Devices.Stage.ActualPositionX
-#    py[k] = Zen.Devices.Stage.ActualPositionY
-#    pz[k] = Zen.Devices.Focus.ActualPosition
+    # Midpoint of AB
+    my = (y1 + y2) / 2
+    mz = (z1 + z2) / 2
+
+    # Length of AB (chord length)
+    ab_length = math.sqrt((y2 - y1)**2 + (z2 - z1)**2)
+
+    # Handle special case where alpha is 0 (no valid circle)
+    if diff == 0:
+        raise ValueError("Diff angle cannot be 0 degrees.")
+
+    # Handle special case where alpha is 180 (center is midpoint, radius is half the distance)
+    if diff == 180:
+        r = ab_length / 2
+        return my, mz, 2 * r
+
+    # Radius of the circle
+    r = (ab_length / 2) / math.sin(diff_rad / 2)
+
+     # Perpendicular bisector direction
+    dy = y2 - y1
+    dz = z2 - z1
+
+    # Perpendicular direction
+    perp_dy = -dz
+    perp_dz = dy
+
+    # Normalize the perpendicular direction
+    #d_length = math.sqrt(perp_dy**2 + perp_dz**2)
+    perp_dy /= ab_length
+    perp_dz /= ab_length
+
+    # Distance from midpoint to the center
+    h = math.sqrt(r**2 - (ab_length / 2)**2)
+
+    # Center of the circle (two possible solutions, above or below the chord)
+    if chord == 1:
+        cy = my + perp_dy * h
+        cz = mz + perp_dz * h
+    else:
+        cy = my - perp_dy * h
+        cz = mz - perp_dz * h
+
+    # Diameter of the circle
+    diameter = 2 * r
+
+    #return (cz1, cz1), (cz2, cz2), diameter
+    return cy, cz, diameter
+
+#angle1=3
+#angle2=30
+#y1 = 0
+#y2 = 3
+#z1 = 1
+#z2 = 3
+
+diff = int(angle2) - int(angle1)
+Cy, Cz, d = calculate_circle_properties(y1, z1, y2, z2, diff)
+print("Center of the circle: %s, %s" % (Cy, Cz))
+print("Diameter of the circle: %s" % d)
+
+write_to_log("Cy: %s" % Cy)
+write_to_log("Cz: %s" % Cz)
+write_to_log("r: %s" % d)
 </Text>
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>43</Row>
-  <Column>1</Column>
+  <Row>171</Row>
+  <Column>21</Column>
   <WatchVariables>
     <Watch></Watch>
   </WatchVariables>
