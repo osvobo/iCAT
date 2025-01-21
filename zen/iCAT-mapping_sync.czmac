@@ -22,7 +22,7 @@ version = 1.0
 Zen.Application.MacroEditor.ClearMessages()
 
 
-iCATfolder = 'C:\\Users\\zeiss\\Desktop\\iCAT' #change this to what ever default location
+iCATfolder = 'C:\Users\zeiss\Documents\GitHub\iCat' #change this to what ever default location
 inputPath = 'logs\\zeiss_setup'
 outputPath = 'logs\\zeiss_sync'
 anglePath = 'logs\\rotate'
@@ -105,7 +105,7 @@ def get_newest_values(file_path):
         extracted_values = {}
         
         # Match variables using regex for each angle and coordinate
-        for match in re.finditer(r'(angle\d+|x\d+|y\d+|z\d+|Cy|Cz|r):\s*(-?\d+\.?\d*)', log_data):
+        for match in re.finditer(r'(angle\d+|x\d+|y\d+|z\d+|Cy|Cz|d):\s*(-?\d+\.?\d*(?:[eE][+-]?\d+)?)', log_data):
         #for match in re.finditer(r'(Cy|Cz|d):\s*(-?\d+\.?\d*)', log_data):
             variable_name = match.group(1)
             value = float(match.group(2))
@@ -165,8 +165,11 @@ else:
 
 
 def calculate_point_on_circle(cy, cz, r, delta):
+    angle_rad = math.atan2(y1 - cy, z1 - cz)  # atan2 gives the angle in radians
+    angle_deg = math.degrees(angle_rad) 
+
     # Convert angle delta from degrees to radians
-    delta_rad = math.radians(delta)
+    delta_rad = math.radians(delta - angle_deg)
 
     # Calculate the coordinates of the new point
     y = cy + r * math.cos(delta_rad)
@@ -188,32 +191,23 @@ else:
     print("Input folder empty, check path for iCAT rotate log")
     sys.exit(1) 
 
-
+#angle = 0
+angle_diff = angle - angle1
 print("new angle: %s" % angle)
-y, z = calculate_point_on_circle(Cy, Cz, d/2, 90-angle)
+y, z = calculate_point_on_circle(Cy, Cz, d/2, 90-angle_diff)
 print(y)
 print(z)
 
-## get positions from user
-#Zen.Application.Pause("Go to first position!")
-#px = [0 for a in range(P)]
-#py = [0 for a in range(P)]
-#pz = [0 for a in range(P)]
-#
-#px[0] = Zen.Devices.Stage.ActualPositionX
-#py[0] = Zen.Devices.Stage.ActualPositionY
-#pz[0] = Zen.Devices.Focus.ActualPosition
-##print(pz[0])
-#
-#for k in range (1, P):
-#    Zen.Application.Pause("Go to next position!")
-#    px[k] = Zen.Devices.Stage.ActualPositionX
-#    py[k] = Zen.Devices.Stage.ActualPositionY
-#    pz[k] = Zen.Devices.Focus.ActualPosition
+
+#Zen.Devices.Stage.TargetPositionX = 665
+Zen.Devices.Stage.TargetPositionY = y
+Zen.Devices.Focus.TargetPosition = z
+Zen.Devices.Stage.Apply()
+Zen.Devices.Focus.Apply()
 </Text>
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>178</Row>
-  <Column>29</Column>
+  <Row>192</Row>
+  <Column>50</Column>
 </Script>

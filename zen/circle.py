@@ -1,9 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Script>
-  <Context>Zen26</Context>
-  <Version>1.0</Version>
-  <Language>Python</Language>
-  <Text>import math
+import math
 
 
 def calculate_circle_properties(y1, z1, y2, z2, diff):
@@ -18,12 +13,6 @@ def calculate_circle_properties(y1, z1, y2, z2, diff):
 
     # Convert angle from degrees to radians
     diff_rad = math.radians(diff)
-
-    # Convert coordinates to floats
-    y1 = float(y1)
-    y2 = float(y2)
-    z1 = float(z1)
-    z2 = float(z2)
 
     # Midpoint of AB
     my = (y1 + y2) / 2
@@ -78,21 +67,26 @@ def calculate_circle_properties(y1, z1, y2, z2, diff):
     return cy, cz, diameter
 
 def calculate_point_on_circle(cy, cz, r, delta):
+    angle_rad = math.atan2(y1 - cy, z1 - cz)  # atan2 gives the angle in radians
+    angle_deg = math.degrees(angle_rad) 
+
+
     # Convert angle delta from degrees to radians
-    delta_rad = math.radians(delta)
+    delta_rad = math.radians(delta - angle_deg)
 
     # Calculate the coordinates of the new point
     y = cy + r * math.cos(delta_rad)
     z = cz + r * math.sin(delta_rad)
 
-    return y, z
+    return y, z, angle_deg
 
 # Example usage
-y1, z1 = float(0), float(3)  # Coordinates of point A
-y2, z2 = float(3), float(0)  # Coordinates of point B
-alpha = 10      # Angle between vertical and line C-point1
-beta = 100      # Angle between vertical and line C-point2
-delta = 190    # Angle between vertical and line C-new point
+y1, z1 = -3382 , -1478  # Coordinates of point A
+y2, z2 = -2307, -1147  # Coordinates of point B
+alpha = 4      # Angle between vertical and line C-point1
+beta = 95      # Angle between vertical and line C-point2
+delta = 95    # Angle between vertical and line C-new point
+delta_diff = delta - alpha
 diff = beta - alpha  # Angle between points A and B
 
 # Calculate the circle properties
@@ -100,15 +94,9 @@ Ycenter, Zcenter, diameter = calculate_circle_properties(y1, z1, y2, z2, diff)
 radius = diameter / 2
 
 # Calculate a point on the circle
-y_point, z_point = calculate_point_on_circle(Ycenter, Zcenter, radius, 90-delta)
+y_point, z_point, ORIangle = calculate_point_on_circle(Ycenter, Zcenter, radius, 90-delta_diff)
 
 print("Center of the circle: (%s, %s)" % (Ycenter, Zcenter))
 print("Radius of the circle: %s" % radius)
+print("y1z1 angle: %s" % ORIangle)
 print("Point on the circle at delta=%s degrees: (%s, %s)" % (delta, y_point, z_point))
-</Text>
-  <Author></Author>
-  <Description></Description>
-  <Keywords></Keywords>
-  <Row>90</Row>
-  <Column>11</Column>
-</Script>
