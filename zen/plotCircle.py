@@ -77,14 +77,17 @@ def plot_circle_and_points(center, diameter, point_a, point_b, point_x1, point_x
     plt.show()
 
 # Define the center, diameter, and points A, B, and X
-center = (-3174.55470632, -309.591296111)
-diameter = 383.51828518
-point_a = (-3355.146, -245.106)
-point_b = (-2993.627, -246.056)
+#center = (-3007.136397045647, -784.3002210753166)
+center = (-2681.863602954353, -1840.6997789246834)
+diameter = 788*2
+point_a = (-3382 , -1478 )
+point_b = (-2307, -1147)
 point_x1 = (-2993.6269999984502, -246.05599999872095)
 point_x2 = (-3026.2686268764805, -188.00672714716274)
 point_x3 = (-3329.204,
 -303.554)
+
+
 
 # Call the function
 plot_circle_and_points(center, diameter, point_a, point_b, point_x1, point_x2, point_x3)
