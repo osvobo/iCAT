@@ -114,7 +114,7 @@ dircheck(iCATfolder, outputPath)
 log_file = os.path.join(iCATfolder, outputPath, 'positions_{}.txt'.format(timestamp))
 
 
-Zen.Application.Pause("setup initial angle")
+Zen.Application.Pause("setup initial angle and position")
 for k in range (0, P):
     newest_file = get_newest_inputFile(Path.Combine(iCATfolder, inputPath))
 
@@ -135,7 +135,7 @@ for k in range (0, P):
     
     
     # get positions from user
-    Zen.Application.Pause("Center and focus on position %s" % str(k+1))
+    #Zen.Application.Pause("Center and focus on position %s" % str(k+1))
     globals()['x' + str(k+1)] = Zen.Devices.Stage.ActualPositionX
     globals()['y' + str(k+1)] = Zen.Devices.Stage.ActualPositionY
     globals()['z' + str(k+1)] = Zen.Devices.Focus.ActualPosition
@@ -153,7 +153,7 @@ for k in range (0, P):
     write_to_log("z%s: %s" % (k+1, globals()['z' + str(k+1)]))
     
     if k &lt; P - 1:
-        Zen.Application.Pause("Position %s set, set up angle %s" % (str(k+1), str(k+2)))
+        Zen.Application.Pause("Position %s set, set up angle and position %s" % (str(k+1), str(k+2)))
 #    else:
 #        # Last iteration, show a custom message
 #        Zen.Application.Pause("Position %s set, start imaging" % str(k+1))
@@ -247,8 +247,8 @@ write_to_log("d: %s" % d)
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>171</Row>
-  <Column>1</Column>
+  <Row>151</Row>
+  <Column>74</Column>
   <WatchVariables>
     <Watch></Watch>
   </WatchVariables>

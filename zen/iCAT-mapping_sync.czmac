@@ -10,7 +10,7 @@
 # Use at your own Risk !!!
 # Compatible with ZEN versions 3.6 and higher
 
-
+import threading
 import time
 import os
 import re
@@ -35,14 +35,13 @@ Dialog.AddFolderBrowser('baseFolder', 'Specify iCAT temp folder:', iCATfolder)
 
 
 # show dialog
-result = Dialog.Show()
-if result.HasCanceled:
-    print('Macro was canceled by user.')
-    raise SystemExit
-
+#result = Dialog.Show()
+#if result.HasCanceled:
+#    print('Macro was canceled by user.')
+#    raise SystemExit
 
 # dialog values
-iCATfolder = result.GetValue('baseFolder')
+#iCATfolder = result.GetValue('baseFolder')
 
 
 def dircheck(baseFolder, relativeFolder):
@@ -150,7 +149,6 @@ dircheck(iCATfolder, outputPath)
 log_file = os.path.join(iCATfolder, outputPath, 'log_{}.txt'.format(timestamp))
 newest_file = get_newest_inputFile(Path.Combine(iCATfolder, inputPath))
 
-
 if newest_file:
     print("newest input log file: %s" % newest_file)
     value = get_newest_values(newest_file)
@@ -164,50 +162,111 @@ else:
     sys.exit(1) 
 
 
-def calculate_point_on_circle(cy, cz, r, delta):
-    angle_rad = math.atan2(y1 - cy, z1 - cz)  # atan2 gives the angle in radians
-    angle_deg = math.degrees(angle_rad) 
-
+def calculate_point_on_circle(cy, cz, r, new_angle):
+    angle1_rad = math.atan2(y1 - cy, z1 - cz)  # atan2 gives the angle in radians
+    angle1_deg = math.degrees(angle1_rad)
+    #print(angle1_deg)
+    new_angle = new_angle - angle1
+    print(new_angle)
+    new_angle = new_angle % 360
+    print(new_angle)
+    angle_coef = angle2-angle1
+    diff_angle = -1* angle1_deg + 90
+    
+    
+    if angle_coef &lt;= 180:
+        if (new_angle &lt;= angle_coef):
+            ax = ((360-angle_coef) * new_angle / angle_coef)
+        else:
+            ax = (360 - angle_coef) + (angle_coef) / (360 - angle_coef) * (new_angle - angle_coef)
+        
+    else:
+        if (new_angle &lt;= angle_coef):
+            ax = (360 - angle_coef) + (angle_coef) / (360 - angle_coef) * (new_angle - angle_coef)
+        else:
+            ax = ((360-angle_coef) * new_angle / angle_coef)
+        
+        
+        
+    print('ax')
+    print(ax)
+    diff_angle = diff_angle + ax
+    
     # Convert angle delta from degrees to radians
-    delta_rad = math.radians(delta - angle_deg)
+    diff_angle_rad = math.radians(diff_angle)
 
     # Calculate the coordinates of the new point
-    y = cy + r * math.cos(delta_rad)
-    z = cz + r * math.sin(delta_rad)
+    y = cy + r * math.cos(diff_angle_rad)
+    z = cz + r * math.sin(diff_angle_rad)
 
     return y, z
 
 
-newest_file = get_newest_inputFile(Path.Combine(iCATfolder, anglePath))
-if newest_file:
-    print("newest input log file: %s" % newest_file)
-    value = get_newest_angle(newest_file)
-    if value:
-        angle = float(value)
-    else:
-        print("No motor1 value available in the input file")
-        sys.exit(1) 
+# Function to repeatedly print "running"
+def repeat_task(stop_event):
+    while not stop_event.is_set():  # Run until the stop_event is triggered
+        print("running")
+        write_to_log("")
+        write_to_log("SYNC values:")
+        time.sleep(1)  # 500ms delay
+        newest_file = get_newest_inputFile(Path.Combine(iCATfolder, anglePath))
+        if newest_file:
+            print("newest input log file: %s" % newest_file)
+            value = get_newest_angle(newest_file)
+            write_to_log("newest angle: %s" %(value))
+            if value:
+                new_angle = float(value)
+            else:
+                print("No motor1 value available in the input file")
+                sys.exit(1) 
+        else:
+            print("Input folder empty, check path for iCAT rotate log")
+            sys.exit(1) 
+
+        #angle = 0
+        print("new angle: %s" % new_angle)
+        y, z = calculate_point_on_circle(Cy, Cz, d/2, new_angle)
+        write_to_log("y: %s" %(y))
+        write_to_log("z: %s" %(z))
+        print(y, z)
+
+
+        #Zen.Devices.Stage.TargetPositionX = 665
+        Zen.Devices.Stage.TargetPositionY = y
+        Zen.Devices.Focus.TargetPosition = z
+        Zen.Devices.Stage.Apply()
+        Zen.Devices.Focus.Apply()
+
+# Initialize the dialog
+Dialog = ZenWindow()
+Dialog.Initialize('iCAT Axial mapping plug-in - sync' + str(version))
+
+
+# Create a threading event to control the loop
+stop_event = threading.Event()
+thread = threading.Thread(target=repeat_task, args=(stop_event,))
+thread.start()  # Start the loop in a separate thread
+
+# Show dialog and handle user input
+result = Dialog.Show()
+
+# Stop the thread based on user action
+if result.HasCanceled:
+    print('Macro was canceled by user.')
 else:
-    print("Input folder empty, check path for iCAT rotate log")
-    sys.exit(1) 
+    print('Macro completed successfully.')
 
-#angle = 0
-angle_diff = angle - angle1
-print("new angle: %s" % angle)
-y, z = calculate_point_on_circle(Cy, Cz, d/2, 90-angle_diff)
-print(y)
-print(z)
+# Stop the loop thread
+stop_event.set()
+thread.join()  # Ensure the thread finishes before exiting
 
 
-#Zen.Devices.Stage.TargetPositionX = 665
-Zen.Devices.Stage.TargetPositionY = y
-Zen.Devices.Focus.TargetPosition = z
-Zen.Devices.Stage.Apply()
-Zen.Devices.Focus.Apply()
+
+
 </Text>
   <Author></Author>
   <Description></Description>
   <Keywords></Keywords>
-  <Row>192</Row>
-  <Column>50</Column>
+  <Row>184</Row>
+  <Column>9</Column>
 </Script>
