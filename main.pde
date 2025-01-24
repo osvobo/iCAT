@@ -894,7 +894,8 @@ void handleMessage(byte[] data) {
     {
         try {
           //Save raw data to file
-          String fname = "capture#"+picNum+"_"+day()+month()+year()+".jpg";
+          //String fname = "capture_" + picNum + "_" + day() + month() + year() + ".jpg";
+          String fname = "capture_" + picNum + "_" + String.format("%04d-%02d-%02d_%02d-%02d-%02d", year, month, day, hour, min, sec) + ".jpg";
           saveBytes("data/capture/"+fname, data);
           // Open saved picture for local display
           img = loadImage("/data/capture/"+fname);

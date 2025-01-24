@@ -157,6 +157,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 *NOTE: After the initial assembly, test the chamber by filling it with water and letting it stand overnight. There should be no leaks.* <br><br>
 4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below.
 ![alt text](support/media/iCAT-21a.jpg)
+<a id="iCAT-20a"></a>
 ![alt text](support/media/iCAT-20a.jpg) <br><br>
 
 
@@ -167,11 +168,13 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 3. Open the Arduino IDE by opening the [```main.ino```](main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper]( https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM]( https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
 4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
 ```#define OV5642_MINI_5MP_PLUS``` <br>
-5. Test the iCAT by connecting the Arduino to the PC using USB-B cable, connecting the 12 V main power, the trigger IN, and the Peltier connector. Open the [```main.pde```](main.pde) and click on the arrow in the upper left corner, this will open the Graphical User Interface (GUI) of the iCAT. <br>
-6. Select the port to which is the iCAT connected. After successful connection, the message will appear in the console: *"iCAT is ready"*. <br>
+5. Test the iCAT by connecting the Arduino to the PC using USB-B cable, connecting the 12 V main power, the trigger IN, and the Peltier connector. Open the [```main.pde```](main.pde) and click on the **Run button** in the upper left corner, this will open the Graphical User Interface (GUI) of the iCAT. <br>
+<a id="processing"></a>
 ![alt text](support/media/processing.jpg) <br><br>
+6. Select the port using **Port selection button** to which the iCAT is connected. After successful connection, the message will appear in the console: *"iCAT is ready!"*. <br>
 
-### Part 5: Usage
+
+### Part 5: General usage
 These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCAT and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the chamber needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
@@ -182,7 +185,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 �
 ![alt text](support/media/iCAT-40.jpg) <br><br>
 6. Gently insert the FEP tube into the chamber. Using a syringe, apply grease inside the openings at the top of the chamber. The grease will fill the gaps and seal the FEP tube in place. <br>
 ![alt text](support/media/iCAT-39.jpg) <br><br>
-7. Tight the 'FEP adapter' screw to fix it to the axial motor. Fill the chamber with water. Launch iCAT and set up the desired chamber temperature. <br>
+7. Tight the 'FEP adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the chamber with water. Launch iCAT and set up the desired chamber temperature using the [GUI](#processing). <br>
 *NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the chamber. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
@@ -195,6 +198,57 @@ if(valueDiff <0 ) {
 }
 ```
 8. Use intuitive axial rotation wheel to orient your sample along its x-axis. <br><br>
+
+
+### Part 6: Special functions
+This section provides a detailed explanation of the functions of individual [GUI](#processing) buttons and other features of the software. <br>
+
+**Reset camera position** <br>
+Use the **Camera slider control** to center the camera preview. If the slider reaches its limits, use the **reset button** to recenter it based on the current view.
+
+**Camera control** <br>
+Use the **Camera resolution buttons** to adjust the resolution. To take a single snapshot, press the **s button**. To activate or deactivate continuous mode, press the **c button**. By default, the camera screen displays the middle portion of the captured image. To scroll up or down, use the Camera vertical crop slider **Camera vertical crop slider**.
+
+**Logging and data storage** <br>
+The iCAT generates following log files within its root folder: <br>
+```
+iCAT\logs\log\log_YYYY-MM-DD_HH-mm-ss.txt
+iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
+```
+The ```log_*.txt``` file stores all serial communication between the Arduino and the PC to which Processing is connected, while the ```rotate_*.txt``` log specifically records the rotary movements. <br>
+The images captured by the camera are stored here: <br>
+```
+iCAT\logs\log\capture_no_YYYY-MM-DD_HH-mm-ss.txt
+```
+
+**Remote axial control** <br>
+The iCAT controlling software enables remote axial rotation control, which can be achieved in two ways: <br>
+
+1. **File-based control:** The iCAT Processing software continuously monitors the ```iCAT\logs\temp\``` folder for the presence of a ```temp.txt file```. If such a file is found and contains an integer value, the control software adds this value to the current axial position and uses the result as the target angle for axial rotation. The ```temp.txt``` file is subsequently renamed to prevent repeated use.
+
+2. **Trigger-based control:** Remote rotation can also be activated using trigger input (IN) signals. This requires the trigger IN cable to be connected to the [Trigger IN port](#iCAT-20a) and a valid signal to be sent. The signal is a 5 ms, 5 V pulse typically generated by the microscope trigger board via the microscope control software.
+<br>
+To activate the triggering, the **Interval button** must be active, and rotation angles must be configured within the **Rotation step-size control**. The **upper slider** determines the rotation amount.
+<br>
+If two different rotation angles are needed for independent, consecutive trigger inputs, the second desired angle can be set using the **bottom slider**. This feature is particularly useful for alternating the specimen's rotation back and forth. To achieve this, configure a value in the **upper slider** and set its negative equivalent in the **bottom slider**.
+
+**Step-size control** <br>
+Additionally, the rotation step-size can also be controlled manually. As with the trigger inputs, set the desired angle(s) using the slider(s). To apply the angle change, press the corresponding **push button**.
+
+**Home point** <br>
+By default, iCAT always recovers the last known axial angle position based on the stored value within this log:
+```
+iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
+```
+It is also possible to save the **HOME position** by adjusting the axial angle and pressing the **set H button**. Once this button is active, toggling the **go H button** will move to the saved angle position. If the **set H button** is inactive, pressing the **go H button** will move to the default position — 0°.
+
+**Full integration with microscope controlling software**
+iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **Zeiss microscopes**. This integration utilizes custom-made [macros](zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
+These macros are used in two steps:
+1. During the first step, the [iCAT-mapping_setup.czmac](zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
+2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](zen/iCAT-mapping_sync.czmac) macro to enable the synchronization of the stage with specimen rotation. During this synchronization, the stage and focus are automatically synced with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
+<br><br>
+
 
 ### Start imaging!
 ![alt text](support/media/iCAT-24.jpg)
