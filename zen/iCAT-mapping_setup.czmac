@@ -164,9 +164,9 @@ def calculate_circle_properties(y1, z1, y2, z2, diff):
     # Normalize the angle to the range [0, 360) degrees
 
     if math.floor(diff/180) % 2 == 0:
-        chord = 0
-    else:
         chord = 1
+    else:
+        chord = 0
 
     diff = diff % 360
 
