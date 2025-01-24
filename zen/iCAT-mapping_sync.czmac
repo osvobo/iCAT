@@ -172,25 +172,7 @@ def calculate_point_on_circle(cy, cz, r, new_angle):
     print(new_angle)
     angle_coef = angle2-angle1
     diff_angle = -1* angle1_deg + 90
-    
-    
-    if angle_coef &lt;= 180:
-        if (new_angle &lt;= angle_coef):
-            ax = ((360-angle_coef) * new_angle / angle_coef)
-        else:
-            ax = (360 - angle_coef) + (angle_coef) / (360 - angle_coef) * (new_angle - angle_coef)
-        
-    else:
-        if (new_angle &lt;= angle_coef):
-            ax = (360 - angle_coef) + (angle_coef) / (360 - angle_coef) * (new_angle - angle_coef)
-        else:
-            ax = ((360-angle_coef) * new_angle / angle_coef)
-        
-        
-        
-    print('ax')
-    print(ax)
-    diff_angle = diff_angle + ax
+    diff_angle = diff_angle + new_angle
     
     # Convert angle delta from degrees to radians
     diff_angle_rad = math.radians(diff_angle)
