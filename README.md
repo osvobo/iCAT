@@ -101,14 +101,14 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' using two M3x6 screws and secure the linear guide with four M3x5 screws. <br>
 ![alt text](support/media/iCAT-4.jpg)
 ![alt text](support/media/iCAT-6.jpg) <br><br>
-3. Fix the 'motor plates' to NEMA motors using eighth M3x4 screws according to the image below. Attach GT2 Pulley to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically. <br>
+3. Fix the 'motor plates' to NEMA motors using eighth M3x4 screws according to the image below. Attach 'GT2 Pulley' to one of the NEMA motor. The pin connections of this NEMA motor need to be oriented vertically. <br>
 ![alt text](support/media/iCAT-5a.jpg) <br><br>
 
 4. Secure the 'motor plates' on the 'base' using M3x4 screws. <br>
 ![alt text](support/media/iCAT-7.jpg) <br><br>
-5. Insert three M3 nuts into the 'cargo plate-2' and attach the GT2 Idler to it using a M3x14 screw. Cut 33.5 cm of GT2 Timing Belt and pass it through the idler. Fasten the ends of the belt inside the 'cargo' according to the image below. <br>
+5. Insert three M3 nuts into the 'cargo plate-2' and attach the 'GT2 Idler' to it using a M3x14 screw. Cut 33.5 cm of 'GT2 Timing Belt' and pass it through the idler. Fasten the ends of the belt inside the 'cargo' according to the image below. <br>
 ![alt text](support/media/iCAT-8.jpg) <br><br>
-6. Secure the 'cargo' to the Linear Guide Carriage using two M3x4 screws and place the belt on the GT2 Pulley that was previously attached to one of the NEMA motors. Attach the 'cargo plate-2' to the 'cargo plate-1' using prepared screws. Do not overtighten these screws, otherwise the 'base' will bend. <br>
+6. Secure the 'cargo' to the Linear Guide Carriage using two M3x4 screws and place the belt on the 'GT2 Pulley' that was previously attached to one of the NEMA motors. Attach the 'cargo plate-2' to the 'cargo plate-1' using prepared screws. Do not overtighten these screws, otherwise the 'base' will bend. <br>
 ![alt text](support/media/iCAT-9.jpg) <br><br>
 7. Insert the M3x6 screws into the mounting holes of the Arduino Uno and plug the CNC shield onto the Arduino, ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the M2 pin of the CNC Shield HIGH by connecting the black jumper caps, as shown in the image below. Attach the DRV8825 Stepper Motor Drivers to the CNC Shield and connect the power supply wires to both the shield and the WAGO terminals. <br>
 ![alt text](support/media/iCAT-10a.jpg) <br>
@@ -156,6 +156,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 ![alt text](support/media/iCAT-38.jpg)
 *NOTE: After the initial assembly, test the chamber by filling it with water and letting it stand overnight. There should be no leaks.* <br><br>
 4. Slide the Peltier element to the back of the chamber. Place the chamber on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below.
+<a id="iCAT-21a"></a>
 ![alt text](support/media/iCAT-21a.jpg)
 <a id="iCAT-20a"></a>
 ![alt text](support/media/iCAT-20a.jpg) <br><br>
@@ -172,6 +173,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <a id="processing"></a>
 ![alt text](support/media/processing.jpg) <br><br>
 6. Select the port using **Port selection button** to which the iCAT is connected. After successful connection, the message will appear in the console: *"iCAT is ready!"*. <br>
+7. Test the functionality of the main components: the LED, heating, motors, and camera. Adjust the camera focus using the [Focus adjustment ring](#iCAT-21a).<br><br>
 
 
 ### Part 5: General usage
@@ -223,7 +225,7 @@ The images captured by the camera are stored here: <br>
 ```
 iCAT\logs\log\capture_no_YYYY-MM-DD_HH-mm-ss.txt
 ```
-<br><br>
+<br>
 
 **Remote axial control** <br>
 The iCAT controlling software enables remote axial rotation control, which can be achieved in two ways: <br>
