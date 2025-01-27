@@ -91,7 +91,7 @@ Screwdriver Set, 1x <br>
 
 ## Instructions
 ### Part 1: 3D printing
-All 3D-printed parts can be printed using PETG or PLA filaments. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. For the remaining parts, black filament should be used to reduce light reflections. The individual STL and 3MF files and the complete Fusion360 project are in the [3D folder](support/3d). <br>
+All 3D-printed parts can be printed using PETG or PLA filaments. To print the chamber, it is recommended to use a transparent material for the first three layers in order to be able to use the transmitted light of a microscope. For the remaining parts, black filament should be used to reduce light reflections. The individual STL and 3MF files and the complete Fusion360 project are in the [3D folder](support/3D). The complete iCAT model can be loaded from the [mesh folder](support/mesh). The STL data can be visualized using 3D slicer software, while the OBJ file can be opened with any mesh viewer, such as the 3D Viewer application in Windows. <br>
 
 ### Part 2: iCAT assembly
 To assemble iCAT from individual parts, follow the instructions below. If needed, see the [pinout sheet](support/support.xlsx), and the wiring diagram. 
@@ -137,11 +137,11 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 16. Use 'mounting screws' to connect the iCAT's 'mounting plate' to the stage of the microscope. <br><br>
 
 So far, the iCAT was successfully mounted and used in combination with the following microscopes. <br><br>
-ZEISS Axio Examiner:
+**ZEISS Axio Examiner:**
 ![alt text](support/media/iCAT-23.jpg)
 ![alt text](support/media/iCAT-44.jpg)
 <br><br>
-ZEISS Axio Zoom.V16:
+**ZEISS Axio Zoom.V16:**
 ![alt text](support/media/iCAT-42.jpg)
 ![alt text](support/media/iCAT-43.jpg)
 
@@ -255,7 +255,7 @@ It is also possible to save the **HOME position** by adjusting the axial angle a
 iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **Zeiss microscopes**. This integration utilizes custom-made [macros](zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
 These macros are used in two steps:
 1. During the first step, the [iCAT-mapping_setup.czmac](zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
-2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](zen/iCAT-mapping_sync.czmac) macro to enable the synchronization of the stage with specimen rotation. During this synchronization, the stage and focus are automatically synced with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
+2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](zen/iCAT-mapping_sync.czmac) macro to enable automatic synchronization of the focus and the stage with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
 <br><br>
 
 
