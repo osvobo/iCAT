@@ -136,8 +136,12 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 
 
 ### Part 4: Installation
-1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application]( https://processing.org/download). <br>
+1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application]( https://processing.org/download). Additionally, the ControlP5 library must be installed in Processing. To do this, open the application, navigate to Sketch > Import Library > Manage Libraries, and search for 'ControlP5' to install it. <br>
+Alternatively, you can download the [Processing sketch folder](processing/) and run the [```iCAT.exe```](processing/iCAT.exe) file directly without installing Processing. <br>
 *NOTE: If you run the [```iCAT.exe```](processing/iCAT.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](processing/) does not contain Java.* <br>
+*The current versions of Processing and ControlP5 that iCAT has been tested on are:* <br>
+**ControlP5: 2.2.6<br>
+Processing: 4.3.1**<br><br>
 2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
 3. Open the Arduino IDE by opening the [```main.ino```](main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper]( https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM]( https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
 4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
