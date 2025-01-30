@@ -8,7 +8,7 @@
 
 
 # Introduction
-In the field of light microscopy, imaging specimens from multiple angles and maintaining controlled temperature conditions are crucial for comprehensive and accurate analysis. To address these challenges, we present iCAT, an open-source multifunctional accessory designed to revolutionize light microscopy capabilities. iCAT enables the rotation of specimens along their axial axis, incorporates an in-built thermometer and Peltier element for precise temperature control, features an integrated LED light source, and is equipped with a camera. This versatile device, controlled by an Arduino-based electronic circuit and a Processing based graphical user interface (GUI), allows researchers to capture detailed images and videos of both fixed and live specimens, such as C. Elegans, Zebrafish, Drosophila, mouse embryos etc. The iCAT accessory, which can be easily 3D printed and assembled using readily available electrical components, serves as a powerful tool for investigating dynamic cellular processes and complex developmental phenomena. <br>
+In the field of light microscopy, imaging specimens from multiple angles and maintaining controlled temperature conditions are crucial for comprehensive and accurate analysis. To address these challenges, we present iCAT, an open-source multifunctional accessory designed to revolutionize light microscopy capabilities. iCAT enables the rotation of specimens along their axial axis, incorporates an in-built thermometer and Peltier element for precise temperature control, features an integrated LED light source, and is equipped with a camera. This versatile device, controlled by an Arduino-based electronic circuit and a Processing based graphical user interface (GUI), allows researchers to capture detailed images and videos of both fixed and live specimens, such as C. Elegans, Zebrafish, Drosophila, mouse embryos etc. The iCAT accessory, which can be easily 3D printed and assembled using readily available electrical components, serves as a powerful tool for investigating dynamic cellular processes and complex developmental phenomena. The iCAT 3D model can be visualized in this [video](https://youtu.be/drMLpkQK6RA). <br>
 ![iCAT-detail](support/media/iCAT-30.jpg)
 <br><br>
 
@@ -207,15 +207,15 @@ if(valueDiff <0 ) {
 This section provides a detailed explanation of the functions of individual [GUI](#processing) buttons and other features of the software. 
 <br>
 
-**Reset camera position** <br>
+**Reset camera position:** <br>
 Use the **Camera slider control** to center the camera preview. If the slider reaches its limits, use the **reset button** to recenter it based on the current view.
 <br><br>
 
-**Camera control** <br>
+**Camera control:** <br>
 Use the **Camera resolution buttons** to adjust the resolution. To take a single snapshot, press the **s button**. To activate or deactivate continuous mode, press the **c button**. By default, the camera screen displays the middle portion of the captured image. To scroll up or down, use the Camera vertical crop slider **Camera vertical crop slider**.
 <br><br>
 
-**Logging and data storage** <br>
+**Logging and data storage:** <br>
 The iCAT generates following log files within its root folder: <br>
 ```
 iCAT\logs\log\log_YYYY-MM-DD_HH-mm-ss.txt
@@ -228,7 +228,7 @@ iCAT\logs\log\capture_no_YYYY-MM-DD_HH-mm-ss.txt
 ```
 <br>
 
-**Remote axial control** <br>
+**Remote axial control:** <br>
 The iCAT controlling software enables remote axial rotation control, which can be achieved in two ways: <br>
 
 1. **File-based control:** The iCAT Processing software continuously monitors the ```iCAT\logs\temp\``` folder for the presence of a ```temp.txt file```. If such a file is found and contains an integer value, the control software adds this value to the current axial position and uses the result as the target angle for axial rotation. The ```temp.txt``` file is subsequently renamed to prevent repeated use.
@@ -240,11 +240,11 @@ To activate the triggering, the **Interval button** must be active, and rotation
 If two different rotation angles are needed for independent, consecutive trigger inputs, the second desired angle can be set using the **bottom slider**. This feature is particularly useful for alternating the specimen's rotation back and forth. To achieve this, configure a value in the **upper slider** and set its negative equivalent in the **bottom slider**.
 <br><br>
 
-**Step-size control** <br>
+**Step-size control:** <br>
 Additionally, the rotation step-size can also be controlled manually. As with the trigger inputs, set the desired angle(s) using the slider(s). To apply the angle change, press the corresponding **push button**.
 <br><br>
 
-**Home point** <br>
+**Home point:** <br>
 By default, iCAT always recovers the last known axial angle position based on the stored value within this log:
 ```
 iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
@@ -252,8 +252,9 @@ iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
 It is also possible to save the **HOME position** by adjusting the axial angle and pressing the **set H button**. Once this button is active, toggling the **go H button** will move to the saved angle position. If the **set H button** is inactive, pressing the **go H button** will move to the default position — 0°.
 <br><br>
 
-**Full integration with microscope controlling software**<br>
+**iCAT-ZEN (Zeiss) synchronization:**<br>
 iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **Zeiss microscopes**. This integration utilizes custom-made [macros](zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
+A demonstration of this integration can be seen in this [video](https://youtu.be/mFEu0ixnI0U).<br>
 These macros are used in two steps:
 1. During the first step, the [iCAT-mapping_setup.czmac](zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
 2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](zen/iCAT-mapping_sync.czmac) macro to enable automatic synchronization of the focus and the stage with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
