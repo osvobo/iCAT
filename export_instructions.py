@@ -12,9 +12,6 @@ def delete_file(file_path):
 
 delete_file("./instructions-short.md")
 
-
-
-
 def extract_chapter(file_path, chapter_title):
     """
     Extracts the content of a specific chapter from a Markdown file.
@@ -31,9 +28,48 @@ def extract_chapter(file_path, chapter_title):
         return match.group(1)
     return None
 
+
+def replace_links(content):
+    """
+    Replaces occurrences of '](' within specific link patterns,
+    but only in content that contains specific keywords:
+        macros](
+        sheet](
+        folder](
+        czmac](
+        ```](
+    
+    These keywords that are used for md preview won't be affected:
+        pic](
+        video](
+        ring](#
+        GUI](#
+        port](#
+
+    These keywords that already provide external links won't be affected:
+        application](
+        Arduino IDE](
+        AccelStepper](
+        ArduCAM](
+    """
+    
+    keywords = ["macros](", "sheet](", "folder](", "czmac](", "```]("]
+    
+    # Build the regex pattern to match lines containing the keywords and `](`
+    def replacement_match(match):
+        # Replace `](` with the new URL only if it contains any of the keywords
+        line = match.group(0)
+        if any(keyword in line for keyword in keywords):
+            return line.replace('](', '](https://github.com/osvobo/iCAT/tree/dev/')
+        return line
+    
+    # Use re.sub to perform the replacement on every line
+    return re.sub(r'.*?\]\(.*?$', replacement_match, content, flags=re.MULTILINE)
+
+
 def append_to_file(target_path, content):
     """
-    Appends the extracted content to another Markdown file.
+    Appends the extracted and modified content to another Markdown file.
     """
     with open(target_path, 'a', encoding='utf-8') as file:
         file.write(content)
@@ -45,14 +81,16 @@ def main():
     chapters_to_extract = [
         "# iCAT: A Multifunctional Open-Source Platform for Advanced Light Microscopy", 
         "## Supplies"
-        ]  # List of chapters to extract
+    ]  # List of chapters to extract
     
     for chapter_title in chapters_to_extract:
         print(f"Extracting '{chapter_title}'...")
         chapter_content = extract_chapter(source_file, chapter_title)
         if chapter_content:
+            print(f"Replacing links in '{chapter_title}'...")
+            modified_content = replace_links(chapter_content)
             print(f"Appending '{chapter_title}' to target file.")
-            append_to_file(target_file, chapter_content)
+            append_to_file(target_file, modified_content)
         else:
             print(f"Chapter '{chapter_title}' not found in source file.")
     
