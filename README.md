@@ -203,7 +203,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <div style="page-break-before: always;">
 
 ### Part 5: General usage
-These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCAT and Zeiss Axio Examiner microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
+These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCAT and ZEISS Axio Examiner microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
@@ -279,8 +279,8 @@ iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
 It is also possible to save the **HOME position** by adjusting the axial angle and pressing the **set H button**. Once this button is active, toggling the **go H button** will move to the saved angle position. If the **set H button** is inactive, pressing the **go H button** will move to the default position — 0°.
 <br><br>
 
-**iCAT-ZEN (Zeiss) synchronization:**<br>
-iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **Zeiss microscopes**. This integration utilizes custom-made [macros](zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
+**iCAT-ZEN (ZEISS) synchronization:**<br>
+iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **ZEISS microscopes**. This integration utilizes custom-made [macros](zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
 A demonstration of this integration can be seen in this [video](https://youtu.be/mFEu0ixnI0U).<br>
 These macros are used in two steps:
 1. During the first step, the [iCAT-mapping_setup.czmac](zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
