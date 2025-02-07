@@ -90,7 +90,7 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 ![pic](support/media/iCAT-9.jpg) <br><br>
 7. Insert the M3x6 screws into the mounting holes of the 'Arduino Uno' and plug the 'CNC shield' onto the 'Arduino', ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the 'M2 pin' of the 'CNC Shield' HIGH by connecting the 'black jumper caps', as shown in the image below. Attach the 'DRV8825 Stepper Motor Drivers' to the 'CNC Shield' and connect the power supply wires to both the shield and the 'WAGO terminals'. <br>
 ![pic](support/media/iCAT-10a.jpg) <br>
-*NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used steeper motors is 1.8 A. To calculate the Vref, use this equation:* <br>
+*NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used stepper motors is 1.8 A. To calculate the Vref, use this equation:* <br>
 **V<sub>REF</sub> = I<sub>max</sub>/2** <br>
 **V<sub>REF</sub> = 1.8/2 = 0.9 V** <br>
 *In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the 'DRV8825 Stepper Motor Drivers' to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage.* <br><br>
@@ -167,7 +167,7 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <div style="page-break-before: always;">
 
 ### Part 5: General usage
-These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCAT and Zeiss AxioExaminer microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
+These instructions can be used to mount and image zebrafish embryos between 0 – 4 dpf using iCAT and ZEISS Axio Examiner microscope equipped with LSM900 confocal scan head. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
@@ -243,8 +243,8 @@ iCAT\logs\rotate\rotate_YYYY-MM-DD_HH-mm-ss.txt
 It is also possible to save the **HOME position** by adjusting the axial angle and pressing the **set H button**. Once this button is active, toggling the **go H button** will move to the saved angle position. If the **set H button** is inactive, pressing the **go H button** will move to the default position — 0°.
 <br><br>
 
-**iCAT-ZEN (Zeiss) synchronization:**<br>
-iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **Zeiss microscopes**. This integration utilizes custom-made [macros](https://github.com/osvobo/iCAT/tree/dev/zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
+**iCAT-ZEN (ZEISS) synchronization:**<br>
+iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **ZEISS microscopes**. This integration utilizes custom-made [macros](https://github.com/osvobo/iCAT/tree/dev/zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
 A demonstration of this integration can be seen in this [video](https://youtu.be/mFEu0ixnI0U).<br>
 These macros are used in two steps:
 1. During the first step, the [iCAT-mapping_setup.czmac](https://github.com/osvobo/iCAT/tree/dev/zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
