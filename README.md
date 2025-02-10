@@ -207,7 +207,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
-4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one zebrafish embryo into the pipette. <br>
+4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one or more zebrafish embryos into the pipette. <br>
 5. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br>
 ![pic](support/media/iCAT-41.jpg)
 ![pic](support/media/iCAT-40.jpg) <br><br>
