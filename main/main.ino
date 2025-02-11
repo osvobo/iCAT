@@ -3,19 +3,6 @@
 #include <ArduCAM.h>
 #include <SPI.h>
 #include "memorysaver.h"
-// #define ntc_pin A0
-// #define ntc_ref 10000
-// #define temp_ref 25
-// #define ntc_no 10
-// #define ntc_beta 3950
-// #define ntc_resistor 10000
-// #define dir1 8
-// #define step1 3
-// #define dir2 4
-// #define step2 5
-// #define EN 7
-// #define IN A1
-// #define motorInterfaceType 1
 
 #define ntc_pin A0
 #define ntc_ref 10000
@@ -36,18 +23,6 @@
 #endif
 #define FRAMES_NUM 0x00
 
-// led and peltier
-// int led_pin = 9;
-// int pelt_pin = 6;
-// int samples[ntc_no];
-// int interval = 0;
-// int intV = 0;
-// int int1 = 0;
-// int int2 = 0;
-// int inti = 0;
-// int motor1_temp = 0;
-// unsigned long t;
-// float temperature;
 
 // led, temperature, peltier, motors
 int pacemaker = 4000;
@@ -139,7 +114,7 @@ void setup() {
   myCAM1.OV5642_set_JPEG_size(OV5642_320x240);
   delay(1000);
   myCAM1.clear_fifo_flag();
-  SendMessage("iCat is ready!");
+  SendMessage("iCAT is ready!");
   t = millis();
 }
 
@@ -187,10 +162,11 @@ void loop() {
       snprintf(logMessage, sizeof(logMessage), "int: %d", int12[inti]);
       SendMessage(logMessage);
 
-      snprintf(logMessage, sizeof(logMessage), "Position before int1: %d", intV);
+      snprintf(logMessage, sizeof(logMessage), "Position before int: %d", intV);
       SendMessage(logMessage);
       intV = intV + int12[inti];
-      snprintf(logMessage, sizeof(logMessage), "Position after int1: %d", intV);
+      snprintf(logMessage, sizeof(logMessage), "Position after int: %d", intV);
+      SendMessage(logMessage);
       motor1(intV);
       motor1(intV);
       delay(1000);
@@ -200,6 +176,11 @@ void loop() {
       }
     }
   }
+ // else if (interval == 1) {
+ //     snprintf(logMessage, sizeof(logMessage), "A2low: %d", intervalPin);
+ //     SendMessage(logMessage);
+ // }
+
 
   if (CAM1_EXIST && continuous) {
     streamStartTime = millis();
@@ -288,25 +269,31 @@ void led(int led_val) {
 }
 
 void pelt(int pelt_val) {
-  //Serial.println("true pelt");
-  //Serial.print("Arduino: pelt ");
-  //Serial.println(pelt_val);
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: pelt %d", pelt_val);
+  SendMessage(logMessage);
   analogWrite(pelt_pin, pelt_val);
 }
 
 
 void motor1(long motor1_val) {
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: motor1 %d", motor1_val);
+  SendMessage(logMessage);
+
   motor1_val = motor1_val * 16 / 1.8;  //value * 16(microsteepeing when all 3 pins connected) *200 (steps/cycle) / 360 (°)
   digitalWrite(EN, LOW);
   stepper1.moveTo(motor1_val);
   stepper1.runToPosition();
-  //Serial.print("motor1 moved (sent value*16/1.8) to: ");
-  //Serial.println(motor1_val);
   digitalWrite(EN, HIGH);
 }
 
 
 void motor2(long motor2_val) {
+  char logMessage[64];
+  snprintf(logMessage, sizeof(logMessage), "Arduino: motor2 %d", motor2_val);
+  SendMessage(logMessage);
+
   motor2_val = motor2_val * 8;
   digitalWrite(EN, LOW);
   stepper2.moveTo(motor2_val);
