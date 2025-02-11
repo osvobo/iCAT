@@ -152,10 +152,10 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <div style="page-break-before: always;">
 
 ### Part 4: Installation
-1. Download the entire repository, or simply download the [Arduino sketch folder](https://github.com/osvobo/iCAT/tree/dev/main/), the [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) Processing sketch, and install the [Processing application](https://github.com/osvobo/iCAT/tree/dev/https://processing.org/download). <br>
+1. Download the entire repository, or simply download the [Arduino sketch folder](https://github.com/osvobo/iCAT/tree/dev/main/), the [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) Processing sketch, and install the [Processing application](https://processing.org/download). <br>
 *NOTE: If you run the [```iCAT.exe```](https://github.com/osvobo/iCAT/tree/dev/processing/iCAT.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](https://github.com/osvobo/iCAT/tree/dev/processing/) does not contain Java.* <br>
 2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
-3. Open the Arduino IDE by opening the [```main.ino```](https://github.com/osvobo/iCAT/tree/dev/main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper](https://github.com/osvobo/iCAT/tree/dev/ https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM](https://github.com/osvobo/iCAT/tree/dev/ https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
+3. Open the Arduino IDE by opening the [```main.ino```](https://github.com/osvobo/iCAT/tree/dev/main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper](https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM](https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
 4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](https://github.com/osvobo/iCAT/tree/dev/main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
 ```#define OV5642_MINI_5MP_PLUS``` <br>
 5. Test the iCAT by connecting the Arduino to the PC using USB-B cable, connecting the '12 V main power', the 'trigger IN', and the 'Peltier connector'. Open the [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) and click on the **Run button** in the upper left corner, this will open the Graphical User Interface (GUI) of the iCAT. <br>
@@ -171,7 +171,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
-4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one zebrafish embryo into the pipette. <br>
+4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one or more zebrafish embryos into the pipette. <br>
 5. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br>
 ![pic](support/media/iCAT-41.jpg)
 ![pic](support/media/iCAT-40.jpg) <br><br>

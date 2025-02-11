@@ -53,18 +53,25 @@ def replace_links(content):
         ArduCAM](
     """
     
-    keywords = ["macros](", "sheet](", "folder](", "czmac](", "```]("]
-    
-    # Build the regex pattern to match lines containing the keywords and `](`
+    modify_keywords = ["macros](", "sheet](", "folder](", "czmac](", "```]("]
+    ignore_keywords = ["pic](", "video](", "ring](#", "GUI](#", "port](#",
+        "application](", "Arduino IDE](", "AccelStepper](", "ArduCAM]("]
+
     def replacement_match(match):
-        # Replace `](` with the new URL only if it contains any of the keywords
         line = match.group(0)
-        if any(keyword in line for keyword in keywords):
+        # If the line contains an ignore keyword or an external link, return it unchanged
+        if any(keyword in line for keyword in ignore_keywords):
+            return line
+        # Check if the line already contains an external link (http:// or https://)
+        if "http://" in line or "https://" in line or "github.com" in line:
+            return line
+        # If the line contains a modify keyword, replace `](` with the GitHub URL
+        if any(keyword in line for keyword in modify_keywords):
             return line.replace('](', '](https://github.com/osvobo/iCAT/tree/dev/')
-        return line
-    
-    # Use re.sub to perform the replacement on every line
-    return re.sub(r'.*?\]\(.*?$', replacement_match, content, flags=re.MULTILINE)
+        return line  # Default case: leave it unchanged
+
+    # Updated regex to ensure that links containing the modify keywords are also matched
+    return re.sub(r'\[.*?\]\(.*?\)', replacement_match, content)
 
 
 def append_to_file(target_path, content):
