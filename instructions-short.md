@@ -60,15 +60,15 @@ Pipette Pump 10ml, 1x <br>
 Borosilicate Glass Pasteur Pipettes, 1x <br>
 Crimping Tools SN-58B + 4 jaws, 1x <br>
 Screwdriver Set, 1x <br>
-*NOTE: The complete shopping list is in the [components sheet](https://github.com/osvobo/iCAT/tree/dev/support/support.xlsx).* <br><br>
+*NOTE: The complete shopping list is in the [components sheet](https://github.com/osvobo/iCAT/tree/main/support/support.xlsx).* <br><br>
 <div style="page-break-before: always;">
 
 ## Instructions
 ### Part 1: 3D printing
-All 3D-printed parts can be made using PETG or PLA filaments. For the 'chamber', it is recommended to use a transparent material for the first three layers to allow the use of transmitted light from a microscope. The 'chamber' can be printed in approximately 4 hours, requiring 10.5 meters of filament. For the remaining parts, black filament is recommended to minimize light reflections. Printing these parts takes about 25 hours and consumes 75 meters of filament. The individual STL and 3MF files and the complete Fusion360 project are in the [3D folder](https://github.com/osvobo/iCAT/tree/dev/support/3D). The complete iCAT model can also be loaded from the [mesh folder](https://github.com/osvobo/iCAT/tree/dev/support/mesh). The STL data can be visualized using 3D slicer software, while the OBJ file can be opened with any mesh viewer, such as the 3D Viewer application in Windows. <br>
+All 3D-printed parts can be made using PETG or PLA filaments. For the 'chamber', it is recommended to use a transparent material for the first three layers to allow the use of transmitted light from a microscope. The 'chamber' can be printed in approximately 4 hours, requiring 10.5 meters of filament. For the remaining parts, black filament is recommended to minimize light reflections. Printing these parts takes about 25 hours and consumes 75 meters of filament. The individual STL and 3MF files and the complete Fusion360 project are in the [3D folder](https://github.com/osvobo/iCAT/tree/main/support/3D). The complete iCAT model can also be loaded from the [mesh folder](https://github.com/osvobo/iCAT/tree/main/support/mesh). The STL data can be visualized using 3D slicer software, while the OBJ file can be opened with any mesh viewer, such as the 3D Viewer application in Windows. <br>
 
 ### Part 2: iCAT assembly
-To assemble iCAT from individual parts, follow the instructions below. If needed, see the [pinout sheet](https://github.com/osvobo/iCAT/tree/dev/support/support.xlsx), and the wiring diagram. 
+To assemble iCAT from individual parts, follow the instructions below. If needed, see the [pinout sheet](https://github.com/osvobo/iCAT/tree/main/support/support.xlsx), and the wiring diagram. 
 ![pic](support/fritzing/iCAT_v2.png) <br><br>
 1. Insert all M3 nuts and four neodymium magnets into both 'base' parts. <br>
 ![pic](support/media/iCAT-3.jpg)
@@ -106,7 +106,7 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 ![pic](support/media/iCAT-15.jpg) <br><br>
 13. Install the 'IRF520 Driver Module' and plug its 'Dupont wires' (ground, 5 V). Plug the signal input as described in step 10. Fit 'Male DC connector' connected to 'IRF520 Module' in the upper right corner of the 'base'. Secure the 'potentiometer' by its nut and attach the 'knob' to it. <br>
 ![pic](support/media/iCAT-16.jpg) <br><br>
-14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](https://github.com/osvobo/iCAT/tree/dev/support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. <br>
+14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](https://github.com/osvobo/iCAT/tree/main/support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. <br>
 ![pic](support/media/iCAT-17.jpg)
 ![pic](support/media/iCAT-18a.jpg) <br>
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.* <br><br>
@@ -152,13 +152,13 @@ To install the 'cover' on the sample 'chamber', follow these steps: <br>
 <div style="page-break-before: always;">
 
 ### Part 4: Installation
-1. Download the entire repository, or simply download the [Arduino sketch folder](https://github.com/osvobo/iCAT/tree/dev/main/), the [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) Processing sketch, and install the [Processing application](https://processing.org/download). <br>
-*NOTE: If you run the [```iCAT.exe```](https://github.com/osvobo/iCAT/tree/dev/processing/iCAT.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](https://github.com/osvobo/iCAT/tree/dev/processing/) does not contain Java.* <br>
+1. Download the entire repository, or simply download the [Arduino sketch folder](https://github.com/osvobo/iCAT/tree/main/main/), the [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) Processing sketch, and install the [Processing application](https://processing.org/download). <br>
+*NOTE: If you run the [```iCAT.exe```](https://github.com/osvobo/iCAT/tree/main/processing/iCAT.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](https://github.com/osvobo/iCAT/tree/main/processing/) does not contain Java.* <br>
 2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
-3. Open the Arduino IDE by opening the [```main.ino```](https://github.com/osvobo/iCAT/tree/dev/main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper](https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM](https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
-4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](https://github.com/osvobo/iCAT/tree/dev/main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
+3. Open the Arduino IDE by opening the [```main.ino```](https://github.com/osvobo/iCAT/tree/main/main/main.ino) file. Next, go to the Library Manager and install the [AccelStepper](https://www.airspayce.com/mikem/arduino/AccelStepper/) and [ArduCAM](https://github.com/dennis-ard/ArduCAM) libraries. Once both libraries are installed, press the 'Verify' button to ensure the installation is successful. <br>
+4. Check the path of ```memorysaver.h``` file by hovering the mouse over its name at row 5 in the line ```#include "memorysaver.h"```. Then navigate to its folder and replace it with the [```memorysaver.h```](https://github.com/osvobo/iCAT/tree/main/main/memorysaver.h) file provided, which has the camera definition uncommented: <br>
 ```#define OV5642_MINI_5MP_PLUS``` <br>
-5. Test the iCAT by connecting the Arduino to the PC using USB-B cable, connecting the '12 V main power', the 'trigger IN', and the 'Peltier connector'. Open the [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) and click on the **Run button** in the upper left corner, this will open the Graphical User Interface (GUI) of the iCAT. <br>
+5. Test the iCAT by connecting the Arduino to the PC using USB-B cable, connecting the '12 V main power', the 'trigger IN', and the 'Peltier connector'. Open the [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) and click on the **Run button** in the upper left corner, this will open the Graphical User Interface (GUI) of the iCAT. <br>
 <a id="processing"></a>
 ![pic](support/media/processing.jpg) <br><br>
 6. Select the port using **Port selection button** to which the iCAT is connected. After successful connection, the message will appear in the console: *"iCAT is ready!"*. <br>
@@ -178,7 +178,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 6. Gently insert the FEP tube into the 'chamber'. Using a syringe, apply grease inside the openings at the top of the 'chamber'. The grease will fill the gaps and seal the FEP tube in place. <br>
 ![pic](support/media/iCAT-39.jpg) <br><br>
 7. Tight the 'FEP adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
-*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/dev/main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
+*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
     peltPower = 5;
@@ -244,11 +244,11 @@ It is also possible to save the **HOME position** by adjusting the axial angle a
 <br><br>
 
 **iCAT-ZEN (ZEISS) synchronization:**<br>
-iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **ZEISS microscopes**. This integration utilizes custom-made [macros](https://github.com/osvobo/iCAT/tree/dev/zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
+iCAT can be fully synchronized with the software that controls the microscope. In our showcase example, we developed integration with the **ZEN software**, which is used to control **ZEISS microscopes**. This integration utilizes custom-made [macros](https://github.com/osvobo/iCAT/tree/main/zen) that need to be loaded into the ZEN macro folder: ```Documents\Carl Zeiss\ZEN\Documents\Macros``` and that need to be run in parallel with the iCAT software.<br>
 A demonstration of this integration can be seen in this [video](https://youtu.be/mFEu0ixnI0U).<br>
 These macros are used in two steps:
-1. During the first step, the [iCAT-mapping_setup.czmac](https://github.com/osvobo/iCAT/tree/dev/zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
-2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](https://github.com/osvobo/iCAT/tree/dev/zen/iCAT-mapping_sync.czmac) macro to enable automatic synchronization of the focus and the stage with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
+1. During the first step, the [iCAT-mapping_setup.czmac](https://github.com/osvobo/iCAT/tree/main/zen/iCAT-mapping_setup.czmac) macro is activated. This guides the user through the calibration of a 3D space. The user is prompted to focus and center the specimen within two distinct angle orientations, thereby generating a 2D model of the specimen's orientation within the FEP tube.
+2. Once the mathematical model is created, the user can activate the [iCAT-mapping_sync.czmac](https://github.com/osvobo/iCAT/tree/main/zen/iCAT-mapping_sync.czmac) macro to enable automatic synchronization of the focus and the stage with axial rotation adjustments. This feature is particularly useful when the specimen is mounted eccentrically.
 <br><br>
 <div style="page-break-before: always;">
 

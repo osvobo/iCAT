@@ -67,7 +67,7 @@ def replace_links(content):
             return line
         # If the line contains a modify keyword, replace `](` with the GitHub URL
         if any(keyword in line for keyword in modify_keywords):
-            return line.replace('](', '](https://github.com/osvobo/iCAT/tree/dev/')
+            return line.replace('](', '](https://github.com/osvobo/iCAT/tree/main/')
         return line  # Default case: leave it unchanged
 
     # Updated regex to ensure that links containing the modify keywords are also matched
