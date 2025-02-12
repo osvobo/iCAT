@@ -95,6 +95,7 @@ Pipette Pump 10ml, 1x <br>
 Borosilicate Glass Pasteur Pipettes, 1x <br>
 Crimping Tools SN-58B + 4 jaws, 1x <br>
 Screwdriver Set, 1x <br>
+
 *NOTE: The complete shopping list is in the [components sheet](support/support.xlsx).* <div style="page-break-before: always;">
 
 
@@ -174,6 +175,7 @@ In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the
 <br><br>
 <span><img src="support/media/iCAT-17.jpg" width="500"></span>
 <span><img src="support/media/iCAT-18a.jpg" width="500"></span>
+
 <i>NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.</i>
 <div style="page-break-before: always;">
 
@@ -209,6 +211,7 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 2. Secure the attached coverslip with eight M3x4 screws, and tighten the screws gently.
 <br><br>
 <span><img src="support/media/iCAT-38.jpg" width="500"></span>
+
 <i>NOTE: Be careful when tightening the screws, as the coverslip is fragile. It is recommended to tighten the screws gradually in several rounds, testing the 'chamber' after each round by filling it with water. If no leaks are observed, let the 'chamber' sit overnight on a soft tissue surface. No leaks should be present the following day.</i>
 <br><div style="page-break-before: always;">
 
@@ -223,6 +226,7 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 
 ### Part 4: Installation
 1. Download the entire repository, or simply download the [Arduino sketch folder](main/), the [```main.pde```](main.pde) Processing sketch, and install the [Processing application](https://processing.org/download). <br>
+
 *NOTE: If you run the [```iCAT.exe```](processing/iCAT.exe) file directly, you will need to install OpenJDK17, as the [Processing sketch folder](processing/) does not contain Java.*<br>
 
 2. Install the [Arduino IDE](https://www.arduino.cc/en/software). <br>
@@ -256,6 +260,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 <span><img src="support/media/iCAT-39.jpg" width="500"></span> 
 
 7. Tight the 'FEP tube adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
+
 *NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
