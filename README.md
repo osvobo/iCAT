@@ -145,10 +145,10 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 <br><br>
 <span><img src="support/media/iCAT-10.jpg" width="500"></span>
 <br>
-*NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used stepper motors is 1.8 A. To calculate the Vref, use this equation:* <br>
+<i>NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used stepper motors is 1.8 A. To calculate the Vref, use this equation: <br>
 **V<sub>REF</sub> = I<sub>max</sub>/2** <br>
 **V<sub>REF</sub> = 1.8/2 = 0.9 V** <br>
-*In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the 'DRV8825 Stepper Motor Drivers' to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage.* 
+In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the 'DRV8825 Stepper Motor Drivers' to the USB port, connect the negative probe of the multimeter to the GND, connect the positive probe of the multimeter to the screwdriver tip, set the multimeter to DC Voltage measurement, and use the screwdriver to turn the potentiometer until you get the calculated voltage.</i>
 <br>
 
 8. Similarly to the previous step, interconnect the 'WAGO terminals' with the 'IRF520 Driver Module' using additional power wires. Next, connect the wire end of the first 'Pigtail Cable Jack' to the 'WAGO terminals'. The wire end of the other 'Pigtail Cable Jack' needs to be connected to the 'IRF520 Driver Module'. If needed, crimp the ends of any wires. 
@@ -183,11 +183,10 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 
 14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. 
 <br><br>
-<span><img src="support/media/iCAT-17.jpg" width="500">
+<span><img src="support/media/iCAT-17.jpg" width="500"></span>
+<span><img src="support/media/iCAT-18a.jpg" width="500"></span>
 <br>
-<img src="support/media/iCAT-18a.jpg" width="500"></span>
-<br>
-*NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.*
+<i>NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.</i>
 <br><div style="page-break-before: always;">
 
 15. Attach the 'lid' to the 'base' and attach 'Arducam' to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. 
@@ -225,16 +224,15 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 <br><br>
 <span><img src="support/media/iCAT-38.jpg" width="500"></span>
 <br>
-*NOTE: Be careful when tightening the screws, as the coverslip is fragile. It is recommended to tighten the screws gradually in several rounds, testing the 'chamber' after each round by filling it with water. If no leaks are observed, let the 'chamber' sit overnight on a soft tissue surface. No leaks should be present the following day.*
+<i>NOTE: Be careful when tightening the screws, as the coverslip is fragile. It is recommended to tighten the screws gradually in several rounds, testing the 'chamber' after each round by filling it with water. If no leaks are observed, let the 'chamber' sit overnight on a soft tissue surface. No leaks should be present the following day.</i>
 <br><div style="page-break-before: always;">
 
 3. Slide the Peltier element to the back of the 'chamber'. Place the 'chamber' on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below. 
 <br><br>
 <a id="iCAT-21a"></a>
-<span><img src="support/media/iCAT-21a.jpg" width="500">
-<br>
+<span><img src="support/media/iCAT-21a.jpg" width="500"></span>
 <a id="iCAT-20a"></a>
-<img src="support/media/iCAT-20a.jpg" width="500"></span><div style="page-break-before: always;">
+<span><img src="support/media/iCAT-20a.jpg" width="500"></span><div style="page-break-before: always;">
 
 
 ### Part 4: Installation
