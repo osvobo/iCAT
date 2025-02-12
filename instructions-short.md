@@ -176,21 +176,18 @@ So far, the iCAT was successfully mounted and used in combination with the follo
 ### Part 3: Chamber assembly
 To install the 'cover' on the sample 'chamber', follow these steps: 
 <br>
-1. Apply grease around the perimeter of the 'chamber' window.
+1. Apply grease around the perimeter of the 'chamber' window and gently place the 'Microscope Cover Glass' (coverslip) onto the applied grease. Ensure that the grease spreads evenly under the coverslip and that it is centered.
 <br><br>
-<img src="support/media/iCAT-36.jpg" width="500">
+<img src="support/media/iCAT-36.jpg" width="250">
+<img src="support/media/iCAT-37.jpg" width="250">
 <br>
-
-2. Gently place the 'Microscope Cover Glass' (coverslip) onto the applied grease. Ensure that the grease spreads evenly under the coverslip and that it is centered.
-<br><br>
-<img src="support/media/iCAT-37.jpg" width="500"><div style="page-break-before: always;">
 
 3. Secure the attached coverslip with eight M3x4 screws, and tighten the screws gently.
 <br><br>
 <img src="support/media/iCAT-38.jpg" width="500">
 <br>
 *NOTE: Be careful when tightening the screws, as the coverslip is fragile. It is recommended to tighten the screws gradually in several rounds, testing the 'chamber' after each round by filling it with water. If no leaks are observed, let the 'chamber' sit overnight on a soft tissue surface. No leaks should be present the following day.*
-<br>
+<br><div style="page-break-before: always;">
 
 4. Slide the Peltier element to the back of the 'chamber'. Place the 'chamber' on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below. 
 <br><br>
@@ -213,7 +210,7 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 <br><br>
 <a id="processing"></a>
 ![pic](support/media/processing.jpg) 
-<br>
+<br><div style="page-break-before: always;">
 6. Select the port using **Port selection button** to which the iCAT is connected. After successful connection, the message will appear in the console: *"iCAT is ready!"*. <br>
 7. Test the functionality of the main components: the LED, heating, motors, and camera. Adjust the camera focus using the [Focus adjustment ring](#iCAT-21a).
 <br><div style="page-break-before: always;">
@@ -226,9 +223,8 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
 4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one or more zebrafish embryos into the pipette. <br>
 5. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br><br>
-<img src="support/media/iCAT-41.jpg" width="500">
-<br>
-<img src="support/media/iCAT-40.jpg" width="500"> 
+<img src="support/media/iCAT-41.jpg" width="250">
+<img src="support/media/iCAT-40.jpg" width="250"> 
 <br>
 
 6. Gently insert the FEP tube into the 'chamber'. Using a syringe, apply grease inside the openings at the top of the 'chamber'. The grease will fill the gaps and seal the FEP tube in place. 
