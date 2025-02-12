@@ -58,7 +58,7 @@ Peltier plate module TEC1-12706, 1x <br>
 NTC Thermistor 10K 1% 3950, 1x <br>
 4.7 kOhm resistor, 1x <br>
 10 kOhm resistor, 1x <br>
-10K Ohm potentiometer, 1x <br>
+10 kOhm potentiometer, 1x <br>
 3W High Power LED Module LED with PCB Chassis for Arduino, 1x <br>
 12V 3A Power Supply, 1x <br>
 
@@ -106,7 +106,7 @@ All 3D-printed parts can be made using PETG or PLA filaments. For the 'chamber',
 To assemble iCAT from individual parts, follow the instructions below. If needed, see the [pinout sheet](support/support.xlsx), and the wiring diagram. 
 <br><br>
 <!-- ![pic](support/fritzing/iCAT_v2.png) -->
-<img src="support/fritzing/iCAT_v2.png" width="450">
+<img src="support/fritzing/iCAT_v2.png" width="400">
 <br>
 
 1. Insert all M3 nuts and four neodymium magnets into both 'base' parts. 
@@ -114,25 +114,27 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 <img src="support/media/iCAT-3.jpg" width="500">
 <br>
 
-2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' using two M3x6 screws and secure the 'linear guide' with four M3x5 screws. 
+2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' using two M3x6 screws and secure the 'linear guide' with four M3x5 screws.
 <br><br>
 <img src="support/media/iCAT-4.jpg" width="500">
-<img src="support/media/iCAT-6.jpg" width="500"><div style="page-break-before: always;">
-
+<br><br>
+<img src="support/media/iCAT-6.jpg" width="500">
+<br>
 
 3. Fix the 'motor plates' to 'NEMA motors' using eighth M3x4 screws according to the image below. Attach 'GT2 Pulley' to one of the 'NEMA motor'. The pin connections of this 'NEMA motor' need to be oriented vertically. 
 <br><br>
 <img src="support/media/iCAT-5a.jpg" width="500">
-<br>
+<br><div style="page-break-before: always;">
 
 4. Secure the 'motor plates' on the 'base' using M3x4 screws. 
 <br><br>
-<img src="support/media/iCAT-7.jpg" width="500"><div style="page-break-before: always;">
+<img src="support/media/iCAT-7.jpg" width="500">
+<br>
 
 5. Insert three M3 nuts into the 'cargo plate-2' and attach the 'GT2 Idler' to it using a M3x14 screw. Cut 33.5 cm of 'GT2 Timing Belt' and pass it through the 'idler'. Fasten the ends of the belt inside the 'cargo' according to the image below. 
 <br><br>
 <img src="support/media/iCAT-8.jpg" width="500">
-<br>
+<br><div style="page-break-before: always;">
 
 6. Secure the 'cargo' to the 'Linear Guide Carriage' using two M3x4 screws and place the belt on the 'GT2 Pulley' that was previously attached to one of the 'NEMA motors'. Attach the 'cargo plate-2' to the 'cargo plate-1' using prepared screws. Do not overtighten these screws, otherwise the 'base' will bend. 
 <br><br>
@@ -151,7 +153,8 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 
 8. Similarly to the previous step, interconnect the 'WAGO terminals' with the 'IRF520 Driver Module' using additional power wires. Next, connect the wire end of the first 'Pigtail Cable Jack' to the 'WAGO terminals'. The wire end of the other 'Pigtail Cable Jack' needs to be connected to the 'IRF520 Driver Module'. If needed, crimp the ends of any wires. 
 <br><br>
-<img src="support/media/iCAT-11.jpg" width="500"><div style="page-break-before: always;">
+<img src="support/media/iCAT-11.jpg" width="500">
+<br>
 
 9. Attach the 'Ardunio UNO' coupled with the 'CNC Shield' and all the wirings to the 'base' using previously inserted screws. 
 <br><br>
@@ -170,13 +173,13 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 
 12. Install the 'Trigger IN breadboard' and fit 'Male DC connector' in the 'base adapter'. 
 <br><br>
-<img src="support/media/iCAT-15.jpg" width="500"><div style="page-break-before: always;">
-
+<img src="support/media/iCAT-15.jpg" width="500">
+<br>
 
 13. Install the 'IRF520 Driver Module' and plug its 'Dupont wires' (ground, 5 V). Plug the signal input as described in step 10. Fit 'Male DC connector' connected to 'IRF520 Module' in the upper right corner of the 'base'. Secure the 'potentiometer' by its nut and attach the 'knob' to it. 
 <br><br>
 <img src="support/media/iCAT-16.jpg" width="500">
-<br>
+<br><div style="page-break-before: always;">
 
 14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. 
 <br><br>
@@ -185,7 +188,7 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 <img src="support/media/iCAT-18a.jpg" width="500">
 <br>
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.*
-<br>
+<br><div style="page-break-before: always;">
 
 15. Attach the 'lid' to the 'base' and attach 'Arducam' to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. 
 <br><br>
@@ -198,13 +201,15 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 So far, the iCAT was successfully mounted and used in combination with the following microscopes. 
 <br><br>
 **ZEISS Axio Examiner:**<br>
-![pic](support/media/iCAT-23.jpg)
-![pic](support/media/iCAT-44.jpg)<div style="page-break-before: always;">
+<img src="support/media/iCAT-23.jpg" width="600">
+<img src="support/media/iCAT-44.jpg" width="600">
+<br><div style="page-break-before: always;">
 
 
 **ZEISS Axio Zoom.V16:**<br>
-![pic](support/media/iCAT-42.jpg)
-![pic](support/media/iCAT-43.jpg)<div style="page-break-before: always;">
+<img src="support/media/iCAT-42.jpg" width="600">
+<img src="support/media/iCAT-43.jpg" width="600">
+<br><div style="page-break-before: always;">
 
 
 ### Part 3: Chamber assembly
@@ -216,14 +221,14 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 <img src="support/media/iCAT-37.jpg" width="250">
 <br>
 
-3. Secure the attached coverslip with eight M3x4 screws, and tighten the screws gently.
+2. Secure the attached coverslip with eight M3x4 screws, and tighten the screws gently.
 <br><br>
 <img src="support/media/iCAT-38.jpg" width="500">
 <br>
 *NOTE: Be careful when tightening the screws, as the coverslip is fragile. It is recommended to tighten the screws gradually in several rounds, testing the 'chamber' after each round by filling it with water. If no leaks are observed, let the 'chamber' sit overnight on a soft tissue surface. No leaks should be present the following day.*
 <br><div style="page-break-before: always;">
 
-4. Slide the Peltier element to the back of the 'chamber'. Place the 'chamber' on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below. 
+3. Slide the Peltier element to the back of the 'chamber'. Place the 'chamber' on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below. 
 <br><br>
 <a id="iCAT-21a"></a>
 <img src="support/media/iCAT-21a.jpg" width="500">
@@ -244,29 +249,30 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 <br><br>
 <a id="processing"></a>
 ![pic](support/media/processing.jpg) 
-<br><div style="page-break-before: always;">
+<br>
+
 6. Select the port using **Port selection button** to which the iCAT is connected. After successful connection, the message will appear in the console: *"iCAT is ready!"*. <br>
 7. Test the functionality of the main components: the LED, heating, motors, and camera. Adjust the camera focus using the [Focus adjustment ring](#iCAT-21a).
-<br><div style="page-break-before: always;">
+<br>
 
 
 ### Part 5: General usage
 These instructions can be used to mount and image zebrafish embryos between 0 – 10 dpf using iCAT and confocal microscope or macroscope. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
 1. Cut 9 cm of FEP tube. <br>
-2. Insert the FEP tube inside the 'FEP adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
+2. Insert the FEP tube inside the 'FEP tube adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
 4. Attach a borosilicate glass Pasteur pipette to the pipette pump and aspirate one or more zebrafish embryos into the pipette. <br>
 5. Insert the tip of the pipette into the silicone rubber tube and gently transfer the embryo to the center of the FEP tube. Allow the agarose in the FEP tube to solidify. <br><br>
 <img src="support/media/iCAT-41.jpg" width="250">
 <img src="support/media/iCAT-40.jpg" width="250"> 
-<br>
+<br><div style="page-break-before: always;">
 
 6. Gently insert the FEP tube into the 'chamber'. Using a syringe, apply grease inside the openings at the top of the 'chamber'. The grease will fill the gaps and seal the FEP tube in place. 
 <br><br>
 <img src="support/media/iCAT-39.jpg" width="500"> 
 <br>
 
-7. Tight the 'FEP adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
+7. Tight the 'FEP tube adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
 *NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
 ```
 if(valueDiff <0 ) {
