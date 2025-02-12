@@ -138,6 +138,7 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 7. Insert the M3x6 screws into the mounting holes of the 'Arduino Uno' and plug the 'CNC shield' onto the 'Arduino', ensuring that the pins are properly aligned with the corresponding headers. To adjust micro-stepping (1/16 step), set up the 'M2 pin' of the 'CNC Shield' HIGH by connecting the 'black jumper caps', as shown in the image below. Attach the 'DRV8825 Stepper Motor Drivers' to the 'CNC Shield' and connect the power supply wires to both the shield and the 'WAGO terminals'. 
 <br><br>
 <span><img src="support/media/iCAT-10.jpg" width="500"></span>
+
 <i>NOTE: Before proceeding any further, the voltage reference (V<sub>REF</sub>) that corresponds to the maximum current that will flow to the stepper motors needs to be set. The maximum current of used stepper motors is 1.8 A. To calculate the Vref, use this equation: <br>
 **V<sub>REF</sub> = I<sub>max</sub>/2** <br>
 **V<sub>REF</sub> = 1.8/2 = 0.9 V** <br>
