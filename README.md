@@ -115,7 +115,7 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 
 2. Slide the linear guide into the 'base-1', put both 'base' parts together, and secure the connection between them with two M3x6 screws. Attach the 'mounting plate' using two M3x6 screws and secure the 'linear guide' with four M3x5 screws.
 <br><br>
-<span><img src="support/media/iCAT-4.jpg" width="500"></span>
+<span><img src="support/media/iCAT-4.jpg" width="500"></span><div style="page-break-before: always;">
 <span><img src="support/media/iCAT-6.jpg" width="500"></span>
 
 3. Fix the 'motor plates' to 'NEMA motors' using eighth M3x4 screws according to the image below. Attach 'GT2 Pulley' to one of the 'NEMA motor'. The pin connections of this 'NEMA motor' need to be oriented vertically. 
@@ -152,11 +152,11 @@ In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the
 
 9. Attach the 'Ardunio UNO' coupled with the 'CNC Shield' and all the wirings to the 'base' using previously inserted screws. 
 <br><br>
-<span><img src="support/media/iCAT-12.jpg" width="500"></span>
+<span><img src="support/media/iCAT-12.jpg" width="500"></span><div style="page-break-before: always;">
 
 10. Install wiring components on three mini breadboards according to the image below. First, plug '10 kOhm resistor' into the 'Thermistor breadboard'. Shorten the resistor leads, if necessary. Plug '10 kOhm thermistor', while one of its leads connects it with the resistor. Connect the 'Male-Female Dupont wire' to it. This will be connected to the analog input ('Abort pin') on the 'CNC shield' later on. The other 'Dupont wires' need to be connected to the other thermistor lead (ground) and to the second resistor lead (5 V). Second, prepare the 'Trigger IN' breadboard by plugging a '4.7 kOhm resistor' into it and connecting its terminals to the 'Male DC connector'. 'Dupont wires' will be connected to both of these resistor leads later on (step 14) to the ground and to the analog input ('Hold' pin) on the 'CNC Shield'. Third, plug '10 kOhm potentiometer' into the last breadboard. Two 'Dupont wires' will be connected to the side and the middle terminals later on, connecting it to 'PWM digital input' ('Step Y' pin of the 'CNC shield') and to the 'IRF520 Driver Module' signal input. If needed, crimp the ends of any wires. 
 <br><br>
-<span><img src="support/media/iCAT-13a.jpg" width="500"></span>
+<span><img src="support/media/iCAT-13a.jpg" width="500"></span><div style="page-break-before: always;">
 
 11. Install the 'Potentiometer breadboard' and 'DC Female pigtail' in to the 'base' and cover it with the 'base adapter'. 
 <br><br>
@@ -164,20 +164,18 @@ In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the
 
 12. Install the 'Trigger IN breadboard' and fit 'Male DC connector' in the 'base adapter'. 
 <br><br>
-<span><img src="support/media/iCAT-15.jpg" width="500"></span>
+<span><img src="support/media/iCAT-15.jpg" width="500"></span><div style="page-break-before: always;">
 
 13. Install the 'IRF520 Driver Module' and plug its 'Dupont wires' (ground, 5 V). Plug the signal input as described in step 10. Fit 'Male DC connector' connected to 'IRF520 Module' in the upper right corner of the 'base'. Secure the 'potentiometer' by its nut and attach the 'knob' to it. 
 <br><br>
 <span><img src="support/media/iCAT-16.jpg" width="500"></span>
-<br><div style="page-break-before: always;">
 
 14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. 
 <br><br>
-<span><img src="support/media/iCAT-17.jpg" width="500"></span>
+<span><img src="support/media/iCAT-17.jpg" width="500"></span><div style="page-break-before: always;">
 <span><img src="support/media/iCAT-18a.jpg" width="500"></span>
 
 <i>NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.</i>
-<div style="page-break-before: always;">
 
 15. Attach the 'lid' to the 'base' and attach 'Arducam' to the 'cargo' using two M3x4 screws. Install a Sleeving Cord Protector to cover the wiring of the camera. 
 <br><br>
