@@ -183,9 +183,9 @@ To assemble iCAT from individual parts, follow the instructions below. If needed
 
 14. Install the 'Thermistor' breadboard in the 'base'. Connect 'Dupont wires' of all the 'breadboards' as described in step 10. Connect 'LED' to 5 V, ground, and digital output ('Dir Y' pin) on the 'CNC Shield'. Plug eight 'Dupont wires' to the 'Arducam' and connect them to the 'CNC Shield' according to the [pinout sheet](support/support.xlsx) and the wiring diagram. Test the functionality of the device at this point before attaching the 'lid'. 
 <br><br>
-<span><img src="support/media/iCAT-17.jpg" width="500"></span>
+<span><img src="support/media/iCAT-17.jpg" width="500">
 <br>
-<span><img src="support/media/iCAT-18a.jpg" width="500"></span>
+<img src="support/media/iCAT-18a.jpg" width="500"></span>
 <br>
 *NOTE: It is possible to use 5 V and GND pins of unoccupied driver bays on the 'CNC Shield' to connect the 'IRF520 Driver Module' and the 'thermistor'.*
 <br><div style="page-break-before: always;">
@@ -231,10 +231,10 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 3. Slide the Peltier element to the back of the 'chamber'. Place the 'chamber' on the 'base', and connect it to the female DC connector on the side. Focus the camera using the adjustment ring. All iCAT connectors are depicted below. 
 <br><br>
 <a id="iCAT-21a"></a>
-<span><img src="support/media/iCAT-21a.jpg" width="500"></span>
+<span><img src="support/media/iCAT-21a.jpg" width="500">
 <br>
 <a id="iCAT-20a"></a>
-<span><img src="support/media/iCAT-20a.jpg" width="500"></span><div style="page-break-before: always;">
+<img src="support/media/iCAT-20a.jpg" width="500"></span><div style="page-break-before: always;">
 
 
 ### Part 4: Installation
