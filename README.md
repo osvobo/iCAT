@@ -1,5 +1,5 @@
 # iCAT: A Multifunctional Open-Source Platform for Advanced Light Microscopy
-[![DOI](https://zenodo.org/badge/708209904.svg)](https://doi.org/10.5281/zenodo.14943941)<br><br>
+[![DOI](https://zenodo.org/badge/708209904.svg)](https://doi.org/10.5281/zenodo.14943941)<br>
 
 "i" - Intuitive: iCAT represents an innovative approach to light microscopy, incorporating advanced features like intuitive axial rotation and tracking. It introduces a novel solution for imaging and studying biological specimens with enhanced capabilities, pushing the boundaries of traditional microscopy techniques. <br>
 "C" - Controlled: iCAT offers precise control over specimen rotation, temperature regulation, and lighting conditions, ensuring optimal imaging conditions and experimental reproducibility. <br>
