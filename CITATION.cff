@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: iCAT
+authors:
+  - given-names: Ondrej
+    family-names: Svoboda
+    email: osvoboda@img.cas.cz
+    affiliation: Institute of Molecular Genetics of the Czech Academy of Sciences (IMG)
+    orcid: https://orcid.org/0000-0001-7443-175X
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.14943941
+    description: Zenodo
+url: https://github.com/osvobo/iCAT
+license: MIT
+version: v1.0.0
+date-released: 2025-02-27
