@@ -127,7 +127,7 @@ void loop() {
     SendMessage(logMessage);
     ntc(1023);                 //1023 for 5V, 675 for 3.3V
     t = millis();
-    if (temperature > 35) {
+    if (temperature > 42) {
       pelt(0);
     SendMessage("peltier safety shutdown!!!!");
       }

@@ -152,12 +152,12 @@ output2 = createWriter("logs/rotate/rotate_" + String.format("%04d-%02d-%02d_%02
 
 //temp out
   Slider3 = cp5.addSlider("tempOut")
-               .setRange(24,32)
+               .setRange(24,37)
                .setValue(0)
                .setLabel("set temp [°C]")
                .setPosition(HAlign2,150)
                .setSize(400,35)
-               .setNumberOfTickMarks(33)
+               .setNumberOfTickMarks(53)
                .setFont(font2)
                .setTriggerEvent(Slider.RELEASED)
                .setColorValue(0xffaaaaaa)
@@ -220,7 +220,7 @@ output2 = createWriter("logs/rotate/rotate_" + String.format("%04d-%02d-%02d_%02
   Chart1 = cp5.addChart("tempInChart")
                .setPosition(HAlign2, 230)
                .setSize(400, 140)
-               .setRange(22, 34)
+               .setRange(22, 40)
                .setView(Chart.BAR) // use Chart.LINE, Chart.PIE, Chart.AREA, Chart.BAR_CENTERED
                ;
   Chart1.getColor().setBackground(color(255, 100));
@@ -679,61 +679,64 @@ void thermostat() {
     output1.println();
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
       output1.print("valueIn: " + valueIn);
-    float valueDiff = valueOut-valueIn;
-    println("valueDiff: " + valueDiff);
+    float deltaT = valueOut-valueIn;
+    println("deltaT: " + deltaT);
     output1.println();    
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output1.print("valueDiff: " + valueDiff);
+      output1.print("deltaT: " + deltaT);
     
-    if(valueDiff <0 ) {
+    
+    if(deltaT <0 ) {
       peltPower = 5;
+      println("heat ON! 5");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        println("heating OFF");
-      peltColor = color(background4);
+        output1.println("heat_" + peltPower);
+      peltColor = color(0);
       write(peltPower, 0, 3);
     }
-    if(valueDiff >=0 && valueDiff <0.2 ) {
-      peltPower = 5;
-      output1.println();
-        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat ON!" + peltPower);
-      peltColor = color(60);
-      write(peltPower, 0, 3);
-    }
-    if(valueDiff >=0.2 && valueDiff <0.5 ) {
+    if(deltaT >=0 && deltaT <0.2 ) {
       peltPower = 10;
       println("heat ON! 10");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat ON!" + peltPower);
+        output1.print("heat_" + peltPower);
       peltColor = color(60);
       write(peltPower, 0, 3);
     }
-    if(valueDiff >=0.5 && valueDiff <2 ) {
+    if(deltaT >=0.2 && deltaT <0.5 ) {
+      peltPower = 10;
+      println("heat ON! 10");
+      output1.println();
+        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
+        output1.print("heat_" + peltPower);
+      peltColor = color(60);
+      write(peltPower, 0, 3);
+    }
+    if(deltaT >=0.5 && deltaT <2 ) {
       peltPower = 15;      
       println("heat ON! 15");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat ON!" + peltPower);
+        output1.print("heat_" + peltPower);
       peltColor = color(120);
       write(peltPower, 0, 3);
     }
-    if(valueDiff >=2 && valueDiff <4 ) {
+    if(deltaT >=2 && deltaT <4 ) {
       peltPower = 20;      
       println("heat ON! 20");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat ON!" + peltPower);
+        output1.print("heat_" + peltPower);
       peltColor = color(180);
       write(peltPower, 0, 3);
     }
-    if(valueDiff >=4 ) {
+    if(deltaT >=4 ) {
       peltPower = 30;
       println("heat ON! 30");
       output1.println();      
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat ON!" + peltPower);
+        output1.print("heat_" + peltPower);
       peltColor = color(240);
       write(peltPower, 0, 3);
     }
@@ -743,7 +746,7 @@ void thermostat() {
           println("heating OFF");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heating OFF");
+        output1.print("heat_0");
       peltColor = color(0);
       write(0, 0, 3);
   }
