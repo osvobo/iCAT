@@ -24,7 +24,6 @@ PImage img;
 long picNum = 0;
 int millisInit;
 int port = 0;
-int peltPower = 0;
 int HAlign1 = 25;
 int HAlign2 = 110;
 int HAlign3 = 540;
@@ -669,81 +668,62 @@ void motor2(int val) {
 //heating
 void thermostat() {
   if(cp5.getController("heating").getValue() == 1) {
-    float valueOut = cp5.getController("tempOut").getValue();
-    println("valueOut: " + valueOut);
+    float targetT = cp5.getController("tempOut").getValue();
+    println("targetT: " + targetT);
     output1.println();
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output1.print("valueOut: " + valueOut);
-    float valueIn = cp5.getController("tempIn").getValue();
-    println("valueIn: " + valueIn);
+      output1.print("targetT: " + targetT);
+    float currentT = cp5.getController("tempIn").getValue();
+    println("currentT: " + currentT);
     output1.println();
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-      output1.print("valueIn: " + valueIn);
-    float deltaT = valueOut-valueIn;
+      output1.print("currentT: " + currentT);
+    float deltaT = targetT-currentT;
     println("deltaT: " + deltaT);
     output1.println();    
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
       output1.print("deltaT: " + deltaT);
     
+    float multiplier = 1 + ((targetT - 28)/4.5); // multiplier increases by 0.2 for each degree Celsius above 28°C
+    int hp0 = Math.round(5 * multiplier); // Heating power level 0
+    int hp1 = Math.round(30); // Heating power level 1
+    float deltaT0 = 0; // Delta temperature threshold at which heating power 0 (hp0) is activated, defined as the difference between the setpoint and the actual temperature 
+    float deltaT1 = 4; // Delta temperature threshold at which heating power 1 (hp1) is activated, defined as the difference between the setpoint and the actual temperature 
+    int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (deltaT1 - deltaT0) ); // A linearly increasing heating power is applied when the actual temperature falls within the range defined by deltaT0 and deltaT1
+    //println("hp0: " + hp0);
+    //println("hp1: " + hp1);
+    //println("hp: " + hp);
+    //println("multiplier: " + multiplier);    
+
     
-    if(deltaT <0 ) {
-      peltPower = 5;
-      println("heat ON! 5");
+    if(deltaT < deltaT0 ) {
+      println("hp0: " + hp0);
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.println("heat_" + peltPower);
+        output1.println("heat_" + hp0);
       peltColor = color(0);
-      write(peltPower, 0, 3);
+      write(hp0, 0, 3);
     }
-    if(deltaT >=0 && deltaT <0.2 ) {
-      peltPower = 10;
-      println("heat ON! 10");
+    if(deltaT >= deltaT0 && deltaT < deltaT1) {
+      println("hp: " + hp);
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat_" + peltPower);
+        output1.print("heat_" + hp);
       peltColor = color(60);
-      write(peltPower, 0, 3);
+      write(hp, 0, 3);
     }
-    if(deltaT >=0.2 && deltaT <0.5 ) {
-      peltPower = 10;
-      println("heat ON! 10");
-      output1.println();
-        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat_" + peltPower);
-      peltColor = color(60);
-      write(peltPower, 0, 3);
-    }
-    if(deltaT >=0.5 && deltaT <2 ) {
-      peltPower = 15;      
-      println("heat ON! 15");
-      output1.println();
-        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat_" + peltPower);
-      peltColor = color(120);
-      write(peltPower, 0, 3);
-    }
-    if(deltaT >=2 && deltaT <4 ) {
-      peltPower = 20;      
-      println("heat ON! 20");
-      output1.println();
-        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat_" + peltPower);
-      peltColor = color(180);
-      write(peltPower, 0, 3);
-    }
-    if(deltaT >=4 ) {
-      peltPower = 30;
-      println("heat ON! 30");
+    if(deltaT >= deltaT1) {
+      println("hp: " + hp1);
       output1.println();      
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heat_" + peltPower);
+        output1.print("heat_" + hp1);
       peltColor = color(240);
-      write(peltPower, 0, 3);
+      write(hp1, 0, 3);
     }
   }
   if(cp5.getController("heating").getValue() == 0) {
     cp5.getController("tempOut").setValue(24);
-          println("heating OFF");
+      println("heat OFF");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
         output1.print("heat_0");

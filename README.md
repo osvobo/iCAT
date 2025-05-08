@@ -261,17 +261,25 @@ These instructions can be used to mount and image zebrafish embryos between 0 â€
 
 7. Tight the 'FEP tube adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
 
-*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it. Further fine-tuning can be done in the* [```main.pde```](main.pde) *Processing sketch by increasing or decresing *```peltPower```* parameter. Similar to the adjustment knob, decreasing this value reduces the heating power, while increasing it raises the Peltier output.*<br>
+*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, it is possible to fine-tune following parameters in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) *Processing sketch:*<br>
 ```
-if(valueDiff <0 ) {
-    peltPower = 5;
-    output.println();
-        output.printf("%02d:%02d:%02d   ", hour, min, sec);
-        println("heating OFF");
-    peltColor = color(background4);
-    write(peltPower, 0, 3);
-}
+float multiplier = 1 + ((targetT - 28)/4.5);
+int hp0 = Math.round(5 * multiplier); // Heating power level 0
+int hp1 = Math.round(30); // Heating power level 1
+float deltaT0 = 0; 
+float deltaT1 = 4;
+int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (deltaT1 - deltaT0) );
 ```
+*Where:<br>
+``hp0`` and ``hp1`` are the heating power levels 0 and 1 <br>
+``deltaT0`` and ``deltaT1`` are the temperature thresholds at which ``hp0`` or ``hp1`` are activated, defined as the difference between the setpoint and the actual temperature. <br> 
+``multiplier`` increases ``hp0`` by 0.2 for each degree Celsius above 28Â°C. <br>
+``hp`` is linearly increasing heating power applied when the actual temperature falls within the range defined by deltaT0 and deltaT1.<br><br>
+Alternatively it is also possible to adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it.<br>
+<br>*
+
+
+
 8. Use intuitive axial rotation wheel to orient your sample along its x-axis.
 <br><div style="page-break-before: always;">
 
