@@ -175,7 +175,7 @@ output2 = createWriter("logs/rotate/rotate_" + String.format("%04d-%02d-%02d_%02
           println("Slider3 pressed released");
           cp5.getController("heating").setValue(1);
           write(0, 0, 8); //get current temp
-          thermostat();
+          //thermostat();
         break;    
       }
     }
@@ -684,8 +684,8 @@ void thermostat() {
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
       output1.print("deltaT: " + deltaT);
     
-    float multiplier = 1 + ((targetT - 28)/4.5); // multiplier increases by 0.2 for each degree Celsius above 28°C
-    int hp0 = Math.round(5 * multiplier); // Heating power level 0
+    float multiplier = 1 + ((targetT - 28)/(1/0.25)); // multiplier increases by 0.25 for each degree Celsius above 28°C
+    int hp0 = Math.round(6 * multiplier); // Heating power level 0
     int hp1 = Math.round(30); // Heating power level 1
     float deltaT0 = 0; // Delta temperature threshold at which heating power 0 (hp0) is activated, defined as the difference between the setpoint and the actual temperature 
     float deltaT1 = 4; // Delta temperature threshold at which heating power 1 (hp1) is activated, defined as the difference between the setpoint and the actual temperature 
@@ -701,7 +701,7 @@ void thermostat() {
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
         output1.println("heat_" + hp0);
-      peltColor = color(0);
+      peltColor = color(30);
       write(hp0, 0, 3);
     }
     if(deltaT >= deltaT0 && deltaT < deltaT1) {
@@ -722,7 +722,7 @@ void thermostat() {
     }
   }
   if(cp5.getController("heating").getValue() == 0) {
-    cp5.getController("tempOut").setValue(24);
+    //cp5.getController("tempOut").setValue(24);
       println("heat OFF");
       output1.println();
         output1.printf("%02d:%02d:%02d   ", hour, min, sec);
@@ -743,18 +743,12 @@ void controlEvent(ControlEvent theEvent) {
     println(diff); 
   }
   
-//heating  
+//stop heating  
 if(theEvent.getController().getName()=="heating") {
-  if(cp5.getController("heating").getValue() == 0) {
-      println("heating OF");
-      output1.println();
-        output1.printf("%02d:%02d:%02d   ", hour, min, sec);
-        output1.print("heating OFF");
-      peltColor = color(0);
-      write(0, 0, 3);
-      cp5.getController("tempOut").setValue(24);
-  }
+  thermostat();
 }
+
+
 
 //Arducam vertical adjust
   if(theEvent.getController().getName()=="camVertical") {

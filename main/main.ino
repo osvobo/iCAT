@@ -427,7 +427,7 @@ void serialEvent() {
         motor2(-val);
       }
 
-      if (inputID == 3 && temperature < 35) {
+      if (inputID == 3) { // && temperature < 35) {
         pelt(val);
       }
 
