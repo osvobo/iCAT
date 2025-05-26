@@ -684,7 +684,7 @@ void thermostat() {
       output1.printf("%02d:%02d:%02d   ", hour, min, sec);
       output1.print("deltaT: " + deltaT);
     
-    float multiplier = 1 + ((targetT - 28)/(1/0.25)); // multiplier increases by 0.25 for each degree Celsius above 28°C
+    float multiplier = 1 + ((targetT - 28)/(1/0.20)); // multiplier increases by 0.20 for each degree Celsius above 28°C
     int hp0 = Math.round(6 * multiplier); // Heating power level 0
     int hp1 = Math.round(30); // Heating power level 1
     float deltaT0 = 0; // Delta temperature threshold at which heating power 0 (hp0) is activated, defined as the difference between the setpoint and the actual temperature 
