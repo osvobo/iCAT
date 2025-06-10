@@ -152,7 +152,8 @@ In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the
 16. Use 'mounting screws' to connect the iCAT's 'mounting plate' to the stage of the microscope. 
 <br><div style="page-break-before: always;">
 
-So far, the iCAT was successfully mounted and used in combination with the following microscopes. 
+iCAT has so far been successfully mounted and used with several upright microscopes. The current imaging chamber design is optimized for upright systems and is compatible with a 0.8 mm inner diameter / 1.2 mm outer diameter FEP tube. To accommodate this configuration, the microscope's focus travel range must be at least 12 mm to reach the sample, and the objective working distance should exceed approximately 0.6 mm (half the FEP tube's outer diameter). <br>
+To use a thicker FEP tube, the imaging chamber must be modified by enlarging the FEP hole in the [Fusion360 design file](support/3D/iCAT_v2%20v91.f3d). This modification can be performed by the user or requested by submitting a new [issue](https://github.com/osvobo/iCAT/issues/new) on the GitHub repository.
 <br><br>
 **ZEISS Axio Examiner:**<br>
 <span><img src="support/media/iCAT-23.jpg" width="600"></span>
@@ -211,7 +212,7 @@ To install the 'cover' on the sample 'chamber', follow these steps:
 
 
 ### Part 5: General usage
-These instructions can be used to mount and image zebrafish embryos between 0 – 10 dpf using iCAT and confocal microscope or macroscope. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible however this has not been tested. <br>
+These instructions can be used to mount and image zebrafish embryos between 0 – 10 dpf using iCAT and confocal microscope or macroscope. Other specimens can be imaged as well. If needed, simply use larger FEP tubes to image larger samples. In such a case, however, the 'chamber' needs to be modified. Using the iCAT in combination with other upright microscopes should be possible; however, this has not been tested. Following [video](https://youtu.be/bGU-32gU9dg) demonstrates sample loading into the FEP tube. <br>
 1. Cut 9 cm of FEP tube. <br>
 2. Insert the FEP tube inside the 'FEP tube adapter'. Attach 1 cm of the silicone rubber tube to the end of the FEP tube. <br>
 3. Cover dechorionated embryos with 0.8 % low melting imaging grade agarose with 0.5x Tricaine mesylate on a 3 cm cell culture dish. <br>
@@ -229,17 +230,17 @@ These instructions can be used to mount and image zebrafish embryos between 0 �
 
 *NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, it is possible to fine-tune following parameters in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) *Processing sketch:*<br>
 ```
-float multiplier = 1 + ((targetT - 28)/4.5);
-int hp0 = Math.round(5 * multiplier); // Heating power level 0
-int hp1 = Math.round(30); // Heating power level 1
-float deltaT0 = 0; 
+float multiplier = 1 + ((targetT - 28)/(1/0.20));
+int hp0 = Math.round(6 * multiplier);
+int hp1 = Math.round(30);
+float deltaT0 = 0;
 float deltaT1 = 4;
 int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (deltaT1 - deltaT0) );
 ```
 *Where:<br>
 ``hp0`` and ``hp1`` are the heating power levels 0 and 1 <br>
 ``deltaT0`` and ``deltaT1`` are the temperature thresholds at which ``hp0`` or ``hp1`` are activated, defined as the difference between the setpoint and the actual temperature. <br> 
-``multiplier`` increases ``hp0`` by 0.2 for each degree Celsius above 28°C. <br>
+``multiplier`` increases ``hp0`` by 0.20 for each degree Celsius above 28°C. <br>
 ``hp`` is linearly increasing heating power applied when the actual temperature falls within the range defined by deltaT0 and deltaT1.<br><br>
 Alternatively it is also possible to adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it.<br>
 <br>*
@@ -280,7 +281,7 @@ The iCAT controlling software enables remote axial rotation control, which can b
 
 1. **File-based control:** The iCAT Processing software continuously monitors the ```iCAT\logs\temp\``` folder for the presence of a ```temp.txt file```. If such a file is found and contains an integer value, the control software adds this value to the current axial position and uses the result as the target angle for axial rotation. The ```temp.txt``` file is subsequently renamed to prevent repeated use.
 
-2. **Trigger-based control:** Remote rotation can also be activated using trigger input (IN) signals. This requires the trigger IN cable to be connected to the [Trigger IN port](#iCAT-20a) and a valid signal to be sent. The signal is a 5 ms, 5 V pulse typically generated by the microscope trigger board via the microscope control software.
+2. **Trigger-based control:** Remote rotation can also be activated using trigger input (IN) signals. This requires the trigger IN cable to be connected to the [Trigger IN port](#iCAT-20a) and a valid signal to be sent. The signal is a 5 ms, 5 V pulse typically generated by the microscope trigger board via the microscope control software. After sending this signal, a 2-second delay should be introduced in the microscope software before imaging begins to allow sufficient time for the iCAT's FEP tube rotation and to minimize potential vibrations.
 <br>
 To activate the triggering, the **Interval button** must be active, and rotation angles must be configured within the **Rotation step-size control**. The **upper slider** determines the rotation amount.
 <br>
