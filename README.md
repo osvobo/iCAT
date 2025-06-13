@@ -276,7 +276,7 @@ int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (de
 ``deltaT0`` and ``deltaT1`` are the temperature thresholds at which ``hp0`` or ``hp1`` are activated, defined as the difference between the setpoint and the actual temperature. <br> 
 ``multiplier`` increases ``hp0`` by 0.20 for each degree Celsius above 28°C. <br>
 ``hp`` is linearly increasing heating power applied when the actual temperature falls within the range defined by deltaT0 and deltaT1.<br><br>
-Alternatively, to avoid modifying the code, users can simply adjust the heating output using the built-in adjustment knob: turning it counterclockwise reduces power, while turning it clockwise increases it.<br>
+Alternatively, to avoid modifying the code, users can simply adjust the heating output using the built-in **'adjustment knob'**: turning it counterclockwise reduces power, while turning it clockwise increases it.<br>
 <br>*
 
 
