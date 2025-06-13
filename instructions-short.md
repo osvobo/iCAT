@@ -245,6 +245,8 @@ int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (de
 Alternatively, to avoid modifying the code, users can simply adjust the heating output using the built-in adjustment knob: turning it counterclockwise reduces power, while turning it clockwise increases it.<br>
 <br>*
 
+
+
 8. Use intuitive axial rotation wheel to orient your sample along its x-axis.
 <br><div style="page-break-before: always;">
 
