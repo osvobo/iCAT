@@ -187,7 +187,7 @@ In order to set up the Vref, plug in the 'Arduino UNO' with 'CNC Shield' and the
 <br><div style="page-break-before: always;">
 
 iCAT has so far been successfully mounted and used with several upright microscopes. The current imaging chamber design is optimized for upright systems and is compatible with a 0.8 mm inner diameter / 1.2 mm outer diameter FEP tube. To accommodate this configuration, the microscope's focus travel range must be at least 12 mm to reach the sample, and the objective working distance should exceed approximately 0.6 mm (half the FEP tube's outer diameter). <br>
-To use a thicker FEP tube, the imaging chamber must be modified by enlarging the FEP hole in the [Fusion360 design file](support/3D/iCAT_v2%20v91.f3d). This modification can be performed by the user or requested by submitting a new [issue](https://github.com/osvobo/iCAT/issues/new) on the GitHub repository.
+To use the FEP tube with a larger inner diameter, the imaging chamber must be modified by enlarging the FEP hole in the [Fusion360 design file](support/3D/iCAT_v2%20v91.f3d). This modification can be performed by the user or requested by submitting a new [issue](https://github.com/osvobo/iCAT/issues/new) on the GitHub repository.
 <br><br>
 **ZEISS Axio Examiner:**<br>
 <span><img src="support/media/iCAT-23.jpg" width="600"></span>
@@ -262,7 +262,7 @@ These instructions can be used to mount and image zebrafish embryos between 0 �
 
 7. Tight the 'FEP tube adapter' screw to fix it to the axial motor. Clean the grease from the surface of the FEP tube using a soft, lint-free tissue. Rotate the tube as needed to ensure thorough cleaning. Fill the 'chamber' with water. Launch iCAT and set up the desired 'chamber' temperature using the [GUI](#processing). <br>
 
-*NOTE: Depending on the surrounding temperature and the specific model of the Peltier element used, the setup temperature might fluctuate slightly. This can result in inconsistent imaging during long time-lapse experiments due to the expansion and contraction of the 'chamber'. To mitigate this, it is possible to fine-tune following parameters in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) *Processing sketch:*<br>
+*NOTE: Frequent on-and-off cycling of the Peltier element can cause expansion and contraction of the 'chamber', leading to inconsistent imaging during long time-lapse experiments. To address this, we developed an algorithm that gradually reaches the set-point temperature and then applies a constant power to the Peltier element to maintain it. Once the target temperature is reached, this power level remains stable throughout the experiment, preventing thermal fluctuations that could otherwise cause 'chamber' expansion or shrinkage. The algorithm performs reliably with default parameters when used in conjunction with the specified Peltier element and under standard ambient conditions (20–25 °C). If needed, these parameters can be fine-tuned in the* [```main.pde```](https://github.com/osvobo/iCAT/tree/main/main.pde) *Processing sketch is possible:*<br>
 ```
 float multiplier = 1 + ((targetT - 28)/(1/0.20));
 int hp0 = Math.round(6 * multiplier);
@@ -276,7 +276,7 @@ int hp = Math.round( (hp0 * (deltaT1 - deltaT) - hp1 * (deltaT0 - deltaT)) / (de
 ``deltaT0`` and ``deltaT1`` are the temperature thresholds at which ``hp0`` or ``hp1`` are activated, defined as the difference between the setpoint and the actual temperature. <br> 
 ``multiplier`` increases ``hp0`` by 0.20 for each degree Celsius above 28°C. <br>
 ``hp`` is linearly increasing heating power applied when the actual temperature falls within the range defined by deltaT0 and deltaT1.<br><br>
-Alternatively it is also possible to adjust the heating output using the adjustment knob. Turning the knob counterclockwise decreases its power, while turning it clockwise increases it.<br>
+Alternatively, to avoid modifying the code, users can simply adjust the heating output using the built-in adjustment knob: turning it counterclockwise reduces power, while turning it clockwise increases it.<br>
 <br>*
 
 
